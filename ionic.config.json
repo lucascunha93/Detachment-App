@@ -1,0 +1,7 @@
+{
+  "name": "detachment",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

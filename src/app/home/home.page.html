@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Feed de ofertas
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="tertiary">
+  <ion-card color="light" *ngFor="let post of posts" class="sc-ion-card-ios-h sc-ion-card-ios-s ios hydrated post-area">
+    <img src="{{post.imgProduct}}">
+    <ion-card-content class="ios card-content-ios hydrated post-content">
+      <img src="{{post.imgUser}}" alt="">
+      <ion-card-header class="content-header">
+        <ion-card-subtitle class="ios hydrated" role="heading" aria-level="1">
+          {{post.description}}
+        </ion-card-subtitle>
+        <ion-text>
+          <a href="" class="link-user">{{post.name}}</a>
+        </ion-text>
+      </ion-card-header>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
