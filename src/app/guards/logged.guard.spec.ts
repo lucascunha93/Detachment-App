@@ -2,7 +2,7 @@ import { TestBed, async, inject } from '@angular/core/testing';
 
 import { LoggedGuard } from './logged.guard';
 
-describe('LoginGuard', () => {
+describe('LoggedGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [LoggedGuard]
