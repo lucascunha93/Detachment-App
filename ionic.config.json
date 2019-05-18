@@ -1,7 +1,5 @@
 {
-  "name": "detachment",
-  "integrations": {
-    "cordova": {}
-  },
+  "name": "Detachment",
+  "integrations": {},
   "type": "angular"
 }

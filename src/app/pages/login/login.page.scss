@@ -1,0 +1,64 @@
+.swiper-no-swiping {
+    --background: none;
+    background-image: url('../../../assets/backgroundLogin.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.container {
+    text-align: center;
+}
+
+.container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 75%;
+    margin: 0 auto;
+    z-index: 2;
+
+    &.top {
+        top: 5%;
+    }
+
+    &.bottom {
+        bottom: 30%;
+
+        span {
+            color: #fff;
+        }
+    }
+}
+
+ion-slides {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    .slide-inner {
+        width: 75%;
+        color: #fff;
+
+        ion-item {
+            --background: rgb(255, 255, 255);
+            margin: 1px 0;
+            padding: 0;
+            
+            ion-input {
+                --color: rgb(161, 161, 161);
+            }
+        }
+    }
+}
+
+.teste{
+    padding: 0;
+    margin: 0;
+}
+
+.btn-login{
+    --background-color: rgb(0, 87, 0);
+    --border-radius: 0;
+    margin: 1px 0;
+    width: 100%;
+}
