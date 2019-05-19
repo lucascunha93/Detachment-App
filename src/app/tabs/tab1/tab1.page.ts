@@ -48,4 +48,8 @@ export class Tab1Page {
     const toast = await this.toastCtrl.create({ message, duration: 2000 });
     toast.present();
   }
+
+  liked() {
+    // Code function
+  }
 }

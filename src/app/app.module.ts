@@ -30,6 +30,7 @@ import { environment } from 'src/environments/environment';
     StatusBar,
     SplashScreen,
     Keyboard,
+    Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

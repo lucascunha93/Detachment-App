@@ -1,14 +1,38 @@
+.btn-favorite {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  opacity: 0.5;
+  width: 23px;
+  height: 23px;
+  --border-radius: 5px;
+  --padding-bottom: 0; 
+  --padding-top: 0; 
+  --padding-end: 0; 
+  --padding-start: 0; 
+}
+
+.btn-favorite > ion-icon {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+}
+
+.post-area {
+  width: 42%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .post-area img {
   max-height: 35vh;
   max-width: auto;
 }
 
 .post-content {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border-top: 1px solid rgba(71, 71, 71, 0.493);
+  padding: 1px;
 }
+
 
 .post-content img {
   height: 50px;
