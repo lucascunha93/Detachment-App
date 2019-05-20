@@ -1,1 +1,35 @@
+ion-content {
+    text-align: center;
+    text-align: -webkit-center;
+}
 
+ion-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(161, 161, 161, 0.603);
+    margin: 15px 0px 0px 0px;
+}
+
+ion-avatar > ion-icon {
+    font-size: 35px;
+    color: rgba(255, 255, 255, 0.966);
+}
+
+.btn-add-photo {
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    bottom: 259px;
+    right: 111px;
+    z-index: 1;
+    --border-radius: 20px;
+    --padding-bottom: 0; 
+    --padding-top: 0; 
+    --padding-end: 0; 
+    --padding-start: 0; 
+}
+
+ion-list {
+    padding: 0 30px;
+}

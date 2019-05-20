@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
+    <ion-title text-center>
       Doações
     </ion-title>
   </ion-toolbar>
@@ -30,15 +30,15 @@
     </ion-item>
   </ion-list>
 
-  <ion-card color="light" *ngFor="let product of products" [routerLink]="['/product-edit', product.id]" class="sc-ion-card-ios-h sc-ion-card-ios-s ios hydrated post-area">
+  <ion-card *ngFor="let product of products" [routerLink]="['/product-edit', product.id]" class="sc-ion-card-ios-h sc-ion-card-ios-s ios hydrated post-area">
     <img src="{{product.picture}}">
     <ion-button color="dark" class="btn-favorite" (click)="liked()" >
       <ion-icon name="jet"></ion-icon>
     </ion-button>
-    <ion-card-content class="ios card-content-ios hydrated post-content">
-      <ion-card-header class="content-header">
+    <ion-card-content  class="ios card-content-ios hydrated post-content">
+      <ion-card-header color="light" class="content-header">
         <ion-card-subtitle color="medium" class="ios hydrated" role="heading" aria-level="1">
-          {{product.description}}
+          {{product.name}}
         </ion-card-subtitle>
       </ion-card-header>
     </ion-card-content>
