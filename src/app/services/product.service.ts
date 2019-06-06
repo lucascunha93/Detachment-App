@@ -41,4 +41,5 @@ export class ProductService {
   deleteProduct(id: string) {
     return this.productsCollection.doc(id).delete();
   }
+  
 }

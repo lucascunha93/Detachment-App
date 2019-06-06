@@ -1,8 +1,9 @@
-<ion-content class="swiper-no-swiping">
+<ion-content color="primary" class="swiper-no-swiping">
   <div class="container top" [hidden]="keyboard.isVisible">
+    <ion-label class="text-login">Detachment</ion-label>
     <img class="img-logo" src="/assets/icon/logo.png">
-
-    <ion-segment (ionChange)="segmentChanged($event)" mode="ios" value="login">
+    
+    <ion-segment color="tertiary" (ionChange)="segmentChanged($event)" mode="ios" value="login">
       <ion-segment-button mode="ios" value="login">
         <ion-label>Login</ion-label>
       </ion-segment-button>
@@ -21,12 +22,12 @@
           <ion-input type="email" placeholder="E-mail" [(ngModel)]="userLogin.email"></ion-input>
         </ion-item>
 
-        <ion-item class="ion-margin-top teste" lines="none">
+        <ion-item class="ion-margin-top" lines="none">
           <ion-icon color="medium" name="lock"></ion-icon>
           <ion-input type="password" placeholder="Senha" [(ngModel)]="userLogin.password"></ion-input>
         </ion-item>
 
-        <ion-button class="btn-login" (click)="login()">
+        <ion-button color="success" class="btn-login" (click)="login()">
           Entrar
         </ion-button>
       </div>
@@ -35,7 +36,7 @@
     <ion-slide>
       <div class="slide-inner ion-padding">
         
-        <ion-item class="ion-margin-top" lines="none">
+        <ion-item style="margin-top: 45px;" lines="none">
           <ion-input type="text" placeholder="Nome"></ion-input>
         </ion-item>
 
@@ -47,7 +48,7 @@
           <ion-input type="password" placeholder="Senha" [(ngModel)]="userRegister.password"></ion-input>
         </ion-item>
 
-        <ion-button class="btn-login" (click)="register()">
+        <ion-button color="success" class="btn-login" (click)="register()">
           Cadastrar
         </ion-button>
       </div>

@@ -7,23 +7,32 @@ ion-avatar {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    height: 130px;
+    width: 130px;
     background-color: rgba(161, 161, 161, 0.603);
     margin: 15px 0px 0px 0px;
 }
 
 ion-avatar > ion-icon {
+    position: relative;
+    left: 27px;
     font-size: 35px;
     color: rgba(255, 255, 255, 0.966);
 }
 
-.btn-add-photo {
+ion-avatar > img {
     position: absolute;
-    height: 24px;
-    width: 24px;
-    bottom: 259px;
-    right: 111px;
+}
+
+.btn-add-photo {
+    position: relative;
+    height: 50px;
+    width: 50px;
+    bottom: -48px;
+    right: -21px;
     z-index: 1;
-    --border-radius: 20px;
+    --border-radius: 25px;
     --padding-bottom: 0; 
     --padding-top: 0; 
     --padding-end: 0; 

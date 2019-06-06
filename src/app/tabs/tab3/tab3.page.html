@@ -7,12 +7,15 @@
 </ion-header>
 
 <ion-content>
-  <ion-avatar>
-    <ion-icon name="camera"></ion-icon>
-    <ion-button class="btn-add-photo">
-      <ion-icon name="add"></ion-icon>
-    </ion-button>
-  </ion-avatar>
+
+    <ion-avatar >
+      <img src="{{imagePath}}" *ngIf="imagePath != ''">
+        <ion-icon name="camera" *ngIf="imagePath === ''"></ion-icon>
+        <ion-button class="btn-add-photo" (click)="openCamera()">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+      </ion-avatar>  
+
   <ion-list>
     <ion-item>
       <ion-input type="text" [(ngModel)]="product.name" placeholder="Nome"></ion-input>
@@ -31,7 +34,7 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button (click)="saveProduct()" expand="block">
+    <ion-button (click)="uploadImage()" expand="block">
       Publicar
     </ion-button>
   </ion-toolbar>
