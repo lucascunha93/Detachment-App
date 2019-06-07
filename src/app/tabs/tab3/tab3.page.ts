@@ -64,7 +64,9 @@ export class Tab3Page {
       try {
         await this.productService.updateProduct(this.productId, this.product);
         await this.loading.dismiss();
-
+        this.product = {};
+        this.imagePath = '';
+        this.cep = null;
         this.navCtrl.navigateBack('/home');
       } catch (error) {
         this.presentToast('Erro ao tentar salvar');
@@ -77,7 +79,9 @@ export class Tab3Page {
         try {
           await this.productService.addProduct(this.product);
           await this.loading.dismiss();
-          this.
+          this.product = {};
+          this.imagePath = '';
+          this.cep = null;
           this.navCtrl.navigateBack('/home');
         } catch (error) {
           this.presentToast('Erro ao salvar');
@@ -92,8 +96,9 @@ export class Tab3Page {
 
   public uploadImage() {
     const that = this;
+    let date = new Date().getTime();
     let storageRef = this.fb.storage().ref();
-    let basePath = '/products/' + this.authService.getAuth().currentUser.uid + '/' + this.authService.getAuth().currentUser.uid + '.png';
+    let basePath = '/products/' + this.authService.getAuth().currentUser.uid + date + '.png';
     let uploadTask = storageRef.child(basePath).putString(this.imagePath, 'data_url');
 
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
@@ -147,15 +152,5 @@ export class Tab3Page {
        this.product.state = cep.uf;
        this.product.city = cep.localidade
      } );
-    // const cepValue = this.contatoForm.controls['cep'].value;
-    // const isValid = this.contatoForm.controls['cep'].valid;
-    // if(isValid) {
-    //   this.http.get(`https://viacep.com.br/ws/${cepValue}/json/`)
-    //   .map(res => res.json())
-    //   .subscribe(data => {
-    //     console.log(data);
-    //   })
-    // }
   }
-
 }
