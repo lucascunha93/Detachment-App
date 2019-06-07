@@ -3,7 +3,9 @@ export interface Product {
     name?: string;
     description?: string;
     picture?: any;
-    local?: string;
+    city?: string;
+    state?: string;
     createdAt?: number;
     userId?: string;
+    userName?: string;
 }

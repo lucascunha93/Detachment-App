@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { NavController, LoadingController, ToastController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
@@ -5,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { FirebaseApp } from '@angular/fire';
 import * as firebase from 'firebase';
+import { HttpClient } from "@angular/common/http";
 
 import { ProductService } from 'src/app/services/product.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -23,6 +25,7 @@ export class Tab3Page {
   private loading: any;
   private productSubscription: Subscription;
   imagePath: string = '';
+  cep: number;
 
   constructor(
     private productService: ProductService,
@@ -32,6 +35,7 @@ export class Tab3Page {
     private authService: AuthService,
     private toastCtrl: ToastController,
     private camera: Camera,
+    public http: HttpClient,
     private fb: FirebaseApp
   ) {
     this.productId = this.activatedRoute.snapshot.params['id'];
@@ -73,6 +77,7 @@ export class Tab3Page {
         try {
           await this.productService.addProduct(this.product);
           await this.loading.dismiss();
+          this.
           this.navCtrl.navigateBack('/home');
         } catch (error) {
           this.presentToast('Erro ao salvar');
@@ -134,6 +139,23 @@ export class Tab3Page {
       }, (err) => {
         // Handle error
       });
+  }
+
+  buscaCep() {
+    this.http.get<any>(`https://viacep.com.br/ws/${this.cep}/json/`)
+     .subscribe( cep => {
+       this.product.state = cep.uf;
+       this.product.city = cep.localidade
+     } );
+    // const cepValue = this.contatoForm.controls['cep'].value;
+    // const isValid = this.contatoForm.controls['cep'].valid;
+    // if(isValid) {
+    //   this.http.get(`https://viacep.com.br/ws/${cepValue}/json/`)
+    //   .map(res => res.json())
+    //   .subscribe(data => {
+    //     console.log(data);
+    //   })
+    // }
   }
 
 }

@@ -1,8 +1,17 @@
 ion-item {
+  position: relative;
   margin: 10px 5px;
-  --border-bottom: none;
+  --border-radius: 5px;
+  --border-style: none;
 }
 
 ion-avatar {
-  
+  width: 90px;
+  height: 90px;
+  --border-radius: none;
+}
+
+ion-label {
+  border-left: 1px solid gray;
+  padding-left: 20px;
 }
