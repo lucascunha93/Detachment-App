@@ -28,11 +28,16 @@
         [brmasker]="{mask:'00000-00', len:9}" placeholder="CEP"></ion-input>
       <ion-button color="success" (click)="buscaCep()">Busca CEP</ion-button>
     </ion-item>
-    <ion-item style="float: left; width:50%">
+    <ion-item style="float: left; width:74%; padding: 0 20px 0 0">
       <ion-input type="text" [(ngModel)]="product.city" placeholder="Cidade"></ion-input>
     </ion-item>
-    <ion-item style="float: left; width:50%">
-      <ion-input type="text" [(ngModel)]="product.state" placeholder="Estado"></ion-input>
+    <ion-item style="float: left; width:26%">
+      <ion-input type="text" [(ngModel)]="product.state" placeholder="uf"></ion-input>
+    </ion-item>
+    <ion-item >
+      <ion-icon color="success" name="logo-whatsapp"></ion-icon>
+      <ion-input type="text" [(ngModel)]="product.number" [brmasker]="{mask:'(00) 00000-0000', len:15}"
+         placeholder=" Número WhatsApp"></ion-input>
     </ion-item>
   </ion-list>
 </ion-content>

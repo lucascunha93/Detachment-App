@@ -1,0 +1,48 @@
+ion-content {
+    text-align: center;
+}
+
+.signup-content {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.icon-register {
+    color: var(--ion-color-primary);
+    position: absolute;
+    left: 0;
+    top: 65%;
+    font-size: 15px;
+}
+
+ion-item {
+    --background: none;
+    --padding: 0;
+    color: var(--ion-color-primary);
+}
+
+ion-label {
+    position: absolute;
+    top: 40%;
+    left: 8%;
+    font-size: 10px !important;
+}
+
+ion-input {
+    position: absolute;
+    top: 50%;
+    left: 8%;
+    color: #ffffffaf;
+    font-size: 15px !important;
+}
+
+ion-button {
+    --border-radius: 20px;
+    position: absolute;
+    bottom: 15%;
+    left: 30%;
+    width: 40%;
+}

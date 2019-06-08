@@ -1,57 +1,20 @@
-<ion-content color="primary" class="swiper-no-swiping">
-  <div class="container top" [hidden]="keyboard.isVisible">
+<ion-content color="primary">
+
+  <div class="login-content">
+    <ion-icon name="cube"></ion-icon>
     <ion-label class="text-login">Detachment</ion-label>
-    <img class="img-logo" src="/assets/icon/logo.png">
-    
-    <ion-segment color="tertiary" (ionChange)="segmentChanged($event)" mode="ios" value="login">
-      <ion-segment-button mode="ios" value="login">
-        <ion-label>Login</ion-label>
-      </ion-segment-button>
-      <ion-segment-button mode="ios" value="register">
-        <ion-label>Cadastro</ion-label>
-      </ion-segment-button>
-    </ion-segment>
   </div>
 
-  <ion-slides>
-    <ion-slide>
-      <div class="slide-inner ion-padding">
+  <div class="login-content">
+    <ion-button [routerLink]="['/signup']" class="btn-login btn-register">
+      CADASTRE-SE GRÁTIS
+    </ion-button>
 
-        <ion-item class="ion-margin-top" lines="none">
-          <ion-icon color="medium" name="mail"></ion-icon>
-          <ion-input type="email" placeholder="E-mail" [(ngModel)]="userLogin.email"></ion-input>
-        </ion-item>
+    <ion-button style="--background: rgba(255, 255, 255, 0); --border-color: #ffffff; 
+      --border-style: solid; --border-width: 1px;" [routerLink]="['/signin']"
+        class="btn-login">
+      ENTRAR
+    </ion-button>
+  </div>
 
-        <ion-item class="ion-margin-top" lines="none">
-          <ion-icon color="medium" name="lock"></ion-icon>
-          <ion-input type="password" placeholder="Senha" [(ngModel)]="userLogin.password"></ion-input>
-        </ion-item>
-
-        <ion-button color="success" class="btn-login" (click)="login()">
-          Entrar
-        </ion-button>
-      </div>
-    </ion-slide>
-
-    <ion-slide>
-      <div class="slide-inner ion-padding">
-        
-        <ion-item style="margin-top: 45px;" lines="none">
-          <ion-input type="text" placeholder="Nome"></ion-input>
-        </ion-item>
-
-        <ion-item class="ion-margin-top" lines="none">
-          <ion-input type="email" placeholder="E-mail" [(ngModel)]="userRegister.email"></ion-input>
-        </ion-item>
-
-        <ion-item class="ion-margin-top" lines="none">
-          <ion-input type="password" placeholder="Senha" [(ngModel)]="userRegister.password"></ion-input>
-        </ion-item>
-
-        <ion-button color="success" class="btn-login" (click)="register()">
-          Cadastrar
-        </ion-button>
-      </div>
-    </ion-slide>
-  </ion-slides>
 </ion-content>

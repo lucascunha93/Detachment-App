@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { LoadingController, ToastController, IonSlides } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,9 +12,6 @@ import { User } from 'src/app/interfaces/user';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  @ViewChild(IonSlides) slides: IonSlides;
-  public wavesPosition: number = 0;
-  private wavesDifference: number = 100;
   public userLogin: User = {};
   public userRegister: User = {};
   private loading: any;
@@ -27,16 +24,6 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit() { }
-
-  segmentChanged(event: any) {
-    if (event.detail.value === 'login') {
-      this.slides.slidePrev();
-      this.wavesPosition += this.wavesDifference;
-    } else {
-      this.slides.slideNext();
-      this.wavesPosition -= this.wavesDifference;
-    }
-  }
 
   async login() {
     await this.presentLoading();
@@ -74,8 +61,13 @@ export class LoginPage implements OnInit {
       await this.authService.register(this.userRegister);
     } catch (error) {
       let message: string;
-
+      console.log(error.code);
+      
       switch (error.code) {
+
+        case 'auth/argument-error':
+          message = 'Preencha todos os campos.';
+          break;
 
         case 'auth/email-already-in-use':
           message = 'E-mail já cadastrado!';

@@ -8,4 +8,5 @@ export interface Product {
     createdAt?: number;
     userId?: string;
     userName?: string;
+    phone?: number;
 }

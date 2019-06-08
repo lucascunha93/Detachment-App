@@ -1,4 +1,3 @@
-import { map } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { NavController, LoadingController, ToastController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
