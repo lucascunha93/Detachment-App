@@ -8,9 +8,9 @@ const routes: Routes = [
   { path: '', loadChildren: './tabs/tabs.module#TabsPageModule', canActivate: [AuthGuard] },
   { path: 'home', loadChildren: './tabs/tabs.module#TabsPageModule', canActivate: [AuthGuard] }, 
   { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule', canActivate: [LoggedGuard] },
-  { path: 'signin', loadChildren: './pages/signin/signin.module#SigninPageModule' },
-  { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule' },
-  { path: 'product-edit', loadChildren: './pages/product-edit/product-edit.module#ProductEditPageModule' }
+  { path: 'signin', loadChildren: './pages/signin/signin.module#SigninPageModule', canActivate: [LoggedGuard] },
+  { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule', canActivate: [LoggedGuard] },
+  { path: 'product-edit', loadChildren: './pages/product-edit/product-edit.module#ProductEditPageModule', canActivate: [AuthGuard] }
 ];
 @NgModule({
   imports: [

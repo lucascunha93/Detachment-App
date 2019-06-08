@@ -17,10 +17,11 @@
       </ion-item>
 
       <ion-item style="--border-style: none">
-        <p class="reset-password-link">esqueceu a senha?</p>
+        <a href="#" class="reset-password-link">esqueceu a senha?</a>
       </ion-item>
 
-      <ion-button class="btn-login" style="color: #8C3555" color="light">
+      <ion-button class="btn-login" (click)="login()" [disabled]="!formLogin.valid" style="color: #8C3555"
+        color="light">
         ENTRAR
       </ion-button>
 

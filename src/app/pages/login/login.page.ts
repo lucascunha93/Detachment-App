@@ -61,7 +61,6 @@ export class LoginPage implements OnInit {
       await this.authService.register(this.userRegister);
     } catch (error) {
       let message: string;
-      console.log(error.code);
       
       switch (error.code) {
 
