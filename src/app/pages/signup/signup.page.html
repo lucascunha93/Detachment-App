@@ -3,7 +3,7 @@
     <ion-icon color="primary" style="font-size: 50px;" name="cube"></ion-icon>
   </div>
   <div style="height: 70%;" class="signup-content">
-    <form style="width: 90%" padding [formGroup]="formRegister" (submit)="validAndRegister()" novalidate>
+    <form style="width: 90%" padding [formGroup]="formRegister" novalidate>
       <ion-item class="ion-no-padding">
         <ion-icon class="icon-register" name="person"></ion-icon>
         <ion-label position="floating">NOME</ion-label>
@@ -22,7 +22,7 @@
         <ion-input type="password" formControlName="password"></ion-input>
       </ion-item>
 
-      <ion-button>
+      <ion-button (click)="register()" [disabled]="!formRegister.valid">
         <ion-icon name="person-add"></ion-icon>
       </ion-button>
     </form>

@@ -29,7 +29,7 @@
       </ion-label>
     </ion-item>
   </ion-list>
-  <ion-item *ngFor="let product of products" [routerLink]="['/product-edit', product.id]" class="item ios in-list ion-focusable item-label hydrated">
+  <ion-item *ngFor="let product of products" [routerLink]="['/product-item', product.id]" class="item ios in-list ion-focusable item-label hydrated">
     <ion-avatar slot="start" class="ios hydrated">
       <img src="{{product.picture}}">
     </ion-avatar>

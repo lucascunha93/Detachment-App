@@ -16,6 +16,9 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 
+import { Facebook } from '@ionic-native/facebook/ngx';
+import { GooglePlus } from '@ionic-native/google-plus/ngx'
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -32,7 +35,9 @@ import { environment } from 'src/environments/environment';
     SplashScreen,
     Keyboard,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Camera
+    Camera,
+    Facebook,
+    GooglePlus
   ],
   bootstrap: [AppComponent]
 })

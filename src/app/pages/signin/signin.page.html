@@ -3,7 +3,7 @@
     <ion-icon color="primary" style="font-size: 50px;" name="cube"></ion-icon>
   </div>
   <div style="height: 70%; align-items: center;" class="signup-content">
-    <form style="width: 90%" padding [formGroup]="formLogin" (submit)="validAndRegister()" novalidate>
+    <form style="width: 90%" padding [formGroup]="formLogin" novalidate>
       <ion-item class="ion-no-padding">
         <ion-icon class="icon-register" name="mail"></ion-icon>
         <ion-label position="floating">EMAIL</ion-label>
@@ -36,11 +36,11 @@
       </div>
 
       <div class="btn-social">
-        <ion-button style="--background:#375F9D">
+        <ion-button style="--background:#375F9D" (click)="signInWithFacebook()" >
           <ion-icon style="color:#ffffff" name="logo-facebook"></ion-icon>
           <p>Facebook</p>
         </ion-button>
-        <ion-button style="--background:#D03D23">
+        <ion-button style="--background:#D03D23" (click)="signInWithGoogle()" >
           <ion-icon style="color:#ffffff" name="logo-google"></ion-icon>
           <p>Google</p>
         </ion-button>

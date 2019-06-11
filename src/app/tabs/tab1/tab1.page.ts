@@ -21,6 +21,7 @@ export class Tab1Page {
     private toastCtrl: ToastController
   ) {
     this.productsSubscription = this.productService.getProducts().subscribe(data => {
+      
       this.products = data;
     });
   }

@@ -1,0 +1,44 @@
+ion-content {
+    text-align: center;
+    text-align: -webkit-center;
+}
+
+ion-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 100px;
+    width: 100px;
+    margin-top: 20px;
+    background-color: rgba(161, 161, 161, 0.603);
+}
+
+ion-avatar > ion-icon {
+    position: relative;
+    left: 23px;
+    font-size: 35px;
+    color: rgba(255, 255, 255, 0.966);
+}
+
+ion-avatar > img {
+    position: absolute;
+}
+
+.btn-add-photo {
+    position: relative;
+    height: 40px;
+    width: 40px;
+    bottom: -45px;
+    right: -12px;
+    z-index: 1;
+    --border-radius: 25px;
+    --padding-bottom: 0; 
+    --padding-top: 0; 
+    --padding-end: 0; 
+    --padding-start: 0; 
+}
+
+ion-list {
+    padding: 0 30px;
+}

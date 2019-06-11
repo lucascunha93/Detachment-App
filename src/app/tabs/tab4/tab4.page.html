@@ -1,7 +1,10 @@
 <ion-content >
   <div class="user-area">
     <ion-avatar>
-      <ion-icon name="contact"></ion-icon>
+      <ion-icon *ngIf="photoUser == '' " name="contact"></ion-icon>
+      <ion-avatar *ngIf="photoUser != '' ">
+        <img src="{{photoUser}}" alt="">
+      </ion-avatar>
     </ion-avatar>
     <div class="user-info">
       <ion-text class="user-name">Bem vindo, Lucas</ion-text>
@@ -13,7 +16,7 @@
 
   <ion-list>
     <ion-item-sliding>
-      <ion-item>
+      <ion-item [routerLink]="['/product-list-user']">
         <ion-icon name="gift"></ion-icon>
         <ion-label>Minhas doações</ion-label>
       </ion-item>

@@ -36,6 +36,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'publish/:id',
+        children: [
+          {
+            path: '',
+            loadChildren: './tab3/tab3.module#Tab3PageModule'
+          }
+        ]
+      },
+      {
         path: 'more',
         children: [
           {

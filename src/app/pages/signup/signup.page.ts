@@ -14,69 +14,35 @@ export class SignupPage implements OnInit {
   private loading: any;
 
   public formRegister: any;
-  messageName = "";
-  messageEmail = "";
-  messagePassword = "";
-  errorName = false;
-  errorEmail = false;
-  errorPassword = false;
 
   constructor(
     fb: FormBuilder,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
     private authService: AuthService,
-    ) {
+  ) {
     this.formRegister = fb.group({
       name: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', Validators.compose([Validators.required,
+        Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)])],
       password: ['', Validators.compose([Validators.minLength(6), Validators.maxLength(20), 
-        Validators.required])]
+        Validators.required])],
     })
   }
 
   ngOnInit() {
   }
 
-  validAndRegister() {
-    let { name, email, password } = this.formRegister.controls;
-
-    if (!this.formRegister.valid) {
-      if (!name.valid) {
-        this.errorName = true;
-        this.messageName = "Opa! Qual seu nome?";
-      } else {
-        this.messageEmail = "";
-      }
-
-      if (!email.valid) {
-        this.errorEmail = true;
-        this.messageEmail = "Ops! Email inválido";
-      } else {
-        this.messageEmail = "";
-      }
-
-      if (!password.valid) {
-        this.errorPassword = true;
-        this.messagePassword ="A senha precisa ter de 6 a 20 caracteres"
-      } else {
-        this.messagePassword = "";
-      }
-    }
-    else {
-      this.register();
-    }
-  }
-
   async register() {
     await this.presentLoading();
+    console.log(this.formRegister.value);
 
     try {
-      await this.authService.register(this.formRegister);
+      await this.authService.register(this.formRegister.value);
     } catch (error) {
       let message: string;
       console.log(error.code);
-      
+
       switch (error.code) {
 
         case 'auth/argument-error':

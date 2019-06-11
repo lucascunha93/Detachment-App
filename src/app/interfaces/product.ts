@@ -9,4 +9,5 @@ export interface Product {
     userId?: string;
     userName?: string;
     phone?: number;
+    visibility?: boolean;
 }

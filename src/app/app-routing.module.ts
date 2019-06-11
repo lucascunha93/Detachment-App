@@ -10,7 +10,9 @@ const routes: Routes = [
   { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule', canActivate: [LoggedGuard] },
   { path: 'signin', loadChildren: './pages/signin/signin.module#SigninPageModule', canActivate: [LoggedGuard] },
   { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule', canActivate: [LoggedGuard] },
-  { path: 'product-edit', loadChildren: './pages/product-edit/product-edit.module#ProductEditPageModule', canActivate: [AuthGuard] }
+  { path: 'product-edit/:id', loadChildren: './pages/product-edit/product-edit.module#ProductEditPageModule', canActivate: [AuthGuard] },
+  { path: 'product-item/:id', loadChildren: './pages/product-item/product-item.module#ProductItemPageModule', canActivate: [AuthGuard] },
+  { path: 'product-list-user', loadChildren: './pages/product-list-user/product-list-user.module#ProductListUserPageModule' }
 ];
 @NgModule({
   imports: [

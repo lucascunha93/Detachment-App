@@ -10,18 +10,22 @@ import { LoadingController } from '@ionic/angular';
 })
 export class Tab4Page {
 
+  public userId = this.authService.getAuth().currentUser.uid;
   private loading: any;
+  public photoUser = '';
 
   constructor(
     private authService: AuthService,
     private loadingCtrl: LoadingController
-  ) {}
+  ) {
+    this.photoUser = this.authService.getAuth().currentUser.photoURL;
+  }
 
   async logout() {
     await this.presentLoading();
 
     try {
-      await this.authService.logout();
+      await this.authService.signOutFirebase();
     } catch (error) {
       console.error(error);
     } finally {

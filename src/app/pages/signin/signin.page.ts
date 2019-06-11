@@ -73,4 +73,35 @@ export class SigninPage implements OnInit {
     toast.present();
   }
 
+  signInWithGoogle() {
+
+    let message: string;
+
+    this.authService.signInWithGoogle()
+      .then(() => {
+        message = 'Você entrou com Google.';
+        this.presentToast(message);
+      })
+      .catch((error) => {
+        message = 'Erro ao efeituar o login.';
+        console.log(error);
+        this.presentToast(message);
+      });
+  }
+
+  signInWithFacebook() {
+    
+    let message: string;
+
+    this.authService.signInWithFacebook()
+      .then(() => {
+        message = 'Você entrou com Facebook.';
+        this.presentToast(message);
+      })
+      .catch((error) => {
+        message = 'Erro ao efeituar o login.';
+        this.presentToast(message);
+      });
+  }
+
 }

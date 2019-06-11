@@ -6,12 +6,12 @@
   </div>
 
   <div class="login-content">
-    <ion-button [routerLink]="['/signup']" class="btn-login btn-register">
+    <ion-button (click)="setSignup()" class="btn-login btn-register">
       CADASTRE-SE GRÁTIS
     </ion-button>
 
     <ion-button style="--background: rgba(255, 255, 255, 0); --border-color: #ffffff; 
-      --border-style: solid; --border-width: 1px;" [routerLink]="['/signin']"
+      --border-style: solid; --border-width: 1px;" (click)="setSignin()"
         class="btn-login">
       ENTRAR
     </ion-button>

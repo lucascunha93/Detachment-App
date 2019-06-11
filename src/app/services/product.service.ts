@@ -26,6 +26,24 @@ export class ProductService {
     );
   }
 
+  getProductsByUser(idU: string) {
+    return this.productsCollection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          if (idU === a.payload.doc.data().userId) {
+            let data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return { ...data };
+          }
+        });
+      })
+    );
+  }
+
+  getProductsField(id: string) {
+    return this.afs.collection<Product>('Products', ref => ref.where('id', '==', id)).valueChanges();
+  }
+
   addProduct(product: Product) {
     return this.productsCollection.add(product);
   }
@@ -41,5 +59,5 @@ export class ProductService {
   deleteProduct(id: string) {
     return this.productsCollection.doc(id).delete();
   }
-  
+
 }
