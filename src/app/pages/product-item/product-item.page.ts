@@ -1,3 +1,5 @@
+import { AuthService } from 'src/app/services/auth.service';
+import { FavoriteService } from './../../services/favorite.service';
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/interfaces/product';
 import { ProductService } from 'src/app/services/product.service';
@@ -19,6 +21,8 @@ export class ProductItemPage implements OnInit {
 
   constructor(
     private productService: ProductService,
+    private authService: AuthService,
+    private favoriteService: FavoriteService,
     private activatedRoute: ActivatedRoute,
     public platform: Platform
   ) { }
@@ -33,6 +37,14 @@ export class ProductItemPage implements OnInit {
     this.productSubscription = this.productService.getProduct(this.productId).subscribe(data => {
       this.product = data;
     });
+  }
+
+  favoriteItem(){
+    let userId = this.authService.getAuth().currentUser.uid;
+    this.product.id = this.productId;
+    console.log(this.productId);
+    
+    this.favoriteService.addProduct(userId, this.product);
   }
 
 }

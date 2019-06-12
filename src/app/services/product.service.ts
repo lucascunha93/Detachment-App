@@ -40,9 +40,9 @@ export class ProductService {
     );
   }
 
-  getProductsField(id: string) {
-    return this.afs.collection<Product>('Products', ref => ref.where('id', '==', id)).valueChanges();
-  }
+  // getProductsField(id: string) {
+  //   return this.afs.collection<Product>('Products', ref => ref.where('id', '==', id)).valueChanges();
+  // }
 
   addProduct(product: Product) {
     return this.productsCollection.add(product);
