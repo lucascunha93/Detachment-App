@@ -3,6 +3,7 @@ import { Product } from 'src/app/interfaces/product';
 import { ProductService } from 'src/app/services/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-product-item',
@@ -12,13 +13,14 @@ import { Subscription } from 'rxjs';
 export class ProductItemPage implements OnInit {
 
   private productId: string = null;
-  public product: Product = {};
+  product: Product = {};
   private loading: any;
   private productSubscription: Subscription;
 
   constructor(
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
+    public platform: Platform
   ) { }
 
   ngOnInit() {

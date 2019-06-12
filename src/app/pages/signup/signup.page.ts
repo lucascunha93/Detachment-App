@@ -41,8 +41,7 @@ export class SignupPage implements OnInit {
       await this.authService.register(this.formRegister.value);
     } catch (error) {
       let message: string;
-      console.log(error.code);
-
+      
       switch (error.code) {
 
         case 'auth/argument-error':

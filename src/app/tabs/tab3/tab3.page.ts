@@ -22,7 +22,6 @@ export class Tab3Page {
   private productId: string = null;
   public product: Product = {};
   private loading: any;
-  private productSubscription: Subscription;
   imagePath: string = '';
   cep: number;
 
@@ -36,28 +35,15 @@ export class Tab3Page {
     private camera: Camera,
     public http: HttpClient,
     private fb: FirebaseApp
-  ) {
-    this.productId = this.activatedRoute.snapshot.params['id'];
-
-    if (this.productId) this.loadProduct();
-  }
+  ) {}
 
   ngOnInit() { }
-
-  ngOnDestroy() {
-    if (this.productSubscription) this.productSubscription.unsubscribe();
-  }
-
-  loadProduct() {
-    this.productSubscription = this.productService.getProduct(this.productId).subscribe(data => {
-      this.product = data;
-    });
-  }
 
   async saveProduct(url) {
     await this.presentLoading();
     this.product.picture = url;
     this.product.userId = this.authService.getAuth().currentUser.uid;
+    this.product.userName = this.authService.getAuth().currentUser.displayName;
 
     if (this.productId) {
       try {

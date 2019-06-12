@@ -1,9 +1,15 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>product-item</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
+<ion-content color="secondary" *ngIf="product">  
+  <div class="content-img">
+    <img src="{{product.picture}}" alt="Imagem do item para doar">
+    <div>
+      <p>Doado por {{product?.userName}}</p>
+    </div>
+  </div>
+  <h3>{{product?.name}}</h3>
+  <h4>{{product?.description}}</h4>
+  <h4>{{product?.city}} / {{product?.state}}</h4>
+  
+  <div class="btn-content">
+    <a href="https://api.whatsapp.com/send?phone=55{{product?.phone}}"><ion-button>Eu quero</ion-button></a>
+  </div>
 </ion-content>
