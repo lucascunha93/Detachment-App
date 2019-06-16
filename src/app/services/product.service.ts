@@ -26,23 +26,18 @@ export class ProductService {
     );
   }
 
-  getProductsByUser(idU: string) {
-    return this.productsCollection.snapshotChanges().pipe(
-      map(actions => {
-        return actions.map(a => {
-          if (idU === a.payload.doc.data().userId) {
-            let data = a.payload.doc.data();
+  getProductsByUser(idU: string) { // Pegar produtos do usuário
+    return this.afs.collection<Product>('Products', ref => ref.where('userId', '==', idU))
+      .snapshotChanges().pipe(
+        map( actions => {
+          return actions.map( a => {
+            const data = a.payload.doc.data();
             data.id = a.payload.doc.id;
-            return { ...data };
-          }
-        });
-      })
-    );
+            return data;
+          } )
+        })
+      );
   }
-
-  // getProductsField(id: string) {
-  //   return this.afs.collection<Product>('Products', ref => ref.where('id', '==', id)).valueChanges();
-  // }
 
   addProduct(product: Product) {
     return this.productsCollection.add(product);

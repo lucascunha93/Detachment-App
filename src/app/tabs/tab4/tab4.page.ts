@@ -10,14 +10,15 @@ import { LoadingController } from '@ionic/angular';
 })
 export class Tab4Page {
 
-  public userId = this.authService.getAuth().currentUser.uid;
+  public userName: string;
   private loading: any;
-  public photoUser = '';
+  public photoUser: string;
 
   constructor(
     private authService: AuthService,
     private loadingCtrl: LoadingController
   ) {
+    this.userName = this.authService.getAuth().currentUser.displayName;
     this.photoUser = this.authService.getAuth().currentUser.photoURL;
   }
 

@@ -21,7 +21,6 @@ export class Tab1Page {
     private toastCtrl: ToastController
   ) {
     this.productsSubscription = this.productService.getProducts().subscribe(data => {
-      
       this.products = data;
     });
   }
@@ -48,9 +47,5 @@ export class Tab1Page {
   async presentToast(message: string) {
     const toast = await this.toastCtrl.create({ message, duration: 2000 });
     toast.present();
-  }
-
-  liked() {
-    // Code function
   }
 }

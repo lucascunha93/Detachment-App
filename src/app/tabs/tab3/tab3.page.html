@@ -6,9 +6,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="secondary">
 
-    <ion-avatar >
+    <ion-avatar>
       <img src="{{imagePath}}" *ngIf="imagePath != ''">
         <ion-icon name="camera" *ngIf="imagePath === ''"></ion-icon>
         <ion-button color="success" class="btn-add-photo" (click)="openCamera()">
@@ -16,36 +16,33 @@
         </ion-button>
       </ion-avatar>  
 
-  <ion-list>
-    <ion-item>
+  <ion-list color="secondary">
+    <ion-item color="secondary">
       <ion-input type="text" required  [(ngModel)]="product.name" placeholder="Nome"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item color="secondary">
       <ion-input type="text" required  [(ngModel)]="product.description" placeholder="Descrição"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item color="secondary">
       <ion-input required style="float: left; width:40%" [(ngModel)]="cep" 
         [brmasker]="{mask:'00000-00', len:9}" placeholder="CEP"></ion-input>
       <ion-button color="success" (click)="buscaCep()">Busca CEP</ion-button>
-    </ion-item>
-    <ion-item style="float: left; width:74%; padding: 0 20px 0 0">
+    </ion-item >
+    <ion-item color="secondary" style="float: left; width:74%; padding: 0 20px 0 0">
       <ion-input type="text" [(ngModel)]="product.city" placeholder="Cidade"></ion-input>
     </ion-item>
-    <ion-item style="float: left; width:26%">
-      <ion-input type="text" [(ngModel)]="product.state" placeholder="uf"></ion-input>
+    <ion-item color="secondary" style="float: left; width:26%">
+      <ion-input class="ion-text-end" type="text" [(ngModel)]="product.state" placeholder="uf"></ion-input>
     </ion-item>
-    <ion-item >
+    <ion-item color="secondary">
       <ion-icon color="success" name="logo-whatsapp"></ion-icon>
       <ion-input type="text" [(ngModel)]="product.phone" [brmasker]="{mask:'(00) 00000-0000', len:15}"
          placeholder=" Número WhatsApp"></ion-input>
     </ion-item>
   </ion-list>
-</ion-content>
 
-<ion-footer>
-  <ion-toolbar>
-    <ion-button color="success" (click)="uploadImage()" expand="block">
-      Publicar
-    </ion-button>
-  </ion-toolbar>
-</ion-footer>
+  <ion-button class="btn-publish" color="success" (click)="uploadImage()" expand="block">
+    Publicar
+  </ion-button>
+
+</ion-content>

@@ -15,26 +15,27 @@ export class SigninPage implements OnInit {
   public formLogin: FormGroup;
 
   constructor(
-      private fb: FormBuilder,
-      private loadingCtrl: LoadingController,
-      private toastCtrl: ToastController,
-      private authService: AuthService) {
-        this.formLogin = this.fb.group({
-          'email': [null, Validators.compose([
-            Validators.required,
-            Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
-          ])],
-          'password': [null, Validators.compose([
-            Validators.required,
-            Validators.minLength(5)
-          ])]
-        })
-    }
+    private fb: FormBuilder,
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController,
+    private authService: AuthService,
+    ) {
+    this.formLogin = this.fb.group({
+      'email': [null, Validators.compose([
+        Validators.required,
+        Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+      ])],
+      'password': [null, Validators.compose([
+        Validators.required,
+        Validators.minLength(5)
+      ])]
+    })
+  }
 
   ngOnInit() {
   }
 
-  async login() {
+  async login() { // Login com email e senha no firebase
     await this.presentLoading();
 
     try {
@@ -63,17 +64,8 @@ export class SigninPage implements OnInit {
     }
   }
 
-  async presentLoading() {
-    this.loading = await this.loadingCtrl.create({ message: 'Aguarde...' });
-    return this.loading.present();
-  }
 
-  async presentToast(message: string) {
-    const toast = await this.toastCtrl.create({ message, duration: 2000 });
-    toast.present();
-  }
-
-  signInWithGoogle() {
+  signInWithGoogle() { // Login com Google
 
     let message: string;
 
@@ -89,8 +81,8 @@ export class SigninPage implements OnInit {
       });
   }
 
-  signInWithFacebook() {
-    
+  signInWithFacebook() { // Login com Facebook
+
     let message: string;
 
     this.authService.signInWithFacebook()
@@ -104,4 +96,13 @@ export class SigninPage implements OnInit {
       });
   }
 
+  async presentLoading() {
+    this.loading = await this.loadingCtrl.create({ message: 'Aguarde...' });
+    return this.loading.present();
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastCtrl.create({ message, duration: 2000 });
+    toast.present();
+  }
 }

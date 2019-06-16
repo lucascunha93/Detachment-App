@@ -49,6 +49,8 @@ export class ProductEditPage implements OnInit {
 
   loadProduct() {
     this.productSubscription = this.productService.getProduct(this.productId).subscribe(data => {
+      console.log(data);
+      
       this.product = data;
     });
   }

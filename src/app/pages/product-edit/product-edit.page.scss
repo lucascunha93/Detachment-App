@@ -3,6 +3,15 @@ ion-content {
     text-align: -webkit-center;
 }
 
+.btn-delete {
+    --background: rgba(0, 0, 0, 0);
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    font-size: 25px;
+    color: rgb(139, 0, 0)
+}
+
 ion-avatar {
     display: flex;
     align-items: center;
@@ -41,4 +50,15 @@ ion-avatar > img {
 
 ion-list {
     padding: 0 30px;
+}
+
+ion-toolbar {
+    text-align: center;
+}
+
+ion-toolbar > ion-button {
+    width: 40%;
+    padding: 0;
+    margin: 0 5px;
+    display: inline-block;
 }

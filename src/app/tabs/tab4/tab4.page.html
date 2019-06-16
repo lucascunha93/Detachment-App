@@ -1,36 +1,28 @@
 <ion-content color="secondary">
   <div class="user-area">
 
-    <ion-icon *ngIf="photoUser != '' || photoUser != 'null' " name="contact"></ion-icon>
-    <ion-avatar *ngIf="photoUser == '' || photoUser == 'null' ">
-      <img src="{{photoUser}}" alt="">
+    <ion-avatar>
+      <img *ngIf="photoUser != null " src="{{photoUser}}" alt="">
+      <img *ngIf="photoUser == null " src="assets/icon/user.svg" alt="">
     </ion-avatar>
 
     <div class="user-info">
-      <ion-text class="user-name">Bem vindo, Lucas</ion-text>
+      <ion-text class="user-name">Bem vindo, {{userName}}</ion-text>
     </div>
   </div>
 
-  <ion-list color="secondary">
-    <ion-item-sliding color="secondary">
-      <ion-item [routerLink]="['/product-list-user']" color="secondary">
-        <ion-icon name="gift"></ion-icon>
-        <ion-label>Minhas doações</ion-label>
-      </ion-item>
-    </ion-item-sliding>
+  <ion-item [routerLink]="['/product-list-user']" color="secondary">
+    <ion-icon name="gift"></ion-icon>
+    <ion-label>Minhas doações</ion-label>
+  </ion-item>
 
-    <ion-item-sliding color="secondary">
-      <ion-item color="secondary">
-        <ion-icon name="cog"></ion-icon>
-        <ion-label>Configurações</ion-label>
-      </ion-item>
-    </ion-item-sliding>
+  <ion-item color="secondary">
+    <ion-icon name="cog"></ion-icon>
+    <ion-label>Configurações</ion-label>
+  </ion-item>
 
-    <ion-item-sliding>
-      <ion-item color="secondary">
-        <ion-icon name="log-out" (click)='logout()'></ion-icon>
-        <ion-label>Sair</ion-label>
-      </ion-item>
-    </ion-item-sliding>
-  </ion-list>
+  <ion-item color="secondary" (click)='logout()'>
+    <ion-icon name="log-out" ></ion-icon>
+    <ion-label>Sair</ion-label>
+  </ion-item>
 </ion-content>

@@ -14,4 +14,29 @@ ion-avatar {
 ion-label {
   border-left: 1px solid gray;
   padding-left: 20px;
+  margin: 0;
+}
+
+ion-label > h2 {
+  font-weight: 600;
+  color: rgb(94, 94, 94);
+}
+
+ion-label > div {
+  display: flex;
+  flex-direction: row;
+  padding: 5px 0;
+}
+
+ion-label > div > p {
+  display: contents;
+  font-size: 9px;
+}
+
+ion-label > div > h4 {
+  margin-left: 3px;
+}
+
+ion-label > p {
+  font-size: 10px;
 }

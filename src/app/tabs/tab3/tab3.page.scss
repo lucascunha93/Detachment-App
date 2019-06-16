@@ -1,6 +1,5 @@
 ion-content {
     text-align: center;
-    text-align: -webkit-center;
 }
 
 ion-avatar {
@@ -40,5 +39,12 @@ ion-avatar > img {
 }
 
 ion-list {
-    padding: 0 30px;
+    margin: 0 30px;
+    background: rgba(0, 0, 0, 0);
+}
+
+.btn-publish {
+    --border-radius: 20px;
+    display: inline-block;
+    width: 60%;
 }

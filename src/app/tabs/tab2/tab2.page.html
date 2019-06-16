@@ -6,13 +6,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="secondary">
   <ion-list>
     <ion-item *ngFor="let item of products">
       <ion-icon (click)="removerFavorite(item?.idRemove)" color="secondary" name="jet"></ion-icon>
       <ion-img [routerLink]="['/product-item', item.id]" class="img-favorite"
-        src="https://images-americanas.b2w.io/produtos/01/00/item/129198/7/129198775_1GG.jpg"></ion-img>
-      <ion-label [routerLink]="['/product-item', item.id]" >{{item.id}}</ion-label>
+        src="{{item.picture}}}"></ion-img>
+      <ion-label [routerLink]="['/product-item', item.id]" >{{item.name}}</ion-label>
     </ion-item>
   </ion-list>
 </ion-content>

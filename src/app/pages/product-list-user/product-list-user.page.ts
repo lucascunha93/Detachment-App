@@ -22,6 +22,8 @@ export class ProductListUserPage implements OnInit {
   ) {
     let userId = this.authService.getAuth().currentUser.uid;
     this.productsSubscription = this.productService.getProductsByUser(userId).subscribe(data => {
+      console.log(data);
+      
       this.products = data;
     })
 }

@@ -47,9 +47,12 @@ export class AuthService {
   signInWithGoogle() {
     return this.googlePlus.login({
       'webClientId': '854932441609-nt42j5507klni6oh6rj87puufg5u8cd8.apps.googleusercontent.com',
-      'offline': true
+      'offline': true,
+      'scopes': 'profile email'
     })
       .then(res => {
+        console.log(res);
+        
         return this.afa.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
       });
   }
