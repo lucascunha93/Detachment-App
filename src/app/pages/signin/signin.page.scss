@@ -10,6 +10,11 @@ ion-content {
     width: 100%;
 }
 
+div > ion-label {
+    font-family: 'Dancing Script', cursive;
+    font-size: 40px;
+}
+
 .icon-register {
     color: var(--ion-color-primary);
     position: absolute;
@@ -24,7 +29,7 @@ ion-item {
     color: var(--ion-color-primary);
 }
 
-ion-label {
+.label-floating {
     position: absolute;
     top: 40%;
     left: 8%;

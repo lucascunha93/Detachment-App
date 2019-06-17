@@ -1,8 +1,10 @@
+import { PopoverComponent } from './../../components/popover/popover.component';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController, PopoverController } from '@ionic/angular';
+
 import { AuthService } from 'src/app/services/auth.service';
-import { log } from 'util';
+
 
 @Component({
   selector: 'app-signin',
@@ -19,6 +21,7 @@ export class SigninPage implements OnInit {
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
     private authService: AuthService,
+    public popoverController: PopoverController
     ) {
     this.formLogin = this.fb.group({
       'email': [null, Validators.compose([
@@ -94,6 +97,14 @@ export class SigninPage implements OnInit {
         message = 'Erro ao efeituar o login.';
         this.presentToast(message);
       });
+  }
+
+  async presentPopover(event) {
+    const popover = await this.popoverController.create({
+      component: PopoverComponent,
+      event: event,
+    });
+    return await popover.present();
   }
 
   async presentLoading() {

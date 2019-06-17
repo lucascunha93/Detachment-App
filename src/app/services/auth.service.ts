@@ -17,34 +17,34 @@ export class AuthService {
     private facebook: Facebook,
     private googlePlus: GooglePlus ) { }
 
-  login(user: User) {
+  login(user: User) { // Logar com email e senha no firebase
     return this.afa.auth.signInWithEmailAndPassword(user.email, user.password);
   }
 
-  register(user: User) {
+  register(user: User) { // Cadastrar email e senha no login com firebase
     return this.afa.auth.createUserWithEmailAndPassword(user.email, user.password);
   }
 
-  resetPassword(email: string) {
+  resetPassword(email: string) { // Resetar senha do email cadastrado no firebase
     return this.afa.auth.sendPasswordResetEmail(email);
   }
 
-  signOutFirebase() {
+  signOutFirebase() { // Deslogar do firebase
     return this.afa.auth.signOut();
   }
 
-  getAuth() {
+  getAuth() { // Pegar usuário autenticado
     return this.afa.auth;
   }
 
-  signInWithFacebook() {
+  signInWithFacebook() { // login com o Facebook
     return this.facebook.login(['public_profile', 'email'])
       .then((res: FacebookLoginResponse) => {
         return this.afa.auth.signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken));
       });
   }
 
-  signInWithGoogle() {
+  signInWithGoogle() { // login com o Google
     return this.googlePlus.login({
       'webClientId': '854932441609-nt42j5507klni6oh6rj87puufg5u8cd8.apps.googleusercontent.com',
       'offline': true,
@@ -57,13 +57,12 @@ export class AuthService {
       });
   }
 
-  logout() : Promise<any> {
+  logout() : Promise<any> { // Verificar como está logado e deslogar
     if (this.afa.auth.currentUser.providerData.length) {
       for (var i = 0; i < this.afa.auth.currentUser.providerData.length; i++) {
         var provider = this.afa.auth.currentUser.providerData[i];
 
         if (provider.providerId == firebase.auth.GoogleAuthProvider.PROVIDER_ID) { // Se for o gooogle
-          // o disconnect limpa o oAuth token e tambem esquece qual conta foi selecionada para o login
           return this.googlePlus.disconnect()
             .then(() => {
               return this.signOutFirebase();
@@ -77,6 +76,6 @@ export class AuthService {
         } 
       }
     }
-    return this.signOutFirebase();
+    return this.signOutFirebase(); // Se tiver logado com e-mail e senha
   }
 }

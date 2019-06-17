@@ -1,0 +1,13 @@
+<ion-content>
+  <ion-list>
+    <ion-label>
+      Digite seu e-mail para recuperarmos a senha:
+    </ion-label>
+    <form [formGroup]="formReset" novalidate>
+      <ion-input type="text" formControlName="email" placeholder="example@example.com"></ion-input>
+      <ion-button [disabled]='!formReset.valid' (click)="resetPassword()" >
+        Enviar
+      </ion-button>
+    </form>
+  </ion-list>
+</ion-content>

@@ -2,12 +2,11 @@
   <div class="user-area">
 
     <ion-avatar>
-      <img *ngIf="photoUser != null " src="{{photoUser}}" alt="">
-      <img *ngIf="photoUser == null " src="assets/icon/user.svg" alt="">
+      <img src="{{photoUser || 'assets/icon/user.svg'}}" alt="">
     </ion-avatar>
 
     <div class="user-info">
-      <ion-text class="user-name">Bem vindo, {{userName}}</ion-text>
+      <ion-text class="user-name">Bem vindo, {{userName || 'Usuário'}}</ion-text>
     </div>
   </div>
 

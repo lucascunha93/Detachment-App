@@ -1,23 +1,24 @@
 <ion-content color="secondary">
   <div style="height: 30%; justify-content: center;" class="signup-content">
     <ion-icon color="primary" style="font-size: 50px;" name="cube"></ion-icon>
+    <ion-label color="primary">Entre</ion-label>
   </div>
   <div style="height: 70%; align-items: center;" class="signup-content">
     <form style="width: 90%" padding [formGroup]="formLogin" novalidate>
       <ion-item class="ion-no-padding">
         <ion-icon class="icon-register" name="mail"></ion-icon>
-        <ion-label position="floating">EMAIL</ion-label>
+        <ion-label class="label-floating" position="floating">EMAIL</ion-label>
         <ion-input type="text" formControlName="email"></ion-input>
       </ion-item>
 
       <ion-item class="ion-no-padding">
         <ion-icon class="icon-register" name="key"></ion-icon>
-        <ion-label position="floating">SENHA</ion-label>
+        <ion-label class="label-floating" position="floating">SENHA</ion-label>
         <ion-input type="password" formControlName="password"></ion-input>
       </ion-item>
 
-      <ion-item style="--border-style: none">
-        <a href="#" class="reset-password-link">esqueceu a senha?</a>
+      <ion-item style="--border-style: none" (click)="presentPopover($event)">
+        <a class="reset-password-link">esqueceu a senha?</a>
       </ion-item>
 
       <ion-button class="btn-login" (click)="login()" [disabled]="!formLogin.valid" style="color: #8C3555"

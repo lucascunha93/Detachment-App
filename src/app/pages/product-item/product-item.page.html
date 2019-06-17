@@ -1,5 +1,6 @@
 <ion-content color="secondary" *ngIf="product">
   <div class="content-img">
+    <ion-icon (click)="favoriteItem()" color="primary" name="jet"></ion-icon>
     <img src="{{product.picture}}" alt="Imagem do item para doar">
     <div>
       <p>Doado por {{product?.userName}}</p>
@@ -8,9 +9,8 @@
   </div>
   <div class="product-content">
     <h3>{{product?.name}}</h3>
-    <h4>{{product?.description}}</h4>
-    <h4>{{product?.city}} / {{product?.state}}</h4>
-    <ion-icon (click)="favoriteItem()" color="primary" name="jet"></ion-icon>
+    <h5>{{product?.description}}</h5>
+    <p>{{product?.city}} / {{product?.state}}</p>
   </div>
   <div class="btn-content">
     <a href="https://api.whatsapp.com/send?phone=55{{product?.phone}}">

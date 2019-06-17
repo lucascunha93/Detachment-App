@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { SigninPage } from './signin.page';
+import { PopoverComponent } from './../../components/popover/popover.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [SigninPage]
+  entryComponents: [PopoverComponent],
+  declarations: [
+    SigninPage,
+    PopoverComponent
+  ]
 })
 export class SigninPageModule {}

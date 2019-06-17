@@ -22,11 +22,10 @@ export class SignupPage implements OnInit {
     private authService: AuthService,
   ) {
     this.formRegister = fb.group({
-      name: ['', Validators.required],
       email: ['', Validators.compose([Validators.required,
-        Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)])],
-      password: ['', Validators.compose([Validators.minLength(6), Validators.maxLength(20), 
-        Validators.required])],
+      Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)])],
+      password: ['', Validators.compose([Validators.minLength(6), Validators.maxLength(20),
+      Validators.required])],
     })
   }
 
@@ -35,13 +34,12 @@ export class SignupPage implements OnInit {
 
   async register() {
     await this.presentLoading();
-    console.log(this.formRegister.value);
 
     try {
       await this.authService.register(this.formRegister.value);
     } catch (error) {
       let message: string;
-      
+
       switch (error.code) {
 
         case 'auth/argument-error':

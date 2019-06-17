@@ -18,13 +18,18 @@ ion-content {
     font-size: 15px;
 }
 
+div > ion-label {
+    font-family: 'Dancing Script', cursive;
+    font-size: 40px;
+}
+
 ion-item {
     --background: none;
     --padding: 0;
     color: var(--ion-color-primary);
 }
 
-ion-label {
+.label-floating {
     position: absolute;
     top: 40%;
     left: 8%;
@@ -41,8 +46,9 @@ ion-input {
 
 ion-button {
     --border-radius: 20px;
-    position: absolute;
+    position: fixed;
     bottom: 15%;
     left: 30%;
     width: 40%;
+    height: 25px;
 }
