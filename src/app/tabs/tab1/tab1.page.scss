@@ -40,3 +40,15 @@ ion-label > div > h4 {
 ion-label > p {
   font-size: 10px;
 }
+
+.error-warning {
+  width: 100%;
+  position: absolute;
+  top:35%;
+  text-align: center;
+}
+
+.error-warning > ion-icon {
+  font-size: 50px;
+  margin: 0 0 40px 0;
+}

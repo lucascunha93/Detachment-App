@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Product } from 'src/app/interfaces/product';
 import { Subscription } from 'rxjs';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController, Platform } from '@ionic/angular';
 
 import { ProductService } from 'src/app/services/product.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -14,20 +15,25 @@ export class Tab1Page {
   private loading: any;
   public products = new Array<Product>();
   private productsSubscription: Subscription;
+  lastTimeBackPress = 0;
+  timePeriodToExit = 2000;
 
   constructor(
     private loadingCtrl: LoadingController,
     private productService: ProductService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private platform: Platform,
+    private router: Router
   ) {
     this.productsSubscription = this.productService.getProducts().subscribe(data => {
-      this.products = data;
+      if (data.length != 0) this.products = data;
     });
   }
 
-  ngOnInit() { }
+  ionViewWillEnter() {}
 
-  ngOnDestroy() {
+  ionViewDidLeave() {
+    this.platform.backButton.subscribe();
     this.productsSubscription.unsubscribe();
   }
 

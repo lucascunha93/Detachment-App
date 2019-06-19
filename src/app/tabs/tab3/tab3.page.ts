@@ -35,7 +35,7 @@ export class Tab3Page {
     private camera: Camera,
     public http: HttpClient,
     private fb: FirebaseApp
-  ) {}
+  ) { }
 
   ngOnInit() { }
 
@@ -45,37 +45,23 @@ export class Tab3Page {
     this.product.userId = this.authService.getAuth().currentUser.uid;
     this.product.userName = this.authService.getAuth().currentUser.displayName;
 
-    if (this.productId) {
+    if (this.product.picture != '') {
+      this.product.createdAt = new Date().getTime();
+
       try {
-        await this.productService.updateProduct(this.productId, this.product);
+        await this.productService.addProduct(this.product);
         await this.loading.dismiss();
         this.product = {};
         this.imagePath = '';
         this.cep = null;
         this.navCtrl.navigateBack('/home');
       } catch (error) {
-        this.presentToast('Erro ao tentar salvar');
+        this.presentToast('Erro ao salvar');
         this.loading.dismiss();
       }
     } else {
-      if (this.product.picture != '') {
-        this.product.createdAt = new Date().getTime();
-
-        try {
-          await this.productService.addProduct(this.product);
-          await this.loading.dismiss();
-          this.product = {};
-          this.imagePath = '';
-          this.cep = null;
-          this.navCtrl.navigateBack('/home');
-        } catch (error) {
-          this.presentToast('Erro ao salvar');
-          this.loading.dismiss();
-        }
-      } else {
-        this.presentToast('Erro ao salvar imagem');
-        this.loading.dismiss();
-      }
+      this.presentToast('Erro ao salvar imagem');
+      this.loading.dismiss();
     }
   }
 
@@ -133,9 +119,9 @@ export class Tab3Page {
 
   buscaCep() {
     this.http.get<any>(`https://viacep.com.br/ws/${this.cep}/json/`)
-     .subscribe( cep => {
-       this.product.state = cep.uf;
-       this.product.city = cep.localidade
-     } );
+      .subscribe(cep => {
+        this.product.state = cep.uf;
+        this.product.city = cep.localidade
+      });
   }
 }

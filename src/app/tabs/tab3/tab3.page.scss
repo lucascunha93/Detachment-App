@@ -1,5 +1,6 @@
 ion-content {
     text-align: center;
+    text-align: -webkit-center;
 }
 
 ion-avatar {
@@ -47,4 +48,6 @@ ion-list {
     --border-radius: 20px;
     display: inline-block;
     width: 60%;
+    height: 33px;
+    margin-top: 20px;
 }
