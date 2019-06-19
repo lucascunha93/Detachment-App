@@ -15,25 +15,27 @@ export class Tab1Page {
   private loading: any;
   public products = new Array<Product>();
   private productsSubscription: Subscription;
-  lastTimeBackPress = 0;
-  timePeriodToExit = 2000;
+  public dbError: boolean = false;
 
   constructor(
     private loadingCtrl: LoadingController,
     private productService: ProductService,
     private toastCtrl: ToastController,
-    private platform: Platform,
-    private router: Router
-  ) {
+  ) { }
+
+  ionViewWillEnter() {
     this.productsSubscription = this.productService.getProducts().subscribe(data => {
-      if (data.length != 0) this.products = data;
+      this.products = data;
+      if (data.length == 0) {
+        setTimeout(() => {
+          this.dbError = true;
+        }, 2000);
+      }
     });
   }
 
-  ionViewWillEnter() {}
-
   ionViewDidLeave() {
-    this.platform.backButton.subscribe();
+    this.products = [];
     this.productsSubscription.unsubscribe();
   }
 

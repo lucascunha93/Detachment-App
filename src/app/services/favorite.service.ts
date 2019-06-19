@@ -45,7 +45,7 @@ export class FavoriteService {
     return this.productsCollection.doc(id).collection('Favorites').add(product);
   }
 
-  deleteProduct(id, idFavorite) {
+  deleteFavorite(id, idFavorite) {
     return this.productsCollection.doc(id).collection('Favorites').doc(idFavorite).delete();
   }
 

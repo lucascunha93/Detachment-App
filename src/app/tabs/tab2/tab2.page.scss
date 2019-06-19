@@ -7,3 +7,14 @@ ion-item {
     width: 30px;
     margin: 0 10px;
 }
+
+.noFavorite {
+    width: 100%;
+    position: absolute;
+    top:35%;
+    text-align: center;
+  }
+  
+  .noFavorite > ion-icon {
+    font-size: 50px;
+  }

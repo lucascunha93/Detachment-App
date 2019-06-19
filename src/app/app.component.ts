@@ -26,7 +26,7 @@ export class AppComponent {
     this.platform.backButton.subscribe(async () => {
       if (new Date().getTime() - this.lastTimeBackPress < this.timePeriodToExit) {
         navigator['app'].exitApp();
-      } else if (this.router.url === '/tabs/home' || this.router.url === '') {
+      } else if (this.router.url === '/tabs/home' || this.router.url === '/login') {
         this.presentToast('Pressione voltar novamente para sair do app.');
         this.lastTimeBackPress = new Date().getTime();
       };

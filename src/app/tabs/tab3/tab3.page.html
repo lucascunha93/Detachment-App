@@ -7,42 +7,46 @@
 </ion-header>
 
 <ion-content color="secondary">
-
+  <form [formGroup]="formResgisterItem" novalidate>
     <ion-avatar>
-      <img src="{{imagePath}}" *ngIf="imagePath != ''">
-        <ion-icon name="camera" *ngIf="imagePath === ''"></ion-icon>
-        <ion-button color="success" class="btn-add-photo" (click)="openCamera()">
-          <ion-icon name="add"></ion-icon>
-        </ion-button>
-      </ion-avatar>  
+      <img formControlName="imagePath" src="{{imagePath}}" *ngIf="imagePath != ''">
+      <ion-icon name="camera" *ngIf="imagePath === ''"></ion-icon>
+      <ion-button color="success" class="btn-add-photo" (click)="openCamera()">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-avatar>
 
-  <ion-list color="secondary">
-    <ion-item color="secondary">
-      <ion-input type="text" required  [(ngModel)]="product.name" placeholder="Nome"></ion-input>
-    </ion-item>
-    <ion-item color="secondary">
-      <ion-input type="text" required  [(ngModel)]="product.description" placeholder="Descrição"></ion-input>
-    </ion-item>
-    <ion-item color="secondary">
-      <ion-input required style="float: left; width:40%" [(ngModel)]="cep" 
-        [brmasker]="{mask:'00000-00', len:9}" placeholder="CEP"></ion-input>
-      <ion-button color="success" (click)="buscaCep()">Busca CEP</ion-button>
-    </ion-item >
-    <ion-item color="secondary" style="float: left; width:74%; padding: 0 20px 0 0">
-      <ion-input type="text" [(ngModel)]="product.city" placeholder="Cidade"></ion-input>
-    </ion-item>
-    <ion-item color="secondary" style="float: left; width:26%">
-      <ion-input class="ion-text-end" type="text" [(ngModel)]="product.state" placeholder="uf"></ion-input>
-    </ion-item>
-    <ion-item color="secondary">
-      <ion-icon color="success" name="logo-whatsapp"></ion-icon>
-      <ion-input type="text" [(ngModel)]="product.phone" [brmasker]="{mask:'(00) 00000-0000', len:15}"
-         placeholder=" Número WhatsApp"></ion-input>
-    </ion-item>
-  </ion-list>
+    <ion-list color="secondary">
+      <ion-item color="secondary">
+        <ion-input type="text" formControlName="name" placeholder="Nome"></ion-input>
+      </ion-item>
+      <ion-item color="secondary">
+        <ion-input type="text" formControlName="description" placeholder="Descrição"></ion-input>
+      </ion-item>
+      <ion-item color="secondary">
+        <ion-input style="float: left; width:40%" formControlName="cep"  
+          [brmasker]="{mask:'00000-00', len:9}" placeholder="CEP"></ion-input>
+        <ion-button color="success" (click)="buscaCep()">Busca CEP</ion-button>
+      </ion-item>
+      <ion-item color="secondary" style="float: left; width:74%; padding: 0 20px 0 0">
+        <ion-input type="text" formControlName="city" value='{{formResgisterItem.value.city}}' 
+          placeholder="Cidade"></ion-input>
+      </ion-item>
+      <ion-item color="secondary" style="float: left; width:26%">
+        <ion-input class="ion-text-end" type="text" formControlName="state" 
+          value='{{formResgisterItem.value.state}}' placeholder="uf"></ion-input>
+      </ion-item>
+      <ion-item color="secondary">
+        <ion-icon color="success" name="logo-whatsapp"></ion-icon>
+        <ion-input type="text" formControlName="phone" [brmasker]="{mask:'(00) 00000-0000', len:15}"
+          placeholder=" Número WhatsApp"></ion-input>
+      </ion-item>
+    </ion-list>
 
-  <ion-button class="btn-publish" color="success" (click)="uploadImage()" expand="block">
-    Publicar
-  </ion-button>
+    <ion-button class="btn-publish" [disabled]="!formResgisterItem.valid" color="success" (click)="uploadImage()" expand="block">
+      Publicar
+    </ion-button>
+
+  </form>
 
 </ion-content>

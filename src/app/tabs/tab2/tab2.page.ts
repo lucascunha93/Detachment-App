@@ -22,13 +22,25 @@ export class Tab2Page {
     private toastCtrl: ToastController
   ) {
     this.userId = this.authService.getAuth().currentUser.uid;
+  }
+
+  ionViewWillEnter() {
     this.productsSubscription = this.favoriteService.getProductsFavorites(this.userId).subscribe(data => {
-      this.products = data;
+      if (data) {
+        this.products = data;
+      }else {
+        this.products = [];
+      }
     });
   }
 
+  ionViewWillLeave() {
+    this.productsSubscription.unsubscribe();
+    this.products = [];
+  }
+
   removerFavorite(idItem) {
-    this.favoriteService.deleteProduct(this.userId, idItem)
+    this.favoriteService.deleteFavorite(this.userId, idItem)
     this.presentToast('Favorito removido.');
   }
 

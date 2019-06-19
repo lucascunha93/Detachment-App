@@ -9,31 +9,32 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="products.length" class="tab1-page-content" color="tertiary">
-
-  <ion-item *ngFor="let item of [0, 1, 2]">
-    <ion-avatar slot="start">
-      <ion-skeleton-text animated></ion-skeleton-text>
-    </ion-avatar>
-    <ion-label>
-      <h3>
-        <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-      </h3>
-      <p>
-        <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-      </p>
-      <p>
-        <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
-      </p>
-    </ion-label>
-  </ion-item>
-
-</ion-content>
 <ion-content *ngIf="!products.length" class="tab1-page-content" color="tertiary">
-  <div class="error-warning">
+  <div *ngIf="dbError" class="error-warning">
     <ion-icon name="information-circle-outline"></ion-icon>
     <h4 class="error-warning">Desculpe, estamos em manutenção.</h4>
   </div>
+  <div *ngIf="!dbError">
+    <ion-item *ngFor="let item of [0, 1, 2]">
+      <ion-avatar slot="start">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-avatar>
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </h3>
+        <p>
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        </p>
+        <p>
+          <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+        </p>
+      </ion-label>
+    </ion-item>
+  </div>
+
+</ion-content>
+<ion-content *ngIf="products.length" class="tab1-page-content" color="tertiary">
   <ion-item *ngFor="let product of products" [routerLink]="['/product-item', product.id]"
     class="item ios in-list ion-focusable item-label hydrated">
     <ion-avatar slot="start" class="ios hydrated">

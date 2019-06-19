@@ -17,7 +17,7 @@ import * as firebase from 'firebase';
   templateUrl: './product-edit.page.html',
   styleUrls: ['./product-edit.page.scss'],
 })
-export class ProductEditPage implements OnInit {
+export class ProductEditPage {
   private productId: string = null;
   public product: Product = {};
   private loading: any;
@@ -37,87 +37,81 @@ export class ProductEditPage implements OnInit {
     private fb: FirebaseApp
   ) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.productId = this.activatedRoute.snapshot.params['id'];
 
     if (this.productId) this.loadProduct();
   }
 
-  ngOnDestroy() {
+  ionViewWillLeave() {
     if (this.productSubscription) this.productSubscription.unsubscribe();
+    this.product = {};
+    this.imagePath = '';
+    this.cep = null;
   }
 
   loadProduct() {
     this.productSubscription = this.productService.getProduct(this.productId).subscribe(data => {
-      console.log(data);
-      
       this.product = data;
     });
   }
 
   public uploadImage() {
-    const that = this;
-    let storageRef = this.fb.storage().ref();
-    let basePath = '/products/';
+    if (this.imagePath != '') {
 
-    if (this.product.picture) {
-      basePath = basePath + this.product.picture;
-    } else {
-      let date = new Date().getTime();
-      basePath = basePath + this.authService.getAuth().currentUser.uid + date + '.png';
-    }
-    let uploadTask = storageRef.child(basePath).putString(this.imagePath, 'data_url');
+      const that = this;
+      let storageRef = this.fb.storage().ref();
+      let basePath = '/products/';
+      console.log(this.product.picture);
 
-    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-      (snapshot) => {
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(progress + "% done");
-      },
-      (error) => {
-        console.error(error);
-      }, function () {
-        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-          that.saveProduct(downloadURL);
+      if (this.product.picture) {
+        basePath = basePath + this.product.picture;
+      } else {
+        let date = new Date().getTime();
+        basePath = basePath + this.authService.getAuth().currentUser.uid + date + '.png';
+      }
+      let uploadTask = storageRef.child(basePath).putString(this.imagePath, 'data_url');
+
+      uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+        (snapshot) => {
+          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(progress + "% done");
+        },
+        (error) => {
+          console.error(error);
+        }, function () {
+          uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+            that.updateProduct(downloadURL);
+          });
         });
-      });
+    } else {
+      this.updateProduct(this.product.picture);
+    }
   }
 
-  async saveProduct(url) {
+  async updateProduct(url) {
     await this.presentLoading();
     this.product.picture = url;
-    this.product.userId = this.authService.getAuth().currentUser.uid;
+    this.product.createdAt = new Date().getTime();
 
-
-    if (this.product.picture != '') {
-
-      this.product.id = this.authService.getAuth().currentUser.uid + new Date().getTime();
-      this.product.createdAt = new Date().getTime();
-
-      try {
-        await this.productService.addProduct(this.product);
-        await this.loading.dismiss();
-        this.product = {};
-        this.imagePath = '';
-        this.cep = null;
-        this.navCtrl.navigateBack('/home');
-      } catch (error) {
-        this.presentToast('Erro ao salvar');
-        this.loading.dismiss();
-      }
-    } else {
-      this.presentToast('Erro ao salvar imagem');
+    try {
+      await this.productService.updateProduct(this.productId, this.product);
+      await this.loading.dismiss();
+     this.navCtrl.navigateBack('/home');
+    } catch (error) {
+      this.presentToast('Erro ao salvar');
       this.loading.dismiss();
     }
   }
 
   deletarItem() {
     this.productService.deleteProduct(this.productId);
-    this.navCtrl.navigateBack('/home');
+    this.navCtrl.navigateForward('/product-list-user');
   }
 
-  itemDoado(){
+  itemDoado() {
     this.product.visibility = false;
-    this.productService.updateProduct( this.productId, this.product );
+    this.productService.updateProduct(this.productId, this.product);
     this.navCtrl.navigateBack('/home');
   }
 

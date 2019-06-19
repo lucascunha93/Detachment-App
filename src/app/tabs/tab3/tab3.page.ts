@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController, ToastController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { FirebaseApp } from '@angular/fire';
 import * as firebase from 'firebase';
@@ -11,6 +10,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 import { Product } from 'src/app/interfaces/product';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-tab3',
@@ -22,12 +22,13 @@ export class Tab3Page {
   private productId: string = null;
   public product: Product = {};
   private loading: any;
-  imagePath: string = '';
+  public formResgisterItem: FormGroup;
   cep: number;
+  imagePath: string = '';
 
   constructor(
+    private formBuilder: FormBuilder,
     private productService: ProductService,
-    private activatedRoute: ActivatedRoute,
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
     private authService: AuthService,
@@ -35,12 +36,37 @@ export class Tab3Page {
     private camera: Camera,
     public http: HttpClient,
     private fb: FirebaseApp
-  ) { }
+  ) {
+    this.formResgisterItem = this.formBuilder.group({
+      'name': [null, Validators.compose([
+        Validators.required,
+      ])],
+      'description': [null, Validators.compose([
+        Validators.required,
+      ])],
+      'cep': [null, Validators.compose([
+        Validators.required
+      ])],
+      'city': [null, Validators.compose([
+        Validators.required
+      ])],
+      'state': [null, Validators.compose([
+        Validators.required,
+      ])],
+      'phone': [null, Validators.compose([
+        Validators.required
+      ])]
+    })
+  }
 
-  ngOnInit() { }
+  ionViewWillLeave() {
+    this.formResgisterItem.reset();
+    this.product = {};
+  }
 
   async saveProduct(url) {
     await this.presentLoading();
+    this.product = this.formResgisterItem.value;
     this.product.picture = url;
     this.product.userId = this.authService.getAuth().currentUser.uid;
     this.product.userName = this.authService.getAuth().currentUser.displayName;
@@ -66,24 +92,31 @@ export class Tab3Page {
   }
 
   public uploadImage() {
-    const that = this;
-    let date = new Date().getTime();
-    let storageRef = this.fb.storage().ref();
-    let basePath = '/products/' + this.authService.getAuth().currentUser.uid + date + '.png';
-    let uploadTask = storageRef.child(basePath).putString(this.imagePath, 'data_url');
+    console.log(this.imagePath);
 
-    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-      (snapshot) => {
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(progress + "% done");
-      },
-      (error) => {
-        console.error(error);
-      }, function () {
-        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-          that.saveProduct(downloadURL);
+    if (this.imagePath == '') {
+      this.presentToast('Sem foto não é permitido!');
+      this.loading.dismiss();
+    } else {
+      const that = this;
+      let date = new Date().getTime();
+      let storageRef = this.fb.storage().ref();
+      let basePath = '/products/' + this.authService.getAuth().currentUser.uid + date + '.png';
+      let uploadTask = storageRef.child(basePath).putString(this.imagePath, 'data_url');
+
+      uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+        (snapshot) => {
+          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(progress + "% done");
+        },
+        (error) => {
+          console.error(error);
+        }, function () {
+          uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+            that.saveProduct(downloadURL);
+          });
         });
-      });
+    }
   }
   async presentLoading() {
     this.loading = await this.loadingCtrl.create({ message: 'Aguarde...' });
@@ -96,7 +129,6 @@ export class Tab3Page {
   }
 
   openCamera() {
-    this.imagePath = '';
 
     const options: CameraOptions = {
       quality: 100,
@@ -118,10 +150,10 @@ export class Tab3Page {
   }
 
   buscaCep() {
-    this.http.get<any>(`https://viacep.com.br/ws/${this.cep}/json/`)
+    this.http.get<any>(`https://viacep.com.br/ws/${this.formResgisterItem.value.cep}/json/`)
       .subscribe(cep => {
-        this.product.state = cep.uf;
-        this.product.city = cep.localidade
+        this.formResgisterItem.value.state = cep.uf;
+        this.formResgisterItem.value.city = cep.localidade;
       });
   }
 }
