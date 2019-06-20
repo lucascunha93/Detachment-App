@@ -9,9 +9,9 @@
 <ion-content color="secondary">
   <form [formGroup]="formResgisterItem" novalidate>
     <ion-avatar>
-      <img formControlName="imagePath" src="{{imagePath}}" *ngIf="imagePath != ''">
+      <img src="{{imagePath}}" *ngIf="imagePath != ''">
       <ion-icon name="camera" *ngIf="imagePath === ''"></ion-icon>
-      <ion-button color="success" class="btn-add-photo" (click)="openCamera()">
+      <ion-button color="success" class="btn-add-photo" (click)="presentActionSheet()">
         <ion-icon name="add"></ion-icon>
       </ion-button>
     </ion-avatar>
@@ -28,13 +28,13 @@
           [brmasker]="{mask:'00000-00', len:9}" placeholder="CEP"></ion-input>
         <ion-button color="success" (click)="buscaCep()">Busca CEP</ion-button>
       </ion-item>
-      <ion-item color="secondary" style="float: left; width:74%; padding: 0 20px 0 0">
+      <ion-item color="secondary" style="float: left; width:80%; padding: 0 20px 0 0">
         <ion-input type="text" formControlName="city" value='{{formResgisterItem.value.city}}' 
           placeholder="Cidade"></ion-input>
       </ion-item>
-      <ion-item color="secondary" style="float: left; width:26%">
-        <ion-input class="ion-text-end" type="text" formControlName="state" 
-          value='{{formResgisterItem.value.state}}' placeholder="uf"></ion-input>
+      <ion-item color="secondary" style="float: left; width:20%">
+        <ion-input type="text" class="ipt-state" formControlName="state" value='{{formResgisterItem.value.state}}' 
+          placeholder="uf"></ion-input>
       </ion-item>
       <ion-item color="secondary">
         <ion-icon color="success" name="logo-whatsapp"></ion-icon>

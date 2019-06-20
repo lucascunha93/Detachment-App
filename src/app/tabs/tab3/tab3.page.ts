@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, ToastController } from '@ionic/angular';
+import { NavController, LoadingController, ToastController, ActionSheetController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { FirebaseApp } from '@angular/fire';
@@ -19,7 +19,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class Tab3Page {
 
-  private productId: string = null;
   public product: Product = {};
   private loading: any;
   public formResgisterItem: FormGroup;
@@ -35,7 +34,8 @@ export class Tab3Page {
     private toastCtrl: ToastController,
     private camera: Camera,
     public http: HttpClient,
-    private fb: FirebaseApp
+    private fb: FirebaseApp,
+    public actionSheetController: ActionSheetController
   ) {
     this.formResgisterItem = this.formBuilder.group({
       'name': [null, Validators.compose([
@@ -65,12 +65,39 @@ export class Tab3Page {
     this.imagePath = '';
   }
 
-  async saveProduct(url) {
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Inserir foto',
+      buttons: [{
+        text: 'Camera',
+        role: 'destructive',
+        icon: 'camera',
+        handler: () => {
+          this.openCamera();
+        }
+      }, {
+        text: 'Galeria',
+        icon: 'images',
+        handler: () => {
+          this.openGalery();
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel'
+      }]
+    });
+    await actionSheet.present();
+  }
+
+  async saveProduct(url: string) {
     await this.presentLoading();
     this.product = this.formResgisterItem.value;
     this.product.picture = url;
     this.product.userId = this.authService.getAuth().currentUser.uid;
     this.product.userName = this.authService.getAuth().currentUser.displayName;
+    this.product.visibility = true;
+    this.product.report = 0;
 
     if (this.product.picture != '') {
       this.product.createdAt = new Date().getTime();
@@ -93,8 +120,6 @@ export class Tab3Page {
   }
 
   public uploadImage() {
-    console.log(this.imagePath);
-
     if (this.imagePath == '') {
       this.presentToast('Sem foto não é permitido!');
       this.loading.dismiss();
@@ -137,10 +162,26 @@ export class Tab3Page {
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       allowEdit: true,
-      targetWidth: 100,
-      targetHeight: 100
     }
 
+    this.camera.getPicture(options)
+      .then((imageData) => {
+        let base64image = 'data:image/jpeg;base64,' + imageData;
+        this.imagePath = base64image;
+      }, (err) => {
+        // Handle error
+      });
+  }
+
+  openGalery() {
+
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
+    }
     this.camera.getPicture(options)
       .then((imageData) => {
         let base64image = 'data:image/jpeg;base64,' + imageData;
@@ -153,8 +194,8 @@ export class Tab3Page {
   buscaCep() {
     this.http.get<any>(`https://viacep.com.br/ws/${this.formResgisterItem.value.cep}/json/`)
       .subscribe(cep => {
-        this.formResgisterItem.value.state = cep.uf;
         this.formResgisterItem.value.city = cep.localidade;
+        this.formResgisterItem.value.state = cep.uf;
       });
   }
 }

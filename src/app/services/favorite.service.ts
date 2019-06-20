@@ -28,8 +28,8 @@ export class FavoriteService {
   //     );
   // }
 
-  getFavorites(id: string) { // Busca no banco todos os favoritos do usuário logado
-    return this.productsCollection.doc<Product>(id).collection('Favorites')
+  getFavorites(user: User) { // Busca no banco todos os favoritos do usuário logado
+    return this.productsCollection.doc<Product>(user.id).collection('Favorites')
       .snapshotChanges().pipe(
         map(actions => {
           return actions.map(a => {
@@ -41,8 +41,8 @@ export class FavoriteService {
       );
   }
 
-  getFavorite(idUser: string, idFavorite: string) {
-    return this.productsCollection.doc<Product>(idUser).collection('Favorites')
+  getFavorite(idUser: User, idFavorite: string) {
+    return this.productsCollection.doc<Product>(idUser.id).collection('Favorites')
       .snapshotChanges().pipe(
         map(actions => {
           return actions.map(a => {
@@ -55,12 +55,12 @@ export class FavoriteService {
       );
   }
 
-  addProduct(id: string, product: Product) {
-    return this.productsCollection.doc(id).collection('Favorites').add(product);
+  addProduct(user: User, product: Product) {
+    return this.productsCollection.doc(user.id).collection('Favorites').add(product);
   }
 
-  deleteFavorite(idUser: string, idFavorite: string) {
-    return this.productsCollection.doc(idUser).collection('Favorites').doc(idFavorite).delete();
+  deleteFavorite(idUser: User, idFavorite: string) {
+    return this.productsCollection.doc(idUser.id).collection('Favorites').doc(idFavorite).delete();
   }
 
 }

@@ -1,3 +1,4 @@
+import { User } from './../../interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { FavoriteService } from './../../services/favorite.service';
 import { Component, OnInit } from '@angular/core';
@@ -14,13 +15,18 @@ import { Platform, ToastController, NavController } from '@ionic/angular';
 })
 export class ProductItemPage {
 
-  private productId: string = null;
-  product: Product = {};
-  private loading: any;
   private productSubscription: Subscription;
   private favoriteSubscription: Subscription;
-  private userId: string;
+  private reportSubscription: Subscription;
+
+  private loading: any;
+  product: Product = {};
+
+  private userId: User = {};
+  private productId: string = null;
   private favoriteId: string = null;
+  public reportId: string = null;
+
   public favorite: boolean = false;
   public report: boolean = false;
 
@@ -36,13 +42,14 @@ export class ProductItemPage {
 
   ionViewWillEnter() {
     this.productId = this.activatedRoute.snapshot.params['id'];
-    this.userId = this.authService.getAuth().currentUser.uid;
+    this.userId.id = this.authService.getAuth().currentUser.uid;
     if (this.productId) this.loadProduct();
   }
 
   ionViewCanLeave() {
     this.productSubscription.unsubscribe();
     this.favoriteSubscription.unsubscribe();
+    this.reportSubscription.unsubscribe();
   }
 
   loadProduct() {
@@ -52,12 +59,20 @@ export class ProductItemPage {
         this.navCtrl.pop();
       } else {
         this.product = data;
-        this.favoriteSubscription = this.favoriteService.getFavorite(this.userId, this.productId).subscribe(data => {
-          if (data[0] != undefined) {
-            this.favoriteId = data[0];
-            this.favorite = true;
-          }
-        });
+        this.favoriteSubscription = this.favoriteService
+          .getFavorite(this.userId, this.productId).subscribe(data => {
+            if (data[0] != undefined) {
+              this.favoriteId = data[0];
+              this.favorite = true;
+            }
+          });
+        this.reportSubscription = this.productService
+          .getReportUser(this.productId, this.userId.id).subscribe(data => {
+            if (data.length != 0) {
+              this.reportId = data[0].id;
+              this.report = true;
+            }
+          });
       }
     });
   }
@@ -77,7 +92,25 @@ export class ProductItemPage {
 
   reportItem() {
     this.report = true;
-    this.presentToast('Obrigado por ajudar a melhorar o App.')
+    this.product.report += 1;
+
+    if (this.product.report >= 1) {
+      this.product.visibility = false;
+      this.productService.updateProduct(this.productId, this.product);
+    }
+    this.presentToast('Denúncia efetuada. Obrigado por ajudar a melhorar o App.');
+    this.productService.addReportProduct(this.userId, this.productId)
+  }
+
+  reportBackItem() {
+    this.report = false;
+    this.product.report -= 1;
+    if (this.product.report < 1) {
+      this.product.visibility = true;
+    }
+    this.productService.updateProduct(this.productId, this.product);
+    this.productService.deleteReportProduct(this.productId, this.reportId);
+    this.presentToast('Denúncia cancelada. Obrigado por ajudar a melhorar o App.')
   }
 
   async presentToast(message: string) {

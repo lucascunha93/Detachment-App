@@ -10,4 +10,5 @@ export interface Product {
     userName?: string;
     phone?: number;
     visibility?: boolean;
+    report?: number;
 }

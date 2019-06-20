@@ -1,3 +1,4 @@
+import { User } from './../../interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { FavoriteService } from './../../services/favorite.service';
 import { Component } from '@angular/core';
@@ -12,7 +13,7 @@ import { ToastController } from '@ionic/angular';
 })
 export class Tab2Page {
 
-  private userId;
+  private userId: User = {};
   public products = new Array<Product>();
   private productsSubscription: Subscription;
 
@@ -23,7 +24,7 @@ export class Tab2Page {
   ) { }
 
   ionViewWillEnter() {
-    this.userId = this.authService.getAuth().currentUser.uid;
+    this.userId.id = this.authService.getAuth().currentUser.uid;
     this.productsSubscription = this.favoriteService.getFavorites(this.userId).subscribe(data => {
       if (data) {
         this.products = data;
