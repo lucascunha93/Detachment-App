@@ -1,13 +1,15 @@
 <ion-content color="secondary" *ngIf="product">
   <div class="content-img">
-    <ion-icon (click)="favoriteItem()" color="primary" name="jet"></ion-icon>
+    <ion-icon *ngIf="!favorite" class="favoriteItem" (click)="favoriteItem()" color="light" name="heart-empty"></ion-icon>
+    <ion-icon *ngIf="favorite" class="favoriteItem" (click)="removeFavoriteItem()" color="primary" name="heart"></ion-icon>
     <img src="{{product.picture}}" alt="Imagem do item para doar">
     <div>
       <p>Doado por {{product?.userName}}</p>
     </div>
-    <p>Denunciar</p>
   </div>
   <div class="product-content">
+    <ion-icon *ngIf="!report" color="light" class="report" (click)="reportItem()" name="thumbs-down"></ion-icon>
+    <ion-icon *ngIf="report" color="primary" class="report" (click)="reportItem()" name="thumbs-down"></ion-icon>
     <h3>{{product?.name}}</h3>
     <h5>{{product?.description}}</h5>
     <p>{{product?.city}} / {{product?.state}}</p>

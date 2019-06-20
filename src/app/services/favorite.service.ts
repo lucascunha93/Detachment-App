@@ -15,20 +15,20 @@ export class FavoriteService {
     this.productsCollection = this.afs.collection<Product>('FavoritesUser');
   }
 
-  getProducts(id) {
-    return this.productsCollection.doc<Product>(id).collection('Favorites')
-      .snapshotChanges().pipe(
-        map(actions => {
-          return actions.map(a => {
-            let data = a.payload.doc.data();
-            data.id = a.payload.doc.id;
-            return { ...data };
-          });
-        })
-      );
-  }
+  // getProducts(id) { // Busca no banco todos os favoritos do usuário logado
+  //   return this.productsCollection.doc<Product>(id).collection('Favorites')
+  //     .snapshotChanges().pipe(
+  //       map(actions => {
+  //         return actions.map(a => {
+  //           let data = a.payload.doc.data();
+  //           data.id = a.payload.doc.id;
+  //           return { ...data };
+  //         });
+  //       })
+  //     );
+  // }
 
-  getProductsFavorites(id) {
+  getFavorites(id: string) { // Busca no banco todos os favoritos do usuário logado
     return this.productsCollection.doc<Product>(id).collection('Favorites')
       .snapshotChanges().pipe(
         map(actions => {
@@ -41,12 +41,26 @@ export class FavoriteService {
       );
   }
 
-  addProduct(id, product: Product) {
+  getFavorite(idUser: string, idFavorite: string) {
+    return this.productsCollection.doc<Product>(idUser).collection('Favorites')
+      .snapshotChanges().pipe(
+        map(actions => {
+          return actions.map(a => {
+            let data = a.payload.doc.data();
+            if (data.id == idFavorite) {
+              return a.payload.doc.id;
+            }
+          });
+        })
+      );
+  }
+
+  addProduct(id: string, product: Product) {
     return this.productsCollection.doc(id).collection('Favorites').add(product);
   }
 
-  deleteFavorite(id, idFavorite) {
-    return this.productsCollection.doc(id).collection('Favorites').doc(idFavorite).delete();
+  deleteFavorite(idUser: string, idFavorite: string) {
+    return this.productsCollection.doc(idUser).collection('Favorites').doc(idFavorite).delete();
   }
 
 }

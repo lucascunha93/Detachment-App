@@ -20,15 +20,14 @@ export class Tab2Page {
     private favoriteService: FavoriteService,
     private authService: AuthService,
     private toastCtrl: ToastController
-  ) {
-    this.userId = this.authService.getAuth().currentUser.uid;
-  }
+  ) { }
 
   ionViewWillEnter() {
-    this.productsSubscription = this.favoriteService.getProductsFavorites(this.userId).subscribe(data => {
+    this.userId = this.authService.getAuth().currentUser.uid;
+    this.productsSubscription = this.favoriteService.getFavorites(this.userId).subscribe(data => {
       if (data) {
         this.products = data;
-      }else {
+      } else {
         this.products = [];
       }
     });
@@ -39,7 +38,7 @@ export class Tab2Page {
     this.products = [];
   }
 
-  removerFavorite(idItem) {
+  removeFavorite(idItem: string) {
     this.favoriteService.deleteFavorite(this.userId, idItem)
     this.presentToast('Favorito removido.');
   }

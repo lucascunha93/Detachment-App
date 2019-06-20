@@ -18,7 +18,11 @@ export class ProductItemPage {
   product: Product = {};
   private loading: any;
   private productSubscription: Subscription;
+  private favoriteSubscription: Subscription;
   private userId: string;
+  private favoriteId: string = null;
+  public favorite: boolean = false;
+  public report: boolean = false;
 
   constructor(
     private productService: ProductService,
@@ -36,6 +40,11 @@ export class ProductItemPage {
     if (this.productId) this.loadProduct();
   }
 
+  ionViewCanLeave() {
+    this.productSubscription.unsubscribe();
+    this.favoriteSubscription.unsubscribe();
+  }
+
   loadProduct() {
     this.productSubscription = this.productService.getProduct(this.productId).subscribe(data => {
       if (!data) {
@@ -43,17 +52,36 @@ export class ProductItemPage {
         this.navCtrl.pop();
       } else {
         this.product = data;
+        this.favoriteSubscription = this.favoriteService.getFavorite(this.userId, this.productId).subscribe(data => {
+          if (data[0] != undefined) {
+            this.favoriteId = data[0];
+            this.favorite = true;
+          }
+        });
       }
     });
   }
 
   favoriteItem() {
+    this.favorite = true;
+    this.presentToast('Item favoritado.');
     this.product.id = this.productId;
     this.favoriteService.addProduct(this.userId, this.product);
   }
 
+  removeFavoriteItem() {
+    this.favorite = false;
+    this.presentToast('Item removido do favoritos.');
+    this.favoriteService.deleteFavorite(this.userId, this.favoriteId);
+  }
+
+  reportItem() {
+    this.report = true;
+    this.presentToast('Obrigado por ajudar a melhorar o App.')
+  }
+
   async presentToast(message: string) {
-    const toast = await this.toastCtrl.create({ message, duration: 2000 });
+    const toast = await this.toastCtrl.create({ message, duration: 2000, cssClass: 'toastBackground' });
     toast.present();
   }
 

@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './product-list-user.page.html',
   styleUrls: ['./product-list-user.page.scss'],
 })
-export class ProductListUserPage implements OnInit {
+export class ProductListUserPage {
 
   public products = new Array<Product>();
   private productsSubscription: Subscription;
@@ -19,14 +19,18 @@ export class ProductListUserPage implements OnInit {
   constructor(
     private authService: AuthService,
     private productService: ProductService,
-  ) {
+  ) { }
+
+  ionViewWillEnter() {
     let userId = this.authService.getAuth().currentUser.uid;
     this.productsSubscription = this.productService.getProductsByUser(userId).subscribe(data => {
       this.products = data;
     })
-}
+  }
 
-  ngOnInit() {
+  ionViewCanLeave(){
+    this.productsSubscription.unsubscribe();
+    this.products = [];
   }
 
 }

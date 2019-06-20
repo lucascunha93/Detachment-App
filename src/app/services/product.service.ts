@@ -19,7 +19,6 @@ export class ProductService {
         return actions.map(a => {
           const data = a.payload.doc.data();
           const id = a.payload.doc.id;
-
           return { id, ...data };
         });
       })
@@ -39,12 +38,12 @@ export class ProductService {
       );
   }
 
-  addProduct(product: Product) {
-    return this.productsCollection.add(product);
-  }
-
   getProduct(id: string) {
     return this.productsCollection.doc<Product>(id).valueChanges();
+  }
+  
+  addProduct(product: Product) {
+    return this.productsCollection.add(product);
   }
 
   updateProduct(id: string, product: Product) {

@@ -62,6 +62,7 @@ export class Tab3Page {
   ionViewWillLeave() {
     this.formResgisterItem.reset();
     this.product = {};
+    this.imagePath = '';
   }
 
   async saveProduct(url) {
