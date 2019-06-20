@@ -2,10 +2,6 @@ ion-tab-bar {
     height: 40px;
 }
 
-ion-tab-button {
-    padding: 9px;
-}
-
 ion-tab-button[aria-selected="true"] {
     color: #6BBFA7;
 }
@@ -21,4 +17,5 @@ ion-tab-button[aria-selected="true"] {
 
 ion-icon {
     margin: 0;
+    font-size: 20px;
 }

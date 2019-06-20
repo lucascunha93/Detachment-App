@@ -36,11 +36,11 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'publish/:id',
+        path: 'config',
         children: [
           {
             path: '',
-            loadChildren: './tab3/tab3.module#Tab3PageModule'
+            loadChildren: './tab4/tab4.module#Tab4PageModule'
           }
         ]
       },
@@ -49,7 +49,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: './tab4/tab4.module#Tab4PageModule'
+            loadChildren: './tab5/tab5.module#Tab5PageModule'
           }
         ]
       },

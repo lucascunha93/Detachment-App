@@ -12,7 +12,8 @@ const routes: Routes = [
   { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule', canActivate: [LoggedGuard] },
   { path: 'product-edit/:id', loadChildren: './pages/product-edit/product-edit.module#ProductEditPageModule', canActivate: [AuthGuard] },
   { path: 'product-item/:id', loadChildren: './pages/product-item/product-item.module#ProductItemPageModule', canActivate: [AuthGuard] },
-  { path: 'product-list-user', loadChildren: './pages/product-list-user/product-list-user.module#ProductListUserPageModule' }
+  { path: 'product-list-user', loadChildren: './pages/product-list-user/product-list-user.module#ProductListUserPageModule' },
+  { path: 'tab5', loadChildren: './tabs/tab5/tab5.module#Tab5PageModule' }
 ];
 @NgModule({
   imports: [

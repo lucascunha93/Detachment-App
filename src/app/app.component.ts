@@ -27,8 +27,10 @@ export class AppComponent {
       if (new Date().getTime() - this.lastTimeBackPress < this.timePeriodToExit) {
         navigator['app'].exitApp();
       } else if (this.router.url === '/tabs/home' || this.router.url === '/login') {
-        this.presentToast('Pressione voltar novamente para sair do app.');
+        this.presentToast('Pressione voltar novamente para sair.');
         this.lastTimeBackPress = new Date().getTime();
+      } else {
+        this.router.navigate(['/home']);
       };
     });
 
