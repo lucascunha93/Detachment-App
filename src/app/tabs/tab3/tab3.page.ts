@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController, ToastController, ActionSheetController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { FirebaseApp } from '@angular/fire';
 import * as firebase from 'firebase';
@@ -103,8 +102,8 @@ export class Tab3Page {
       this.product.createdAt = new Date().getTime();
 
       try {
-        await this.productService.addProduct(this.product);
         await this.loading.dismiss();
+        await this.productService.addProduct(this.product);
         this.product = {};
         this.imagePath = '';
         this.cep = null;

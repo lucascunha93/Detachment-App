@@ -1,4 +1,10 @@
 import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
+
+import { ProductService } from 'src/app/services/product.service';
+
+import { Product } from 'src/app/interfaces/product';
 
 @Component({
   selector: 'app-tab4',
@@ -7,5 +13,24 @@ import { Component } from '@angular/core';
 })
 export class Tab4Page {
 
-  constructor() { }
+  public products = new Array<Product>();
+  private productsSubscription: Subscription;
+
+  constructor(
+    private authService: AuthService,
+    private productService: ProductService,
+  ) { }
+
+  ionViewWillEnter() {
+    let userId = this.authService.getAuth().currentUser.uid;
+    this.productsSubscription = this.productService.getProductsByUser(userId).subscribe(data => {
+      this.products = data;
+    })
+  }
+
+  ionViewCanLeave() {
+    this.productsSubscription.unsubscribe();
+    this.products = [];
+  }
+
 }

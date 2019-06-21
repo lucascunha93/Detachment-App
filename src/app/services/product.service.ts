@@ -29,7 +29,8 @@ export class ProductService {
   }
 
   getProductsByUser(idU: string) { // Pegar produtos do usuário
-    return this.afs.collection<Product>('Products', ref => ref.where('userId', '==', idU))
+    return this.afs.collection<Product>('Products', ref => ref.where('userId', '==', idU)
+      .where('visibility', '==', true))
       .snapshotChanges().pipe(
         map(actions => {
           return actions.map(a => {
@@ -65,8 +66,8 @@ export class ProductService {
     return this.productsCollection.doc<Product>(idProduct).collection('ReportUsers').add(idUser);
   }
 
-  updateProduct(id: string, product: Product) { // Atualiza o produto no firebase
-    return this.productsCollection.doc<Product>(id).update(product);
+  updateProduct(idProduto: string, product: Product) { // Atualiza o produto no firebase
+    return this.productsCollection.doc<Product>(idProduto).update(product);
   }
 
   deleteProduct(id: string) { // Deleta o produto do firebase 

@@ -11,13 +11,13 @@ ion-avatar {
     height: 100px;
     width: 100px;
     margin-top: 20px;
-    background-color: rgba(161, 161, 161, 0.603);
+    background-color: rgba(95, 95, 95, 0.808);
 }
 
 ion-avatar > ion-icon {
-    position: relative;
-    left: 23px;
-    font-size: 35px;
+    position: absolute;
+    left: 28px;
+    font-size: 45px;
     color: rgba(255, 255, 255, 0.966);
 }
 
@@ -27,16 +27,22 @@ ion-avatar > img {
 
 .btn-add-photo {
     position: relative;
-    height: 40px;
-    width: 40px;
-    bottom: -45px;
-    right: -12px;
+    height: 25px;
+    width: 26px;
+    bottom: -30px;
+    right: -40px;
     z-index: 1;
     --border-radius: 25px;
     --padding-bottom: 0; 
     --padding-top: 0; 
     --padding-end: 0; 
     --padding-start: 0; 
+    border-radius: 25px;
+    border: 1px solid #6AA69B;
+}
+
+.btn-add-photo > ion-icon {
+    font-size: 16px;
 }
 
 ion-list {

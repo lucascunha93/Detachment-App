@@ -104,15 +104,18 @@ export class ProductEditPage {
     }
   }
 
-  deletarItem() {
-    this.productService.deleteProduct(this.productId);
-    this.navCtrl.navigateForward('/product-list-user');
+  deletarItem() { // Altera a visibilidade para false
+    this.product.visibility = false;
+    this.presentToast('Item deletado.');
+    this.productService.updateProduct(this.productId, this.product);
+    this.navCtrl.navigateForward('/tab4');
   }
 
-  itemDoado() {
+  itemDoado() { // Altera a visibilidade para false
     this.product.visibility = false;
+    this.presentToast('Item doado. Muito obrigado pela boa ação!')
     this.productService.updateProduct(this.productId, this.product);
-    this.navCtrl.navigateBack('/home');
+    this.navCtrl.navigateForward('/tab4');
   }
 
   openCamera() {

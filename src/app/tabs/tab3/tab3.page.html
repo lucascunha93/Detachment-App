@@ -10,9 +10,9 @@
   <form [formGroup]="formResgisterItem" novalidate>
     <ion-avatar>
       <img src="{{imagePath}}" *ngIf="imagePath != ''">
-      <ion-icon name="camera" *ngIf="imagePath === ''"></ion-icon>
-      <ion-button color="success" class="btn-add-photo" (click)="presentActionSheet()">
-        <ion-icon name="add"></ion-icon>
+      <ion-icon name="person" *ngIf="imagePath === ''"></ion-icon>
+      <ion-button color="primary" class="btn-add-photo" (click)="presentActionSheet()">
+        <ion-icon name="camera"></ion-icon>
       </ion-button>
     </ion-avatar>
 
