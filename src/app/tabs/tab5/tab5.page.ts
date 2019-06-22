@@ -1,6 +1,9 @@
+import { ModalComponent2 } from './../../components/modal2/modal2.component';
+import { ModalComponent } from './../../components/modal/modal.component';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
+import { OverlayEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-tab5',
@@ -15,10 +18,11 @@ export class Tab5Page {
 
   constructor(
     private authService: AuthService,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    public modalCtrl: ModalController
   ) { }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.userName = this.authService.getAuth().currentUser.displayName;
     this.photoUser = this.authService.getAuth().currentUser.photoURL;
   }
@@ -33,6 +37,24 @@ export class Tab5Page {
     } finally {
       this.loading.dismiss();
     }
+  }
+
+  async openModal1() {
+    const modal: HTMLIonModalElement =
+      await this.modalCtrl.create({
+        component: ModalComponent,
+      });
+
+    await modal.present();
+  }
+
+  async openModal2() {
+    const modal: HTMLIonModalElement =
+      await this.modalCtrl.create({
+        component: ModalComponent2,
+      });
+
+    await modal.present();
   }
 
   async presentLoading() {

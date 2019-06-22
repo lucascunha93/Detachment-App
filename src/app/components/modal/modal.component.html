@@ -1,0 +1,18 @@
+<ion-content class="ion-text-center" color="secondary">
+  <h3>Entre em contato</h3>
+  <form [formGroup]="formContact" novalidate>
+
+    <ion-list color="secondary">
+      <ion-item color="secondary">
+        <ion-input type="text" formControlName="name" placeholder="Nome"></ion-input>
+      </ion-item>
+      <ion-item color="secondary">
+        <ion-input type="text" formControlName="description" placeholder="Descrição"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-button (click)="myDismiss()">Enviar mensagem</ion-button>
+
+  </form>
+
+</ion-content>

@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content class="tab1-page-content" color="tertiary">
-  <div *ngIf="!product" class="item-empty">
+  <div *ngIf="products.length === 0" class="item-empty">
     <ion-icon name="information-circle-outline"></ion-icon>
     <h4 class="error-warning">Você não possui doações a serem exibidas.</h4>
   </div>
