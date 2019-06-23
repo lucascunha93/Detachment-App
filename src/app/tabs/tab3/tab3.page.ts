@@ -43,9 +43,7 @@ export class Tab3Page {
       'description': [null, Validators.compose([
         Validators.required,
       ])],
-      'cep': [null, Validators.compose([
-        Validators.required
-      ])],
+      'cep': [null],
       'city': [null, Validators.compose([
         Validators.required
       ])],
@@ -90,7 +88,7 @@ export class Tab3Page {
   }
 
   async saveProduct(url: string) {
-    await this.presentLoading();
+    await this.presentLoading('Publicando item...');
     this.product = this.formResgisterItem.value;
     this.product.picture = url;
     this.product.userId = this.authService.getAuth().currentUser.uid;
@@ -123,6 +121,7 @@ export class Tab3Page {
       this.presentToast('Sem foto não é permitido!');
       this.loading.dismiss();
     } else {
+      this.presentLoading('Salvando Foto...');
       const that = this;
       let date = new Date().getTime();
       let storageRef = this.fb.storage().ref();
@@ -135,16 +134,18 @@ export class Tab3Page {
           console.log(progress + "% done");
         },
         (error) => {
+          this.loading.dismiss();
           console.error(error);
         }, function () {
+          that.loading.dismiss();
           uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
             that.saveProduct(downloadURL);
           });
         });
     }
   }
-  async presentLoading() {
-    this.loading = await this.loadingCtrl.create({ message: 'Aguarde...' });
+  async presentLoading(msg: string) {
+    this.loading = await this.loadingCtrl.create({ message: msg });
     return this.loading.present();
   }
 

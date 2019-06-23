@@ -8,10 +8,10 @@
 
 <ion-content color="secondary">
   <form [formGroup]="formResgisterItem" novalidate>
-    <ion-avatar>
+    <ion-avatar (click)="presentActionSheet()">
       <img src="{{imagePath}}" *ngIf="imagePath != ''">
-      <ion-icon name="person" *ngIf="imagePath === ''"></ion-icon>
-      <ion-button color="primary" class="btn-add-photo" (click)="presentActionSheet()">
+      <ion-icon name="images" *ngIf="imagePath === ''"></ion-icon>
+      <ion-button color="primary" class="btn-add-photo">
         <ion-icon name="camera"></ion-icon>
       </ion-button>
     </ion-avatar>
@@ -43,7 +43,8 @@
       </ion-item>
     </ion-list>
 
-    <ion-button class="btn-publish" [disabled]="!formResgisterItem.valid" color="success" (click)="uploadImage()" expand="block">
+    <ion-button class="btn-publish" [disabled]="!formResgisterItem.valid" 
+      color="primary" (click)="uploadImage()" expand="block">
       Publicar
     </ion-button>
 

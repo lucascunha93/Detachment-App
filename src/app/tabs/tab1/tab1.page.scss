@@ -52,3 +52,16 @@ ion-label > p {
   font-size: 50px;
   margin: 0 0 40px 0;
 }
+
+ion-toolbar > ion-icon {
+  position: absolute;
+  top: 17px;
+  right: 14px;
+  font-size: 21px;
+}
+
+ion-searchbar {
+ background: var(--ion-color-primary, #3880ff) !important;
+ height: 33px;
+ padding: 0;
+}

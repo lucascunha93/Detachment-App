@@ -15,7 +15,9 @@ export class Tab1Page {
   private loading: any;
   public products = new Array<Product>();
   private productsSubscription: Subscription;
-  public dbError: boolean = false;
+  public dbError: boolean = false;  
+
+  filter: boolean = false;
 
   constructor(
     private loadingCtrl: LoadingController,
@@ -39,17 +41,22 @@ export class Tab1Page {
     this.productsSubscription.unsubscribe();
   }
 
-  async presentLoading() {
-    this.loading = await this.loadingCtrl.create({ message: 'Aguarde...' });
-    return this.loading.present();
+  searchBox() {
+    if (this.filter) this.filter = false;
+    else this.filter = true;
   }
-
+  
   async deleteProduct(id: string) {
     try {
       await this.productService.deleteProduct(id);
     } catch (error) {
       this.presentToast('Erro ao tentar deletar');
     }
+  }
+  
+  async presentLoading() {
+    this.loading = await this.loadingCtrl.create({ message: 'Aguarde...' });
+    return this.loading.present();
   }
 
   async presentToast(message: string) {
