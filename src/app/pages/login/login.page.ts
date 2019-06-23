@@ -10,10 +10,6 @@ export class LoginPage {
 
   constructor( public router: Router ) { }
 
-  ionViewWillEnter(){
-   console.log(this.router.url);
-  }
-
   setSignin(){
     this.router.navigate(['signin']);
   }

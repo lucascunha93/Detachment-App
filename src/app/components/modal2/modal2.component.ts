@@ -12,7 +12,7 @@ export class ModalComponent2 {
     private modalController: ModalController,
     ) {}
 
-  async myDismiss() {
+  async closeModal() {
     await this.modalController.dismiss();
   }
 

@@ -25,7 +25,7 @@ export class ModalComponent {
     })
   }
 
-  async myDismiss() {
+  async closeModal() {
     await this.modalController.dismiss();
   }
 

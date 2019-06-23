@@ -18,7 +18,6 @@ import { environment } from 'src/environments/environment';
 
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { SortPipe } from './pipe/sort.pipe'
 
 @NgModule({
   declarations: [AppComponent],
