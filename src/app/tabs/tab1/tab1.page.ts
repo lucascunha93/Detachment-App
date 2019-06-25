@@ -37,8 +37,9 @@ export class Tab1Page {
   }
 
   ionViewDidLeave() {
-    this.products = [];
+    console.log('teste');
     this.productsSubscription.unsubscribe();
+    this.products = [];
   }
 
   searchBox() {

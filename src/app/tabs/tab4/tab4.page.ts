@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -28,7 +28,7 @@ export class Tab4Page {
     })
   }
 
-  ionViewCanLeave() {
+  ionViewDidLeave() {
     this.productsSubscription.unsubscribe();
     this.products = [];
   }

@@ -34,7 +34,9 @@ export class Tab2Page {
     });
   }
 
-  ionViewWillLeave() {
+  ionViewDidLeave() {
+    console.log('chamou');
+    
     this.productsSubscription.unsubscribe();
     this.products = [];
   }

@@ -43,7 +43,7 @@ export class ProductEditPage {
     if (this.productId) this.loadProduct();
   }
 
-  ionViewWillLeave() {
+  ionViewDidLeave() {
     if (this.productSubscription) this.productSubscription.unsubscribe();
     this.product = {};
     this.imagePath = '';

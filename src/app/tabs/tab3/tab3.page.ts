@@ -56,7 +56,7 @@ export class Tab3Page {
     })
   }
 
-  ionViewWillLeave() {
+  ionViewDidLeave() {
     this.formResgisterItem.reset();
     this.product = {};
     this.imagePath = '';
