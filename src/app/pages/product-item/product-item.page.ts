@@ -4,7 +4,7 @@ import { FavoriteService } from './../../services/favorite.service';
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/interfaces/product';
 import { ProductService } from 'src/app/services/product.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Platform, ToastController, NavController } from '@ionic/angular';
 
@@ -37,7 +37,8 @@ export class ProductItemPage {
     private activatedRoute: ActivatedRoute,
     public platform: Platform,
     private toastCtrl: ToastController,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private router: Router
   ) { }
 
   ionViewWillEnter() {
@@ -111,6 +112,10 @@ export class ProductItemPage {
     this.productService.updateProduct(this.productId, this.product);
     this.productService.deleteReportProduct(this.productId, this.reportId);
     this.presentToast('Denúncia cancelada. Obrigado por ajudar a melhorar o App.')
+  }
+
+  openChat(){
+    this.router.navigate(['/chat', this.productId ]);
   }
 
   async presentToast(message: string) {

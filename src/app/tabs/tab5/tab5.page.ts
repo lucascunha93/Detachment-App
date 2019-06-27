@@ -15,6 +15,7 @@ export class Tab5Page {
   public userName: string = '';
   private loading: any;
   public photoUser: string = '';
+  public iptEdit: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -25,6 +26,10 @@ export class Tab5Page {
   ionViewWillEnter() {
     this.userName = this.authService.getAuth().currentUser.displayName;
     this.photoUser = this.authService.getAuth().currentUser.photoURL;
+    if(this.authService.getAuth().currentUser.providerData[0].providerId === 'password'){
+      this.iptEdit = true;
+    }
+    
   }
 
   async logout() {

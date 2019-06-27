@@ -15,7 +15,7 @@
     <p>{{product?.city}} / {{product?.state}}</p>
   </div>
   <div class="btn-content">
-    <a href="https://api.whatsapp.com/send?phone=55{{product?.phone}}">
+    <a (click)="openChat()">
       <ion-button>Eu quero</ion-button>
     </a>
   </div>

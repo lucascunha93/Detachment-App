@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title text-center>Editar perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content color="secondary">
+
+  <form style="width: 90%" padding [formGroup]="formProfile" novalidate>
+
+    <ion-avatar>
+      <img src="{{user?.photoURL}}" *ngIf="user?.photoURL != null && !photoEdit">
+      <img src="{{imagePath}}" *ngIf="photoEdit">
+      <ion-icon name="person" *ngIf="user?.photoURL == null && !photoEdit"></ion-icon>
+      <ion-button *ngIf="photoEdit" color="primary" class="btn-add-photo" (click)="removePhoto()">
+        <ion-icon name="reverse-camera"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="!photoEdit" color="primary" class="btn-add-photo" (click)="presentActionSheet()">
+        <ion-icon name="camera"></ion-icon>
+      </ion-button>
+    </ion-avatar>
+
+    <ion-list color="secondary">
+      <ion-item color="secondary">
+        <ion-input type="text" formControlName="name" value='{{user?.displayName}}' placeholder="Seu nome"></ion-input>
+      </ion-item>
+
+      <ion-item color="secondary">
+        <ion-input type="text" formControlName="email" value='{{user?.email}}' placeholder="Seu e-mail"></ion-input>
+      </ion-item>
+      
+      <ion-item color="secondary">
+        <ion-input [type]="getType()" formControlName="password" placeholder="Senha atual"></ion-input>
+        <ion-icon name="eye" item-right (click)="toggleTextPassword()"></ion-icon>
+      </ion-item>
+
+      <ion-item color="secondary">
+        <ion-input [type]="getType()" formControlName="passwordNew" placeholder="Nova senha"></ion-input>
+        <ion-icon name="eye" item-right (click)="toggleTextPassword()"></ion-icon>
+      </ion-item>
+
+      <ion-button class="btn-edit" [disabled]="!formProfile.valid" (click)="editProfile()">Editar perfil</ion-button>
+
+    </ion-list>
+
+  </form>
+
+</ion-content>

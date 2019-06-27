@@ -1,0 +1,28 @@
+<ion-content>
+  <ion-item *ngIf="product" [routerLink]="['/product-item', product.id]"
+    class="item ios in-list ion-focusable item-label hydrated desc-area">
+    <ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated desc-product">
+      <h2>{{product.name}} / {{product.city}}</h2>
+      <img src="{{product.picture}}">
+    </ion-label>
+  </ion-item>
+
+  <div class="{{msg.userPublish}}" *ngFor="let msg of chat">
+    <ion-avatar slot="start" class="ios hydrated">
+      <img src="{{msg.photoUser || 'assets/icon/user.svg'}}">
+    </ion-avatar>
+    <ion-card>
+      <ion-card-subtitle class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated">
+        {{msg.message}}
+      </ion-card-subtitle>
+    </ion-card>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-item>
+    <ion-input type="text" [(ngModel)]="message.message" placeholder="Digite uma mensagem"></ion-input>
+    <ion-button (click)="addMessage()">Enviar</ion-button>
+  </ion-item>
+</ion-footer>

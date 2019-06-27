@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 
 import { Product } from '../interfaces/product';
 import { User } from './../interfaces/user';
+import { ChatUser } from '../interfaces/chatUser';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class ProductService {
     this.productsCollection = this.afs.collection<Product>('Products');
   }
 
-  getProducts() { // Pegar produtos cadastrados e com visibilidade com atributo true
+  getProducts(userId: string) { // Pegar produtos cadastrados e com visibilidade com atributo true
     return this.afs.collection<Product>('Products', ref => ref.where('visibility', '==', true))
       .snapshotChanges().pipe(
         map(actions => {
@@ -58,12 +59,28 @@ export class ProductService {
     return this.productsCollection.doc<Product>(id).valueChanges();
   }
 
+  getChat(idProduct: string) {
+    return this.productsCollection.doc<Product>(idProduct)
+      .collection('chatUsers', ref => ref.orderBy('createdAt') ).snapshotChanges()
+      .pipe(map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return { ...data };
+        })
+      }));
+  }
+
   addProduct(product: Product) { // Adiciona o produto no firebase
     return this.productsCollection.add(product);
   }
 
   addReportProduct(idUser: User, idProduct: string) {
     return this.productsCollection.doc<Product>(idProduct).collection('ReportUsers').add(idUser);
+  }
+
+  addChat(idProduct: string, chat: ChatUser) {
+    return this.productsCollection.doc<Product>(idProduct).collection('chatUsers').add(chat);
   }
 
   updateProduct(idProduto: string, product: Product) { // Atualiza o produto no firebase
@@ -77,7 +94,7 @@ export class ProductService {
   deleteReportProduct(idProduct: string, idReport: string) {
     console.log(idProduct);
     console.log(idReport);
-    
+
     return this.productsCollection.doc<Product>(idProduct).collection('ReportUsers')
       .doc(idReport).delete();
   }

@@ -12,6 +12,8 @@ const routes: Routes = [
   { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule', canActivate: [LoggedGuard] },
   { path: 'product-edit/:id', loadChildren: './pages/product-edit/product-edit.module#ProductEditPageModule', canActivate: [AuthGuard] },
   { path: 'product-item/:id', loadChildren: './pages/product-item/product-item.module#ProductItemPageModule', canActivate: [AuthGuard] },
+  { path: 'profile-edit', loadChildren: './pages/profile-edit/profile-edit.module#ProfileEditPageModule' },
+  { path: 'chat/:id', loadChildren: './pages/chat/chat.module#ChatPageModule' },
 ];
 @NgModule({
   imports: [

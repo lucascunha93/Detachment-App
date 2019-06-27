@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Product } from 'src/app/interfaces/product';
 import { Subscription } from 'rxjs';
-import { LoadingController, ToastController, Platform } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 
 import { ProductService } from 'src/app/services/product.service';
-import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -22,11 +22,13 @@ export class Tab1Page {
   constructor(
     private loadingCtrl: LoadingController,
     private productService: ProductService,
+    private authService: AuthService,
     private toastCtrl: ToastController,
   ) { }
 
   ionViewWillEnter() {
-    this.productsSubscription = this.productService.getProducts().subscribe(data => {
+    let user = this.authService.getAuth().currentUser.uid;
+    this.productsSubscription = this.productService.getProducts(user).subscribe(data => {
       this.products = data;
       if (data.length == 0) {
         setTimeout(() => {
@@ -37,7 +39,6 @@ export class Tab1Page {
   }
 
   ionViewDidLeave() {
-    console.log('teste');
     this.productsSubscription.unsubscribe();
     this.products = [];
   }

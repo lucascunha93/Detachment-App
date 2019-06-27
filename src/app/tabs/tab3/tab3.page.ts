@@ -162,6 +162,8 @@ export class Tab3Page {
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       allowEdit: true,
+      targetWidth: 100,
+      targetHeight: 100
     }
 
     this.camera.getPicture(options)
