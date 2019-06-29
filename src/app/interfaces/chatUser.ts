@@ -1,11 +1,12 @@
 export interface ChatUser {
 
+    id?: string;
+    idUserPublish?: string;
     idUser?: string;
     createdAt?: number;
-    userName?: string;
-    userPublish?: string;
-    email?: string;
     message?: string;
+    messageRespost?: string;
+    photoUserPublish?: string;
     photoUser?: string;
-    phoneUser?: number;
+    notification?: boolean;
 }

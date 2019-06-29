@@ -83,6 +83,11 @@ export class ProductService {
     return this.productsCollection.doc<Product>(idProduct).collection('chatUsers').add(chat);
   }
 
+  updateChat(idProduct: string, idChat: string, chat: ChatUser){
+    return this.productsCollection.doc<Product>(idProduct)
+      .collection('chatUsers').doc(idChat).update(chat);
+  }
+
   updateProduct(idProduto: string, product: Product) { // Atualiza o produto no firebase
     return this.productsCollection.doc<Product>(idProduto).update(product);
   }

@@ -51,8 +51,6 @@ export class AuthService {
       'scopes': 'profile email'
     })
       .then(res => {
-        console.log(res);
-        
         return this.afa.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
       });
   }

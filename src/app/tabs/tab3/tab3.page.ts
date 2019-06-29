@@ -56,7 +56,7 @@ export class Tab3Page {
     })
   }
 
-  ionViewDidLeave() {
+  ionViewWillLeave() {
     this.formResgisterItem.reset();
     this.product = {};
     this.imagePath = '';
@@ -95,6 +95,8 @@ export class Tab3Page {
     this.product.userName = this.authService.getAuth().currentUser.displayName;
     this.product.visibility = true;
     this.product.report = 0;
+    this.product.messagens = 0;
+    this.product.views = 0;
 
     if (this.product.picture != '') {
       this.product.createdAt = new Date().getTime();
@@ -157,7 +159,7 @@ export class Tab3Page {
   openCamera() {
 
     const options: CameraOptions = {
-      quality: 100,
+      quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
@@ -178,11 +180,13 @@ export class Tab3Page {
   openGalery() {
 
     const options: CameraOptions = {
-      quality: 100,
+      quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
+      sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
+      targetWidth: 100,
+      targetHeight: 100
     }
     this.camera.getPicture(options)
       .then((imageData) => {

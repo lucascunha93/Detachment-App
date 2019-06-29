@@ -22,6 +22,8 @@ export class ChatPage {
   public product: Product = {};
   public productId: string;
   public user: any = {};
+  public isUserPublish: boolean = false;
+  public respost: string = '';
 
   constructor(
     private productService: ProductService,
@@ -34,13 +36,11 @@ export class ChatPage {
     this.productId = this.activatedRoute.snapshot.params['id'];
     this.productSubscription = this.productService.getProduct(this.productId).subscribe(data => {
       this.product = data;
+      if (this.user.uid == this.product.userId) {
+        this.isUserPublish = true;
+      }
     })
     this.chatSubscription = this.productService.getChat(this.productId).subscribe(data => {
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].idUser == this.user.uid) {
-          data[i].userPublish = 'userTrue';    
-        }
-      }
       this.chat = data;
       if (data.length == 0) {
         setTimeout(() => {
@@ -48,8 +48,6 @@ export class ChatPage {
         }, 2000);
       }
     });
-    console.log(this.user.uid);
-    
   }
 
   ionViewDidLeave() {
@@ -59,11 +57,23 @@ export class ChatPage {
 
   addMessage() {
     this.message.idUser = this.user.uid;
-    this.message.userName = this.product.userName;
     this.message.photoUser = this.user.photoURL;
-    this.message.userPublish = 'userFalse';
     this.message.createdAt = new Date().getTime();
+    this.message.notification = true;
+    this.updateStatusMessages();
     this.productService.addChat(this.productId, this.message);
+    this.message.message = '';
+  }
+
+  addMessageRespost(chat: ChatUser){
+    chat.photoUserPublish = this.user.photoURL;
+    chat.idUserPublish = this.user.uid;
+    this.productService.updateChat(this.productId, chat.id, chat);
+  }
+
+  updateStatusMessages() {
+    this.product.messagens += 1;
+    this.productService.updateProduct(this.productId, this.product);
   }
 
 }

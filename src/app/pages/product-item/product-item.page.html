@@ -2,21 +2,31 @@
   <div class="content-img">
     <ion-icon *ngIf="!favorite" class="favoriteItem" (click)="favoriteItem()" color="light" name="heart-empty"></ion-icon>
     <ion-icon *ngIf="favorite" class="favoriteItem" (click)="removeFavoriteItem()" color="primary" name="heart"></ion-icon>
-    <img src="{{product.picture}}" alt="Imagem do item para doar">
-    <div>
-      <p>Doado por {{product?.userName}}</p>
-    </div>
-  </div>
-  <div class="product-content">
     <ion-icon *ngIf="!report" color="light" class="report" (click)="reportItem()" name="thumbs-down"></ion-icon>
     <ion-icon *ngIf="report" color="primary" class="report" (click)="reportBackItem()" name="thumbs-down"></ion-icon>
+    
+    <img src="{{product.picture}}" alt="Imagem do item para doar">
+  </div>
+  <div class="btn-interation">
+    <ion-button (click)="like()">
+      <ion-icon class="{{liked}}" name="thumbs-up"></ion-icon>
+    </ion-button>
+    <ion-button (click)="openChat()">
+      <ion-icon name="chatboxes"></ion-icon>
+    </ion-button>
+    <ion-button (click)="like()">
+      <ion-icon name="share"></ion-icon>
+    </ion-button>
+  </div>
+  <div class="product-content">
     <h3>{{product?.name}}</h3>
     <h5>{{product?.description}}</h5>
+    <p>Doado por {{product?.userName}}</p>
     <p>{{product?.city}} / {{product?.state}}</p>
   </div>
   <div class="btn-content">
-    <a (click)="openChat()">
-      <ion-button>Eu quero</ion-button>
+    <a href="https://api.whatsapp.com/send?phone={{product?.phone}}">
+      <ion-button class="btn-aceitar">Eu quero</ion-button>
     </a>
   </div>
 </ion-content>

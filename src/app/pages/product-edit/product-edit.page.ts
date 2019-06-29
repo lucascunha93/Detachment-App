@@ -92,7 +92,6 @@ export class ProductEditPage {
   async updateProduct(url) {
     await this.presentLoading();
     this.product.picture = url;
-    this.product.createdAt = new Date().getTime();
 
     try {
       await this.productService.updateProduct(this.productId, this.product);

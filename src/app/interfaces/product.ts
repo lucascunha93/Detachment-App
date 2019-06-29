@@ -11,4 +11,6 @@ export interface Product {
     phone?: number;
     visibility?: boolean;
     report?: number;
+    views?: number;
+    messagens?: number;
 }

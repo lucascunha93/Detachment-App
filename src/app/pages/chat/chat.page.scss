@@ -3,6 +3,11 @@
     --background: var(--ion-color-primary);
 }
 
+.no-chat {
+    text-align: center;
+    color: gray;
+}
+
 .desc-product {
     display: flex;
     flex-direction: row;
@@ -24,39 +29,25 @@
     right: 20px;
 }
 
-.userTrue {
+.chat-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 50px;
+    position: relative;
+    background-color: rgba(128, 128, 128, 0.5);
+}
+
+.chat-conversation {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     min-height: 50px;
     position: relative;
+    margin-bottom: 2px;
 }
 
-.userTrue > ion-avatar {
-    position: absolute;
-    top: 10px;
-    right: 12px;
-    height: 35px;
-    width: 35px;
-}
-
-.userTrue > ion-card {
-    position: absolute;
-    right: 46px;
-    padding: 6px;
-    border-radius: 11px 11px 2px 11px;
-    background-color: #80808070;
-}
-
-.userFalse {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    min-height: 50px;
-    position: relative;
-}
-
-.userFalse > ion-avatar {
+.chat-conversation > ion-avatar {
     position: absolute;
     top: 10px;
     left: 12px;
@@ -64,9 +55,10 @@
     width: 35px;
 }
 
-.userFalse > ion-card {
-    position: absolute;
-    left: 46px;
+.chat-conversation > ion-card {
+    position: relative;
+    width: 80%;
     padding: 6px;
-    border-radius: 11px 11px 11px 2px;
+    border-radius: 0px 11px 11px 11px;
+    background-color: #ececec;
 }
