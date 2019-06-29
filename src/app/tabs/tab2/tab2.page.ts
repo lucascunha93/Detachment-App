@@ -35,8 +35,6 @@ export class Tab2Page {
   }
 
   ionViewDidLeave() {
-    console.log('chamou');
-    
     this.productsSubscription.unsubscribe();
     this.products = [];
   }

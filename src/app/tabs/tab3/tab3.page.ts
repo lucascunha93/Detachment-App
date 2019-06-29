@@ -1,3 +1,4 @@
+import { User } from './../../interfaces/user';
 import { Component } from '@angular/core';
 import { NavController, LoadingController, ToastController, ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -18,11 +19,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class Tab3Page {
 
+  private user: any = {};
   public product: Product = {};
   private loading: any;
   public formResgisterItem: FormGroup;
   cep: number;
   imagePath: string = '';
+  state: string = '';
+  city: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,16 +48,12 @@ export class Tab3Page {
         Validators.required,
       ])],
       'cep': [null],
-      'city': [null, Validators.compose([
-        Validators.required
-      ])],
-      'state': [null, Validators.compose([
-        Validators.required,
-      ])],
       'phone': [null, Validators.compose([
         Validators.required
       ])]
     })
+    this.user = this.authService.getAuth().currentUser;
+
   }
 
   ionViewWillLeave() {
@@ -91,8 +91,10 @@ export class Tab3Page {
     await this.presentLoading('Publicando item...');
     this.product = this.formResgisterItem.value;
     this.product.picture = url;
-    this.product.userId = this.authService.getAuth().currentUser.uid;
-    this.product.userName = this.authService.getAuth().currentUser.displayName;
+    this.product.userId = this.user.uid;
+    this.product.userName = this.user.displayName;
+    this.product.city = this.city;
+    this.product.state = this.state;
     this.product.visibility = true;
     this.product.report = 0;
     this.product.messagens = 0;
@@ -107,6 +109,8 @@ export class Tab3Page {
         await this.productService.addProduct(this.product);
         this.product = {};
         this.imagePath = '';
+        this.city = '';
+        this.state = '';
         this.cep = null;
         this.navCtrl.navigateBack('/home');
       } catch (error) {
@@ -128,7 +132,7 @@ export class Tab3Page {
       const that = this;
       let date = new Date().getTime();
       let storageRef = this.fb.storage().ref();
-      let basePath = '/products/' + this.authService.getAuth().currentUser.uid + date + '.png';
+      let basePath = '/products/' + this.user.uid + date + '.png';
       let uploadTask = storageRef.child(basePath).putString(this.imagePath, 'data_url');
 
       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
@@ -160,13 +164,13 @@ export class Tab3Page {
   openCamera() {
 
     const options: CameraOptions = {
-      quality: 50,
+      quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       allowEdit: true,
-      targetWidth: 100,
-      targetHeight: 100
+      targetWidth: 250,
+      targetHeight: 250
     }
 
     this.camera.getPicture(options)
@@ -181,13 +185,13 @@ export class Tab3Page {
   openGalery() {
 
     const options: CameraOptions = {
-      quality: 50,
+      quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
-      targetWidth: 100,
-      targetHeight: 100
+      targetWidth: 250,
+      targetHeight: 250
     }
     this.camera.getPicture(options)
       .then((imageData) => {
@@ -201,8 +205,8 @@ export class Tab3Page {
   buscaCep() {
     this.http.get<any>(`https://viacep.com.br/ws/${this.formResgisterItem.value.cep}/json/`)
       .subscribe(cep => {
-        this.formResgisterItem.value.city = cep.localidade;
-        this.formResgisterItem.value.state = cep.uf;
+        this.city = cep.localidade;
+        this.state = cep.uf;
       });
   }
 }
