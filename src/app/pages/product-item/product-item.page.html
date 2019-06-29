@@ -8,13 +8,16 @@
     <img src="{{product.picture}}" alt="Imagem do item para doar">
   </div>
   <div class="btn-interation">
-    <ion-button (click)="like()">
-      <ion-icon class="{{liked}}" name="thumbs-up"></ion-icon>
+    <ion-button (click)="likeItem()">
+      <ion-icon *ngIf="liked" class="liked" name="thumbs-up"></ion-icon>
+      <ion-icon *ngIf="!liked" name="thumbs-up"></ion-icon>
+      {{product.like}}
     </ion-button>
     <ion-button (click)="openChat()">
       <ion-icon name="chatboxes"></ion-icon>
+      {{product.messagens}}
     </ion-button>
-    <ion-button (click)="like()">
+    <ion-button (click)="shareItem()">
       <ion-icon name="share"></ion-icon>
     </ion-button>
   </div>

@@ -97,6 +97,7 @@ export class Tab3Page {
     this.product.report = 0;
     this.product.messagens = 0;
     this.product.views = 0;
+    this.product.like = 0;
 
     if (this.product.picture != '') {
       this.product.createdAt = new Date().getTime();

@@ -43,9 +43,21 @@ export class ProductService {
       );
   }
 
-  getReportUser(idProduct: string, idUser: string) {
+  getReportUser(idProduct: string, idUser: string) { // Busca denuncia por usuário
     return this.productsCollection.doc<Product>(idProduct)
       .collection('ReportUsers', ref => ref.where('id', '==', idUser)).snapshotChanges()
+      .pipe(map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return { ...data };
+        })
+      }));
+  }
+
+  getLikeUser(idProduct: string, idUser: string) { // Busca curti por usuário
+    return this.productsCollection.doc<Product>(idProduct)
+      .collection('likeUsers', ref => ref.where('id', '==', idUser)).snapshotChanges()
       .pipe(map(actions => {
         return actions.map(a => {
           const data = a.payload.doc.data();
@@ -59,7 +71,7 @@ export class ProductService {
     return this.productsCollection.doc<Product>(id).valueChanges();
   }
 
-  getChat(idProduct: string) {
+  getChat(idProduct: string) { // Busca chat no produto
     return this.productsCollection.doc<Product>(idProduct)
       .collection('chatUsers', ref => ref.orderBy('createdAt') ).snapshotChanges()
       .pipe(map(actions => {
@@ -75,17 +87,26 @@ export class ProductService {
     return this.productsCollection.add(product);
   }
 
-  addReportProduct(idUser: User, idProduct: string) {
+  addReportProduct(idUser: User, idProduct: string) { // Adiciona a denuncia ao produto
     return this.productsCollection.doc<Product>(idProduct).collection('ReportUsers').add(idUser);
   }
 
-  addChat(idProduct: string, chat: ChatUser) {
+  addLike(idProduct: string, idUser: User) { // Adiciona um like no produto
+    return this.productsCollection.doc<Product>(idProduct).collection('likeUsers').add(idUser);
+  }
+
+  addChat(idProduct: string, chat: ChatUser) { // Cria um novo chat no produto
     return this.productsCollection.doc<Product>(idProduct).collection('chatUsers').add(chat);
   }
 
-  updateChat(idProduct: string, idChat: string, chat: ChatUser){
+  updateChat(idProduct: string, idChat: string, chat: ChatUser){ // atualiza os chats do produto
     return this.productsCollection.doc<Product>(idProduct)
       .collection('chatUsers').doc(idChat).update(chat);
+  }
+
+  updateLike(idProduct: string, idChat: string, chat: ChatUser){ // atualiza os curtis do produto
+    return this.productsCollection.doc<Product>(idProduct)
+      .collection('likeUsers').doc(idChat).update(chat);
   }
 
   updateProduct(idProduto: string, product: Product) { // Atualiza o produto no firebase
@@ -97,11 +118,13 @@ export class ProductService {
   }
 
   deleteReportProduct(idProduct: string, idReport: string) {
-    console.log(idProduct);
-    console.log(idReport);
-
     return this.productsCollection.doc<Product>(idProduct).collection('ReportUsers')
       .doc(idReport).delete();
+  }
+
+  deleteLikeProduct(idProduct: string, idLike: string) {
+    return this.productsCollection.doc<Product>(idProduct).collection('likeUsers')
+      .doc(idLike).delete();
   }
 
 }

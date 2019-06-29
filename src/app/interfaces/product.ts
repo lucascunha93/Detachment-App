@@ -13,4 +13,5 @@ export interface Product {
     report?: number;
     views?: number;
     messagens?: number;
+    like?: number;
 }

@@ -14,21 +14,25 @@ import { Platform, ToastController, NavController } from '@ionic/angular';
   styleUrls: ['./product-item.page.scss'],
 })
 export class ProductItemPage {
+  
+  private loading: any;
 
   private productSubscription: Subscription;
   private favoriteSubscription: Subscription;
   private reportSubscription: Subscription;
+  private likeSubscription: Subscription;
 
-  private loading: any;
   product: Product = {};
-
   private userId: User = {};
+
   private productId: string = null;
   private favoriteId: string = null;
-  public reportId: string = null;
+  private reportId: string = null;
+  private likeId: string = null;
 
   public favorite: boolean = false;
   public report: boolean = false;
+  public liked: boolean = false;
 
   constructor(
     private productService: ProductService,
@@ -51,6 +55,7 @@ export class ProductItemPage {
     this.productSubscription.unsubscribe();
     this.favoriteSubscription.unsubscribe();
     this.reportSubscription.unsubscribe();
+    this.likeSubscription.unsubscribe();
   }
 
   loadProduct() {
@@ -74,8 +79,29 @@ export class ProductItemPage {
               this.report = true;
             }
           });
+        this.likeSubscription = this.productService
+        .getLikeUser(this.productId, this.userId.id).subscribe(data => {
+          if(data.length != 0) {
+            this.likeId = data[0].id;
+            this.liked = true;
+          }
+        })
       }
     });
+  }
+
+  likeItem() {
+    if (!this.liked) {
+      this.product.like += 1;
+      this.productService.updateProduct(this.productId, this.product);
+      this.liked = true;
+      this.productService.addLike(this.productId, this.userId)
+    }else{
+      this.product.like -= 1;
+      this.productService.updateProduct(this.productId, this.product);
+      this.liked = false;
+      this.productService.deleteLikeProduct(this.productId, this.likeId);
+    }
   }
 
   favoriteItem() {
@@ -114,8 +140,8 @@ export class ProductItemPage {
     this.presentToast('Denúncia cancelada. Obrigado por ajudar a melhorar o App.')
   }
 
-  openChat(){
-    this.router.navigate(['/chat', this.productId ]);
+  openChat() {
+    this.router.navigate(['/chat', this.productId]);
   }
 
   async presentToast(message: string) {
