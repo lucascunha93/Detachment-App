@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 
-import { User } from '../interfaces/user';
-
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
@@ -17,11 +15,11 @@ export class AuthService {
     private facebook: Facebook,
     private googlePlus: GooglePlus ) { }
 
-  login(user: User) { // Logar com email e senha no firebase
+  login(user: any) { // Logar com email e senha no firebase
     return this.afa.auth.signInWithEmailAndPassword(user.email, user.password);
   }
 
-  register(user: User) { // Cadastrar email e senha no login com firebase
+  register(user: any) { // Cadastrar email e senha no login com firebase
     return this.afa.auth.createUserWithEmailAndPassword(user.email, user.password);
   }
 

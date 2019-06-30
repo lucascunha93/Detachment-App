@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-chat',
@@ -21,7 +22,7 @@ export class ChatPage {
   public noChat: boolean = false;
   public product: Product = {};
   public productId: string;
-  public user: any = {};
+  public user: User = {};
   public isUserPublish: boolean = false;
   public respost: string = '';
 
@@ -29,14 +30,23 @@ export class ChatPage {
     private productService: ProductService,
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
+    private userService: UsersService
   ) { }
 
   ionViewWillEnter() {
-    this.user = this.authService.getAuth().currentUser;
+    let u = this.authService.getAuth().currentUser;
+    this.userService.getUser(u.uid).subscribe(data => {
+      if (data.length != 0) {
+        this.user = data[0];
+      } else {
+        this.user.id = u.uid;
+        this.user.photo = u.photoURL;
+      }
+    })
     this.productId = this.activatedRoute.snapshot.params['id'];
     this.productSubscription = this.productService.getProduct(this.productId).subscribe(data => {
       this.product = data;
-      if (this.user.uid == this.product.userId) {
+      if (this.user.id == this.product.userId) {
         this.isUserPublish = true;
       }
     })
@@ -56,8 +66,8 @@ export class ChatPage {
   }
 
   addMessage() {
-    this.message.idUser = this.user.uid;
-    this.message.photoUser = this.user.photoURL;
+    this.message.idUser = this.user.id;
+    this.message.photoUser = this.user.photo;
     this.message.createdAt = new Date().getTime();
     this.message.notification = true;
     this.updateStatusMessages();
@@ -66,8 +76,8 @@ export class ChatPage {
   }
 
   addMessageRespost(chat: ChatUser){
-    chat.photoUserPublish = this.user.photoURL;
-    chat.idUserPublish = this.user.uid;
+    chat.photoUserPublish = this.user.photo;
+    chat.idUserPublish = this.user.id;
     this.productService.updateChat(this.productId, chat.id, chat);
   }
 

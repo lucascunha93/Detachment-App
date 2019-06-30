@@ -1,3 +1,4 @@
+import { User } from './../../interfaces/user';
 import { UsersService } from './../../services/users.service';
 import { ModalComponent2 } from './../../components/modal2/modal2.component';
 import { ModalComponent } from './../../components/modal/modal.component';
@@ -12,7 +13,7 @@ import { LoadingController, ModalController } from '@ionic/angular';
 })
 export class Tab5Page {
 
-  public user: any = {};
+  public user: User = {};
   private loading: any;
   public photoUser: string = '';
   public iptEdit: boolean = false;
@@ -31,7 +32,8 @@ export class Tab5Page {
         this.user = data[0];
         this.photoUser = data[0].photo;
       } else {
-        this.user = u;
+        this.user.id = u.uid;
+        this.user.name = u.displayName;
         this.photoUser = u.photoURL;
       }
     })

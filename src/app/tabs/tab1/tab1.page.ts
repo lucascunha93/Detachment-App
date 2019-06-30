@@ -29,7 +29,13 @@ export class Tab1Page {
   ionViewWillEnter() {
     let user = this.authService.getAuth().currentUser.uid;
     this.productsSubscription = this.productService.getProducts(user).subscribe(data => {
-      this.products = data;
+      let p = data;
+      for (let i = 0; i < p.length; i++) {
+        if (p[i].userId != user) {
+           this.products.push(p[i]);
+        }
+      }  
+      
       if (data.length == 0) {
         setTimeout(() => {
           this.dbError = true;
