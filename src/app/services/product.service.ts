@@ -16,7 +16,7 @@ export class ProductService {
     this.productsCollection = this.afs.collection<Product>('Products');
   }
 
-  getProducts(userId: string) { // Pegar produtos cadastrados e com visibilidade com atributo true
+  getProducts() { // Pegar produtos cadastrados e com visibilidade com atributo true
     return this.afs.collection<Product>('Products', ref => ref.where('visibility', '==', true))
       .snapshotChanges().pipe(
         map(actions => {
@@ -71,18 +71,6 @@ export class ProductService {
     return this.productsCollection.doc<Product>(id).valueChanges();
   }
 
-  getChat(idProduct: string) { // Busca chat no produto
-    return this.productsCollection.doc<Product>(idProduct)
-      .collection('chatUsers', ref => ref.orderBy('createdAt') ).snapshotChanges()
-      .pipe(map(actions => {
-        return actions.map(a => {
-          const data = a.payload.doc.data();
-          data.id = a.payload.doc.id;
-          return { ...data };
-        })
-      }));
-  }
-
   addProduct(product: Product) { // Adiciona o produto no firebase
     return this.productsCollection.add(product);
   }
@@ -93,15 +81,6 @@ export class ProductService {
 
   addLike(idProduct: string, idUser: User) { // Adiciona um like no produto
     return this.productsCollection.doc<Product>(idProduct).collection('likeUsers').add(idUser);
-  }
-
-  addChat(idProduct: string, chat: ChatUser) { // Cria um novo chat no produto
-    return this.productsCollection.doc<Product>(idProduct).collection('chatUsers').add(chat);
-  }
-
-  updateChat(idProduct: string, idChat: string, chat: ChatUser){ // atualiza os chats do produto
-    return this.productsCollection.doc<Product>(idProduct)
-      .collection('chatUsers').doc(idChat).update(chat);
   }
 
   updateLike(idProduct: string, idChat: string, chat: ChatUser){ // atualiza os curtis do produto

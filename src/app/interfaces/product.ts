@@ -14,4 +14,6 @@ export interface Product {
     views?: number;
     messagens?: number;
     like?: number;
+    notification?: boolean;
+
 }

@@ -9,4 +9,7 @@ export interface ChatUser {
     photoUserPublish?: string;
     photoUser?: string;
     notification?: boolean;
+    respost?: boolean;
+    visualized?: boolean;
+    idProduct?: string;
 }

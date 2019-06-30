@@ -1,3 +1,4 @@
+import { ChatsService } from './../../services/chats.service';
 import { User } from './../../interfaces/user';
 import { Product } from 'src/app/interfaces/product';
 import { Subscription } from 'rxjs';
@@ -29,11 +30,13 @@ export class ChatPage {
   constructor(
     private productService: ProductService,
     private authService: AuthService,
+    private chatService: ChatsService,
     private activatedRoute: ActivatedRoute,
     private userService: UsersService
   ) { }
 
   ionViewWillEnter() {
+    this.productId = this.activatedRoute.snapshot.params['id'];
     let u = this.authService.getAuth().currentUser;
     this.userService.getUser(u.uid).subscribe(data => {
       if (data.length != 0) {
@@ -43,15 +46,15 @@ export class ChatPage {
         this.user.photo = u.photoURL;
       }
     })
-    this.productId = this.activatedRoute.snapshot.params['id'];
     this.productSubscription = this.productService.getProduct(this.productId).subscribe(data => {
       this.product = data;
-      if (this.user.id == this.product.userId) {
+      if (u.uid == this.product.userId) {
         this.isUserPublish = true;
       }
     })
-    this.chatSubscription = this.productService.getChat(this.productId).subscribe(data => {
+    this.chatSubscription = this.chatService.getChat(this.productId).subscribe(data => {
       this.chat = data;
+      this.verifyNotification();
       if (data.length == 0) {
         setTimeout(() => {
           this.noChat = true;
@@ -65,25 +68,47 @@ export class ChatPage {
     this.chat = [];
   }
 
+  verifyNotification(){
+    for (let i = 0; i < this.chat.length; i++) {
+      if (this.chat[i].idUser == this.user.id) {
+        if (this.chat[i].respost && !this.chat[i].visualized) {
+          this.updateVisualizedUser(this.chat[i]);
+        }
+      }
+    }
+  }
+
   addMessage() {
+    this.message.idProduct = this.productId;
     this.message.idUser = this.user.id;
     this.message.photoUser = this.user.photo;
     this.message.createdAt = new Date().getTime();
     this.message.notification = true;
+    this.message.respost = false;
+    this.message.visualized = false;
     this.updateStatusMessages();
-    this.productService.addChat(this.productId, this.message);
+    this.chatService.addChat(this.message);
     this.message.message = '';
   }
 
   addMessageRespost(chat: ChatUser){
     chat.photoUserPublish = this.user.photo;
     chat.idUserPublish = this.user.id;
-    this.productService.updateChat(this.productId, chat.id, chat);
+    chat.notification = false;
+    chat.respost = true;
+    console.log(chat);
+    
+    this.chatService.updateChat(chat.id, chat);
   }
 
   updateStatusMessages() {
     this.product.messagens += 1;
     this.productService.updateProduct(this.productId, this.product);
+  }
+
+  updateVisualizedUser(chat: ChatUser){
+    chat.visualized = true;
+    this.chatService.updateChat(chat.id, chat);
   }
 
 }

@@ -34,7 +34,7 @@
 
 </ion-content>
 <ion-content *ngIf="products.length" class="tab1-page-content" color="tertiary">
-  <ion-item *ngFor="let product of products | search : terms" [routerLink]="['/product-item', product.id]"
+  <ion-item *ngFor="let product of products | search : terms" (click)="detailProduct(product)"
     class="item ios in-list ion-focusable item-label hydrated">
     <ion-avatar slot="start" class="ios hydrated">
       <img src="{{product.picture}}">

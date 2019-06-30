@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -34,7 +34,8 @@ export class ProductEditPage {
     private toastCtrl: ToastController,
     private camera: Camera,
     private http: HttpClient,
-    private fb: FirebaseApp
+    private fb: FirebaseApp,
+    private router: Router
   ) { }
 
   ionViewWillEnter() {
@@ -137,6 +138,10 @@ export class ProductEditPage {
       }, (err) => {
         // Handle error
       });
+  }
+
+  openChat() {
+    this.router.navigate(['/chat', this.productId]);
   }
 
   buscaCep() {

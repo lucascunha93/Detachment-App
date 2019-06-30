@@ -1,3 +1,6 @@
+import { Product } from 'src/app/interfaces/product';
+import { AuthService } from 'src/app/services/auth.service';
+import { ProductService } from './../services/product.service';
 import { Router } from '@angular/router';
 import { Platform, ToastController } from '@ionic/angular';
 import { Component } from '@angular/core';
@@ -11,11 +14,14 @@ export class TabsPage {
 
   lastTimeBackPress = 0;
   timePeriodToExit = 2000;
+  notification: boolean = false;
 
   constructor(
     private platform: Platform,
     private router: Router,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private productService: ProductService,
+    private authService: AuthService
   ) {
     this.platform.backButton.subscribe(async () => {
       if (new Date().getTime() - this.lastTimeBackPress < this.timePeriodToExit) {
@@ -27,6 +33,27 @@ export class TabsPage {
         this.router.navigate(['/home']);
       };
     });
+  }
+
+  ionViewWillEnter() {
+    let u = this.authService.getAuth().currentUser.uid;
+    this.verifyNotificationReport(u);
+  }
+
+  async verifyChat(id: string){
+    
+  }
+
+  async verifyNotificationReport(id: string){
+    this.productService.getProductsByUser(id).subscribe(data =>{
+      if (data.length != 0) {
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].notification) {
+            this.notification = true;
+          }          
+        }
+      }
+    })
   }
 
   async presentToast(message: string) {
