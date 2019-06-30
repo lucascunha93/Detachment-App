@@ -1,11 +1,9 @@
+import { User } from './../../interfaces/user';
+import { UsersService } from './../../services/users.service';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { ActionSheetController, NavController, LoadingController, ToastController } from '@ionic/angular';
-import { ProductService } from 'src/app/services/product.service';
+import { ActionSheetController, ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
-import { FirebaseApp } from '@angular/fire';
-import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-profile-edit',
@@ -15,81 +13,51 @@ import * as firebase from 'firebase';
 export class ProfileEditPage {
 
   public user: any = [];
-  public formProfile: FormGroup;
+  public userDb: User = {};
   imagePath: string = '';
-  isActiveToggleTextPassword: Boolean = true;
-  photoEdit: boolean = false;
+  userEmpty: boolean = false;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private productService: ProductService,
-    private navCtrl: NavController,
-    private loadingCtrl: LoadingController,
     private authService: AuthService,
     private toastCtrl: ToastController,
     private camera: Camera,
-    private fb: FirebaseApp,
-    public actionSheetController: ActionSheetController
-  ) {
-    this.formProfile = this.formBuilder.group({
-      'name': [null, Validators.compose([
-        Validators.required,
-        Validators.minLength(3)
-      ])],
-      'email': [null, Validators.compose([
-        Validators.required,
-        Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
-      ])],
-      'password': [null, Validators.compose([
-        Validators.minLength(6),
-        Validators.required,
-      ])],
-      'passwordNew': [null, Validators.compose([
-        Validators.minLength(6),
-      ])]
-    })
-  }
+    public actionSheetController: ActionSheetController,
+    private userService: UsersService
+  ) { }
 
   public ionViewWillEnter() {
     this.user = this.authService.getAuth().currentUser;
+    this.userService.getUser(this.user.uid).subscribe(data => {
+      if (data.length != 0) {
+        this.userDb = data[0];
+      } else {
+        this.userDb.id = this.user.uid;
+        this.userDb.name = this.user.displayName;
+        this.userDb.photo = this.user.photoURL;
+        this.userDb.phone = this.user.phoneNumber;
+        this.userDb.email = this.user.email;
+        this.userEmpty = true;
+      }
+    })
   }
 
   editProfile() {
-    let userToken = this.authService.getAuth().currentUser;
-    // let credential = firebase.auth.EmailAuthProvider.credential(this.user.email, this.formProfile.value.password);
-    // userToken.reauthenticateWithCredential(credential);
-    
-    if (this.imagePath != '') {
-      userToken.photoURL = this.imagePath;
+
+    if (this.userEmpty) {
+      if (this.imagePath != '') {
+        this.userDb.photo = this.imagePath;
+      }
+      this.userService.addUser(this.userDb);
+    } else {
+      if (this.imagePath != '') {
+        this.userDb.photo = this.imagePath;
+      }
+      this.userService.updateUser(this.userDb.idU, this.userDb)
     }
-
-    if(this.formProfile.value.name != this.user.displayName ){
-      userToken.updateProfile({
-        displayName: this.formProfile.value.name
-      })
-    }
-
-    // if(this.formProfile.value.email != this.user.email ){
-    //   userToken.updateEmail(this.formProfile.value.email);
-    // }
-
-    // if(this.formProfile.value.password != null ){
-    //   userToken.updatePassword(this.formProfile.value.password);
-    // }
-
     this.presentToast('Perfil atualizado com sucesso!');
-    
   }
 
-  public toggleTextPassword(): void {
-    this.isActiveToggleTextPassword = (this.isActiveToggleTextPassword == true) ? false : true;
-  }
-  public getType() {
-    return this.isActiveToggleTextPassword ? 'password' : 'text';
-  }
-
-  public removePhoto(){
-    this.photoEdit = false;
+  public removePhoto() {
     this.imagePath = '';
   }
 
@@ -134,7 +102,6 @@ export class ProfileEditPage {
       .then((imageData) => {
         let base64image = 'data:image/jpeg;base64,' + imageData;
         this.imagePath = base64image;
-        this.photoEdit = true;
       }, (err) => {
         // Handle error
       });
@@ -153,7 +120,6 @@ export class ProfileEditPage {
       .then((imageData) => {
         let base64image = 'data:image/jpeg;base64,' + imageData;
         this.imagePath = base64image;
-        this.photoEdit = true;
       }, (err) => {
         // Handle error
       });

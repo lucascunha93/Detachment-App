@@ -5,7 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ProfileEditPage } from './profile-edit.page';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { BrMaskerModule } from 'br-mask';
 
 const routes: Routes = [
   {
@@ -18,8 +19,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
     IonicModule,
+    BrMaskerModule,
     RouterModule.forChild(routes)
   ],
   declarations: [ProfileEditPage]

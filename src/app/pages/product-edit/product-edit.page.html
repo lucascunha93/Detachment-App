@@ -28,7 +28,8 @@
       <ion-input type="text" [(ngModel)]="product.city" placeholder="Cidade"></ion-input>
     </ion-item>
     <ion-item color="secondary" style="float: left; width:26%">
-      <ion-input type="text" [(ngModel)]="product.state" placeholder="uf"></ion-input>
+      <ion-input type="text" [(ngModel)]="product.state" [brmasker]="{mask:'00', len:2}" 
+        placeholder="uf" ></ion-input>
     </ion-item>
     <ion-item color="secondary">
       <ion-icon color="success" name="logo-whatsapp"></ion-icon>

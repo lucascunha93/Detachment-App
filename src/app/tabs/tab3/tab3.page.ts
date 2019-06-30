@@ -1,4 +1,4 @@
-import { User } from './../../interfaces/user';
+import { UsersService } from './../../services/users.service';
 import { Component } from '@angular/core';
 import { NavController, LoadingController, ToastController, ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -27,6 +27,7 @@ export class Tab3Page {
   imagePath: string = '';
   state: string = '';
   city: string = '';
+  phone: number = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,6 +35,7 @@ export class Tab3Page {
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
     private authService: AuthService,
+    private userService: UsersService,
     private toastCtrl: ToastController,
     private camera: Camera,
     public http: HttpClient,
@@ -52,14 +54,29 @@ export class Tab3Page {
         Validators.required
       ])]
     })
-    this.user = this.authService.getAuth().currentUser;
+  }
 
+  ionViewWillEnter() {
+    let u = this.authService.getAuth().currentUser;
+    this.userService.getUser(u.uid).subscribe(data => {
+      if (data.length != 0) {
+        this.user = data[0];
+        this.city = data[0].city;
+        this.state = data[0].state;
+        this.phone = data[0].phone;
+      } else {
+        this.user = u;
+      }
+    })
   }
 
   ionViewWillLeave() {
     this.formResgisterItem.reset();
     this.product = {};
     this.imagePath = '';
+    this.state = '';
+    this.city = '';
+    this.phone = null;
   }
 
   async presentActionSheet() {

@@ -108,7 +108,7 @@ export class ProductItemPage {
     this.favorite = true;
     this.presentToast('Item favoritado.');
     this.product.id = this.productId;
-    this.favoriteService.addProduct(this.userId, this.product);
+    this.favoriteService.addFavorite(this.userId, this.product);
   }
 
   removeFavoriteItem() {

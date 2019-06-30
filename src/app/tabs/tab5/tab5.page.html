@@ -6,11 +6,11 @@
     </ion-avatar>
 
     <div class="user-info">
-      <ion-text class="user-name">Bem vindo, {{userName || 'Usuário'}}</ion-text>
+      <ion-text class="user-name">Bem vindo, {{user.name || 'Usuário'}}</ion-text>
     </div>
   </div>
 
-  <ion-item *ngIf="iptEdit" color="secondary"  [routerLink]="['/profile-edit']">
+  <ion-item color="secondary"  [routerLink]="['/profile-edit']">
     <ion-icon name="contact"></ion-icon>
     <ion-label>Editar perfil</ion-label>
   </ion-item>

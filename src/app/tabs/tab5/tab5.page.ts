@@ -1,9 +1,9 @@
+import { UsersService } from './../../services/users.service';
 import { ModalComponent2 } from './../../components/modal2/modal2.component';
 import { ModalComponent } from './../../components/modal/modal.component';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoadingController, ModalController } from '@ionic/angular';
-import { OverlayEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-tab5',
@@ -12,7 +12,7 @@ import { OverlayEventDetail } from '@ionic/core';
 })
 export class Tab5Page {
 
-  public userName: string = '';
+  public user: any = {};
   private loading: any;
   public photoUser: string = '';
   public iptEdit: boolean = false;
@@ -20,16 +20,21 @@ export class Tab5Page {
   constructor(
     private authService: AuthService,
     private loadingCtrl: LoadingController,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    private userService: UsersService
   ) { }
 
   ionViewWillEnter() {
-    this.userName = this.authService.getAuth().currentUser.displayName;
-    this.photoUser = this.authService.getAuth().currentUser.photoURL;
-    if(this.authService.getAuth().currentUser.providerData[0].providerId === 'password'){
-      this.iptEdit = true;
-    }
-    
+    let u = this.authService.getAuth().currentUser;
+    this.userService.getUser(u.uid).subscribe(data => {
+      if (data.length != 0) {
+        this.user = data[0];
+        this.photoUser = data[0].photo;
+      } else {
+        this.user = u;
+        this.photoUser = u.photoURL;
+      }
+    })
   }
 
   async logout() {

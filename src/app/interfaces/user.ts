@@ -3,7 +3,11 @@ export interface User {
     id?: string;
     name?: string;
     email?: string;
-    password?: string;
     photo?: string;
+    city?: string;
+    state?: string;
     phone?: number;
+    lastDonation?: number;
+    idU?: string;
+    
 }

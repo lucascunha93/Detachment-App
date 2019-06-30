@@ -15,19 +15,6 @@ export class FavoriteService {
     this.productsCollection = this.afs.collection<Product>('FavoritesUser');
   }
 
-  // getProducts(id) { // Busca no banco todos os favoritos do usuário logado
-  //   return this.productsCollection.doc<Product>(id).collection('Favorites')
-  //     .snapshotChanges().pipe(
-  //       map(actions => {
-  //         return actions.map(a => {
-  //           let data = a.payload.doc.data();
-  //           data.id = a.payload.doc.id;
-  //           return { ...data };
-  //         });
-  //       })
-  //     );
-  // }
-
   getFavorites(user: User) { // Busca no banco todos os favoritos do usuário logado
     return this.productsCollection.doc<Product>(user.id).collection('Favorites')
       .snapshotChanges().pipe(
@@ -55,7 +42,7 @@ export class FavoriteService {
       );
   }
 
-  addProduct(user: User, product: Product) {
+  addFavorite(user: User, product: Product) {
     return this.productsCollection.doc(user.id).collection('Favorites').add(product);
   }
 
