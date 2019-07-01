@@ -15,6 +15,9 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
   ) {
+    this.platform.backButton.subscribe(async () => {
+        navigator['app'].exitApp();
+  })
     this.initializeApp();
   }
 
