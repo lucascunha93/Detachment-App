@@ -9,7 +9,7 @@
 <ion-content color="secondary">
   <ion-list *ngIf="products.length != 0 ">
     <ion-item *ngFor="let item of products">
-      <ion-icon (click)="removeFavorite(item?.idRemove)" color="secondary" name="heart"></ion-icon>
+      <ion-icon (click)="removeFavorite(item?.idRemove)" color="primary" name="heart"></ion-icon>
       <ion-img [routerLink]="['/product-item', item.id]" class="img-favorite"
         src="{{item.picture}}}"></ion-img>
       <ion-label [routerLink]="['/product-item', item.id]" >{{item.name}}</ion-label>

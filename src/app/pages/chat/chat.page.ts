@@ -1,13 +1,17 @@
-import { ChatsService } from './../../services/chats.service';
-import { User } from './../../interfaces/user';
-import { Product } from 'src/app/interfaces/product';
-import { Subscription } from 'rxjs';
-import { ChatUser } from './../../interfaces/chatUser';
-import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/services/product.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
+
+import { ChatUser } from './../../interfaces/chatUser';
+import { Product } from 'src/app/interfaces/product';
+import { User } from './../../interfaces/user';
+
+import { AuthService } from 'src/app/services/auth.service';
+import { ChatsService } from './../../services/chats.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { ProductService } from 'src/app/services/product.service';
 import { UsersService } from 'src/app/services/users.service';
+import { Notify } from 'src/app/interfaces/notification';
 
 @Component({
   selector: 'app-chat',
@@ -26,13 +30,15 @@ export class ChatPage {
   public user: User = {};
   public isUserPublish: boolean = false;
   public respost: string = '';
+  public notification: Notify = {};
 
   constructor(
     private productService: ProductService,
     private authService: AuthService,
     private chatService: ChatsService,
     private activatedRoute: ActivatedRoute,
-    private userService: UsersService
+    private userService: UsersService,
+    private notificationService: NotificationService
   ) { }
 
   ionViewWillEnter() {
@@ -43,6 +49,7 @@ export class ChatPage {
         this.user = data[0];
       } else {
         this.user.id = u.uid;
+        this.user.name = u.displayName;
         this.user.photo = u.photoURL;
       }
     })
@@ -54,7 +61,6 @@ export class ChatPage {
     })
     this.chatSubscription = this.chatService.getChat(this.productId).subscribe(data => {
       this.chat = data;
-      this.verifyNotification();
       if (data.length == 0) {
         setTimeout(() => {
           this.noChat = true;
@@ -68,47 +74,43 @@ export class ChatPage {
     this.chat = [];
   }
 
-  verifyNotification(){
-    for (let i = 0; i < this.chat.length; i++) {
-      if (this.chat[i].idUser == this.user.id) {
-        if (this.chat[i].respost && !this.chat[i].visualized) {
-          this.updateVisualizedUser(this.chat[i]);
-        }
-      }
-    }
-  }
-
   addMessage() {
     this.message.idProduct = this.productId;
     this.message.idUser = this.user.id;
     this.message.photoUser = this.user.photo;
     this.message.createdAt = new Date().getTime();
-    this.message.notification = true;
-    this.message.respost = false;
-    this.message.visualized = false;
     this.updateStatusMessages();
     this.chatService.addChat(this.message);
+    this.notification.idProduct = this.productId;
+    this.notification.photoProduct = this.product.picture;
+    this.notification.idUser = this.product.userId;
+    this.notification.nameUser = this.user.name;
+    this.notification.message = this.message.message;
+    this.notification.question = true;
+    this.notification.createdAt = new Date().getTime();
+    this.notification.visualized = false;
+    this.notificationService.addNotification(this.notification);
     this.message.message = '';
   }
 
   addMessageRespost(chat: ChatUser){
     chat.photoUserPublish = this.user.photo;
     chat.idUserPublish = this.user.id;
-    chat.notification = false;
-    chat.respost = true;
-    console.log(chat);
-    
     this.chatService.updateChat(chat.id, chat);
+    this.notification.idProduct = this.productId;
+    this.notification.photoProduct = this.product.picture;
+    this.notification.idUser = chat.idUser;
+    this.notification.nameUser = this.user.name;
+    this.notification.message = chat.messageRespost;
+    this.notification.question = false;
+    this.notification.createdAt = new Date().getTime();
+    this.notification.visualized = false;
+    this.notificationService.addNotification(this.notification);
   }
 
   updateStatusMessages() {
     this.product.messagens += 1;
     this.productService.updateProduct(this.productId, this.product);
-  }
-
-  updateVisualizedUser(chat: ChatUser){
-    chat.visualized = true;
-    this.chatService.updateChat(chat.id, chat);
   }
 
 }

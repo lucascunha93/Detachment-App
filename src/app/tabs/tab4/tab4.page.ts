@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
+
 import { AuthService } from 'src/app/services/auth.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
-import { ProductService } from 'src/app/services/product.service';
-
-import { Product } from 'src/app/interfaces/product';
+import { Notify } from 'src/app/interfaces/notification';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab4',
@@ -13,24 +14,37 @@ import { Product } from 'src/app/interfaces/product';
 })
 export class Tab4Page {
 
-  public products = new Array<Product>();
-  private productsSubscription: Subscription;
+  public notifications = new Array<Notify>();
+  private notificationSubscription: Subscription;
 
   constructor(
     private authService: AuthService,
-    private productService: ProductService,
+    private noticationService: NotificationService,
+    private router: Router
   ) { }
 
   ionViewWillEnter() {
     let userId = this.authService.getAuth().currentUser.uid;
-    this.productsSubscription = this.productService.getProductsByUser(userId).subscribe(data => {
-      this.products = data;
+    this.notificationSubscription = this.noticationService.getNotification(userId).subscribe(data => {
+      this.notifications = data;
     })
   }
 
   ionViewDidLeave() {
-    this.productsSubscription.unsubscribe();
-    this.products = [];
+    this.notificationSubscription.unsubscribe();
+    this.notifications = [];
+  }
+
+  openNotification(notification: Notify){
+    notification.visualized = true;
+    this.noticationService.updateNotification(notification.idN, notification);
+    this.router.navigate(['/chat', notification.idProduct]);
+  }
+
+  getClass(classe: boolean){
+    if (classe) {
+      return 'not-visualized';
+    }
   }
 
 }

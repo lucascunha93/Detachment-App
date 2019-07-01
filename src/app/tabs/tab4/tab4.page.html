@@ -9,6 +9,19 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="tertiary">
-
+<ion-content>
+  <div *ngIf="notifications.length == 0" class="ion-text-center" ><h6>Ops, você não tem notificações ainda.</h6></div>
+  <ion-item *ngFor="let notification of notifications" [ngClass]="{'!not-visualized': notification.visualized}" (click)="openNotification(notification)"
+    class="item-label item ios in-list ion-focusable hydrated">
+    <ion-avatar slot="start" class="ios hydrated">
+      <img src="{{notification.photoProduct}}">
+    </ion-avatar>
+    <ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated">
+      <h2 *ngIf="notification.question">Você recebeu uma pergunta de <b>{{notification.nameUser}}</b></h2>
+      <h2 *ngIf="!notification.question">Sua pergunta foi respondida pelo <b>{{notification.nameUser}}</b></h2>
+      <h3>- {{notification.message}}</h3>
+      <p *ngIf="notification.question">Clique para visualizar e responder</p>
+      <p *ngIf="!notification.question">Clique para visualizar</p>
+    </ion-label>
+  </ion-item>
 </ion-content>

@@ -1,4 +1,5 @@
 export interface Product {
+    
     id?: string;
     name?: string;
     description?: string;
@@ -14,6 +15,5 @@ export interface Product {
     views?: number;
     messagens?: number;
     like?: number;
-    notification?: boolean;
 
 }

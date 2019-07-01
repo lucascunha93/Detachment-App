@@ -8,8 +8,5 @@ export interface ChatUser {
     messageRespost?: string;
     photoUserPublish?: string;
     photoUser?: string;
-    notification?: boolean;
-    respost?: boolean;
-    visualized?: boolean;
     idProduct?: string;
 }

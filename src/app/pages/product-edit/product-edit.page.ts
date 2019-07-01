@@ -24,6 +24,7 @@ export class ProductEditPage {
   private productSubscription: Subscription;
   cep: number;
   imagePath: string = '';
+  editProd: boolean = false;
 
   constructor(
     private productService: ProductService,
@@ -55,6 +56,14 @@ export class ProductEditPage {
     this.productSubscription = this.productService.getProduct(this.productId).subscribe(data => {
       this.product = data;
     });
+  }
+
+  editProduct(){
+    if (this.editProd) {
+      this.editProd = false;
+    }else {
+      this.editProd = true;
+    }
   }
 
   public uploadImage() {

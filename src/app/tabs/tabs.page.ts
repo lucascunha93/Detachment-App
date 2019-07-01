@@ -1,9 +1,9 @@
-import { Product } from 'src/app/interfaces/product';
-import { AuthService } from 'src/app/services/auth.service';
-import { ProductService } from './../services/product.service';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Platform, ToastController } from '@ionic/angular';
-import { Component } from '@angular/core';
+
+import { AuthService } from 'src/app/services/auth.service';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-tabs',
@@ -14,14 +14,14 @@ export class TabsPage {
 
   lastTimeBackPress = 0;
   timePeriodToExit = 2000;
-  notification: boolean = false;
+  notify: boolean = false;
 
   constructor(
     private platform: Platform,
     private router: Router,
     private toastCtrl: ToastController,
-    private productService: ProductService,
-    private authService: AuthService
+    private authService: AuthService,
+    private notificationService: NotificationService
   ) {
     this.platform.backButton.subscribe(async () => {
       if (new Date().getTime() - this.lastTimeBackPress < this.timePeriodToExit) {
@@ -40,18 +40,20 @@ export class TabsPage {
     this.verifyNotificationReport(u);
   }
 
-  async verifyChat(id: string){
-    
-  }
 
   async verifyNotificationReport(id: string){
-    this.productService.getProductsByUser(id).subscribe(data =>{
+    
+    this.notificationService.getNotification(id).subscribe(data =>{
       if (data.length != 0) {
         for (let i = 0; i < data.length; i++) {
-          if (data[i].notification) {
-            this.notification = true;
+          if (data[i].visualized == false) {
+            this.notify = true;
+          }else {
+            this.notify = false;
           }          
         }
+      }else {
+        this.notify = false;
       }
     })
   }

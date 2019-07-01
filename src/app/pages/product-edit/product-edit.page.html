@@ -1,52 +1,90 @@
 <ion-content color="secondary">
-  <a class="btn-delete" (click)="deletarItem()" expand="block">
-    <ion-icon name="trash"></ion-icon>
-  </a>
 
   <ion-avatar>
     <img src="{{product.picture}}" *ngIf="imagePath == '' && product.picture != '' ">
     <img src="{{imagePath}}" *ngIf="imagePath != ''">
     <ion-icon name="camera" *ngIf="product.picture === ''"></ion-icon>
-    <ion-button color="success" class="btn-add-photo" (click)="openCamera()">
+    <ion-button *ngIf="editProd" color="success" class="btn-add-photo" (click)="openCamera()">
       <ion-icon name="add"></ion-icon>
     </ion-button>
   </ion-avatar>
 
-  <ion-list color="secondary">
+  <ion-list *ngIf="editProd" color="secondary">
     <ion-item color="secondary">
+      <ion-label class="label-floating" position="floating">NOME</ion-label>
       <ion-input type="text" required [(ngModel)]="product.name" placeholder="Nome"></ion-input>
     </ion-item>
     <ion-item color="secondary">
+      <ion-label class="label-floating" position="floating">DESCRIÇÃO</ion-label>
       <ion-input type="text" required [(ngModel)]="product.description" placeholder="Descrição"></ion-input>
     </ion-item>
     <ion-item color="secondary">
       <ion-input required style="float: left; width:40%" [(ngModel)]="cep" [brmasker]="{mask:'00000-00', len:9}"
         placeholder="CEP"></ion-input>
       <ion-button color="success" (click)="buscaCep()">Busca CEP</ion-button>
-    </ion-item >
+    </ion-item>
     <ion-item color="secondary" style="float: left; width:74%; padding: 0 20px 0 0">
+      <ion-label class="label-floating" position="floating">CIDADE</ion-label>
       <ion-input type="text" [(ngModel)]="product.city" placeholder="Cidade"></ion-input>
     </ion-item>
     <ion-item color="secondary" style="float: left; width:26%">
-      <ion-input type="text" [(ngModel)]="product.state" [brmasker]="{mask:'00', len:2}" 
-        placeholder="uf" ></ion-input>
+      <ion-label class="label-floating" position="floating">UF</ion-label>
+      <ion-input type="text" [(ngModel)]="product.state" [brmasker]="{mask:'00', len:2}" placeholder="uf"></ion-input>
     </ion-item>
-    <ion-item color="secondary">
+    <ion-item color="secondary" class="number-input">
+      <ion-label class="label-floating" position="floating">NÚMERO WHATSAPP</ion-label>
       <ion-icon color="success" name="logo-whatsapp"></ion-icon>
       <ion-input type="text" [(ngModel)]="product.phone" [brmasker]="{mask:'(00) 00000-0000', len:15}"
         placeholder=" Número WhatsApp"></ion-input>
     </ion-item>
-  </ion-list>
-  <ion-icon name="chatboxes" (click)="openChat()" ></ion-icon>
-</ion-content>
+    <div class="btn-edit-product">
+      <ion-button color="success" (click)="uploadImage()" expand="block">
+        Editar produto
+      </ion-button>
+      <ion-button (click)="editProduct()" expand="block">
+        Cancelar
+      </ion-button>
+    </div>
 
-<ion-footer>
-  <ion-toolbar>
-    <ion-button color="success" (click)="uploadImage()" expand="block">
-      Concluido
-    </ion-button>
-    <ion-button color="success" (click)="itemDoado()" expand="block">
-      Doado
-    </ion-button>
-  </ion-toolbar>
-</ion-footer>
+  </ion-list>
+
+  <ion-list *ngIf="!editProd" color="secondary">
+    <div>
+      <h2>{{product.name}}</h2>
+    </div>
+    <div class="dashboard-product">
+      <ion-card color="primary" (click)="openChat()">
+        <ion-card-title>Perguntas</ion-card-title>
+        <ion-icon name="chatboxes"></ion-icon>
+        <ion-card-subtitle>{{product.messagens}}</ion-card-subtitle>
+      </ion-card>
+      <ion-card color="primary">
+        <ion-card-title>Curtidas</ion-card-title>
+        <ion-icon name="thumbs-up"></ion-icon>
+        <ion-card-subtitle>{{product.like}}</ion-card-subtitle>
+      </ion-card>
+      <ion-card color="primary">
+        <ion-card-title>Visualizações</ion-card-title>
+        <ion-icon name="eye"></ion-icon>
+        <ion-card-subtitle>{{product.views}}</ion-card-subtitle>
+      </ion-card>
+      <ion-card color="primary">
+        <ion-card-title>Denúncias</ion-card-title>
+        <ion-icon name="thumbs-down"></ion-icon>
+        <ion-card-subtitle>{{product.report}}</ion-card-subtitle>
+      </ion-card>
+      <div style="width: 100%; border: 1px solid #8C3555; margin: 20px 0"></div>
+      <ion-card color="primary" (click)="editProduct()">
+        <ion-card-title>Editar item</ion-card-title>
+        <ion-icon name="create"></ion-icon>
+      </ion-card>
+      <ion-card color="primary">
+        <ion-card-title>Doação efeituada</ion-card-title>
+        <ion-icon name="cube"></ion-icon>
+      </ion-card>
+      <ion-card color="primary" style="width: 100%; margin-top: 20px" (click)="deletarItem()">
+        <ion-card-title><ion-icon name="trash"></ion-icon> Excluir item</ion-card-title>
+      </ion-card>
+    </div>
+  </ion-list>
+</ion-content>

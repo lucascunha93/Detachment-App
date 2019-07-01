@@ -56,6 +56,8 @@ export class Tab1Page {
     if (product.userId == this.user.id) {
       this.router.navigate(['/product-edit', product.id]);
     }else{
+      product.views += 1
+      this.productService.updateProduct(product.id, product);
       this.router.navigate(['/product-item', product.id]);
     }
   }

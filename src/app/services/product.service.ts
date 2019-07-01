@@ -30,8 +30,7 @@ export class ProductService {
   }
 
   getProductsByUser(idU: string) { // Pegar produtos do usuário
-    return this.afs.collection<Product>('Products', ref => ref.where('userId', '==', idU)
-      .where('visibility', '==', true))
+    return this.afs.collection<Product>('Products', ref => ref.where('userId', '==', idU))
       .snapshotChanges().pipe(
         map(actions => {
           return actions.map(a => {
@@ -41,7 +40,11 @@ export class ProductService {
           })
         })
       );
-  }
+    }
+    
+    getProduct(id: string) { // Pega o produto por id
+      return this.productsCollection.doc<Product>(id).valueChanges();
+    }
 
   getReportUser(idProduct: string, idUser: string) { // Busca denuncia por usuário
     return this.productsCollection.doc<Product>(idProduct)
@@ -65,10 +68,6 @@ export class ProductService {
           return { ...data };
         })
       }));
-  }
-
-  getProduct(id: string) { // Pega o produto por id
-    return this.productsCollection.doc<Product>(id).valueChanges();
   }
 
   addProduct(product: Product) { // Adiciona o produto no firebase

@@ -121,7 +121,7 @@ export class ProductItemPage {
     this.report = true;
     this.product.report += 1;
 
-    if (this.product.report >= 1) {
+    if (this.product.report >= 5) {
       this.product.visibility = false;
       this.productService.updateProduct(this.productId, this.product);
     }
@@ -132,7 +132,7 @@ export class ProductItemPage {
   reportBackItem() {
     this.report = false;
     this.product.report -= 1;
-    if (this.product.report < 1) {
+    if (this.product.report < 5) {
       this.product.visibility = true;
     }
     this.productService.updateProduct(this.productId, this.product);
