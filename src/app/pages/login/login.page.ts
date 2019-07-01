@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -8,13 +9,22 @@ import { Router } from '@angular/router';
 })
 export class LoginPage {
 
-  constructor( public router: Router ) { }
+  constructor(
+    public router: Router,
+    public platform: Platform
+  ) {
+    this.platform.backButton.subscribe(async () => {
+      if (this.router.url === '/login') {
+        navigator['app'].exitApp();
+      }
+    })
+  }
 
-  setSignin(){
+  setSignin() {
     this.router.navigate(['signin']);
   }
 
-  setSignup(){
+  setSignup() {
     this.router.navigate(['signup']);
   }
 
