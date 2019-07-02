@@ -1,7 +1,8 @@
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { User } from './../../interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { FavoriteService } from './../../services/favorite.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Product } from 'src/app/interfaces/product';
 import { ProductService } from 'src/app/services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,7 +15,7 @@ import { Platform, ToastController, NavController } from '@ionic/angular';
   styleUrls: ['./product-item.page.scss'],
 })
 export class ProductItemPage {
-  
+
   private loading: any;
 
   private productSubscription: Subscription;
@@ -42,7 +43,8 @@ export class ProductItemPage {
     public platform: Platform,
     private toastCtrl: ToastController,
     private navCtrl: NavController,
-    private router: Router
+    private router: Router,
+    private socialSharing: SocialSharing
   ) { }
 
   ionViewWillEnter() {
@@ -80,14 +82,18 @@ export class ProductItemPage {
             }
           });
         this.likeSubscription = this.productService
-        .getLikeUser(this.productId, this.userId.id).subscribe(data => {
-          if(data.length != 0) {
-            this.likeId = data[0].id;
-            this.liked = true;
-          }
-        })
+          .getLikeUser(this.productId, this.userId.id).subscribe(data => {
+            if (data.length != 0) {
+              this.likeId = data[0].id;
+              this.liked = true;
+            }
+          })
       }
     });
+  }
+
+  shareItem() {
+    this.socialSharing.share("Compartilhando o conteúdo de um aplicativo com o Social Sharing.", null, "", null);
   }
 
   likeItem() {
@@ -96,7 +102,7 @@ export class ProductItemPage {
       this.productService.updateProduct(this.productId, this.product);
       this.liked = true;
       this.productService.addLike(this.productId, this.userId)
-    }else{
+    } else {
       this.product.like -= 1;
       this.productService.updateProduct(this.productId, this.product);
       this.liked = false;

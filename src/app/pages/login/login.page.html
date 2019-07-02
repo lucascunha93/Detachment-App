@@ -1,20 +1,56 @@
 <ion-content color="primary">
-
-  <div class="login-content">
-    <ion-icon name="cube"></ion-icon>
-    <ion-label class="text-login">Detachment</ion-label>
-  </div>
-
-  <div class="login-content">
-    <ion-button (click)="setSignup()" class="btn-login btn-register">
-      CADASTRE-SE GRÁTIS
-    </ion-button>
-
-    <ion-button style="--background: rgba(255, 255, 255, 0); --border-color: #ffffff; 
-      --border-style: solid; --border-width: 1px;" (click)="setSignin()"
-        class="btn-login">
-      ENTRAR
-    </ion-button>
-  </div>
-
-</ion-content>
+    <div style="height: 30%; justify-content: center;" class="signup-content">
+      <ion-icon color="secondary" style="font-size: 50px;" name="cube"></ion-icon>
+      <ion-label color="secondary">Detachment</ion-label>
+    </div>
+    <div style="height: 70%; align-items: center;" class="signup-content">
+      <form style="width: 90%" padding [formGroup]="formLogin" novalidate>
+        <ion-item class="ion-no-padding">
+          <ion-icon class="icon-register" name="mail"></ion-icon>
+          <ion-label class="label-floating" position="floating">EMAIL</ion-label>
+          <ion-input type="text" formControlName="email"></ion-input>
+        </ion-item>
+  
+        <ion-item class="ion-no-padding">
+          <ion-icon class="icon-register" name="key"></ion-icon>
+          <ion-label class="label-floating" position="floating">SENHA</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+  
+        <ion-item style="--border-style: none" (click)="presentPopover($event)">
+          <a class="reset-password-link">esqueceu a senha?</a>
+        </ion-item>
+  
+        <ion-button class="btn-login" (click)="login()" [disabled]="!formLogin.valid" style="color: #8C3555"
+          color="light">
+          ENTRAR
+        </ion-button>
+        
+        <div>
+          <p style="font-size: 10px">Não tem conta? <b style="color: #6AA69B; font-size: 13px" (click)="openCadastro()" > CADASTRE-SE</b></p>
+        </div>
+  
+        <div class="separator-login">
+          <div>
+            <hr>
+          </div>
+          <p>OU CONECTAR COM</p>
+          <div class="separator-login">
+            <hr>
+          </div>
+        </div>
+  
+        <div class="btn-social">
+          <ion-button style="--background:#375F9D" (click)="signInWithFacebook()" >
+            <ion-icon style="color:#ffffff" name="logo-facebook"></ion-icon>
+            <p>Facebook</p>
+          </ion-button>
+          <ion-button style="--background:#D03D23" (click)="signInWithGoogle()" >
+            <ion-icon style="color:#ffffff" name="logo-google"></ion-icon>
+            <p>Google</p>
+          </ion-button>
+        </div>
+  
+      </form>
+    </div>
+  </ion-content>

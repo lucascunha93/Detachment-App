@@ -33,18 +33,22 @@
       </ion-card>
     </div>
     <div class="respostUser" *ngIf="!msg.idUserPublish && isUserPublish">
-      <ion-item>
-        <ion-input type="text" [(ngModel)]="msg.messageRespost" placeholder="Responda essa mensagem"></ion-input>
-        <ion-button (click)="addMessageRespost(msg)">Responder</ion-button>
-      </ion-item>
+      <form [formGroup]="formMessage" novalidate>
+        <ion-item>
+          <ion-input type="text" formControlName="message" placeholder="Responda essa mensagem"></ion-input>
+          <ion-button [disabled]='!formMessage.valid' (click)="addMessageRespost(msg)">Responder</ion-button>
+        </ion-item>
+      </form>
     </div>
   </ion-card>
 
 </ion-content>
 
 <ion-footer *ngIf="!isUserPublish">
-  <ion-item>
-    <ion-input type="text" [(ngModel)]="message.message" placeholder="Faça uma pergunta"></ion-input>
-    <ion-button (click)="addMessage()">Enviar</ion-button>
-  </ion-item>
+  <form [formGroup]="formMessage" novalidate>
+    <ion-item>
+      <ion-input type="text" formControlName="message" placeholder="Faça uma pergunta"></ion-input>
+      <ion-button [disabled]='!formMessage.valid' (click)="addMessage()">Enviar</ion-button>
+    </ion-item>
+  </form>
 </ion-footer>

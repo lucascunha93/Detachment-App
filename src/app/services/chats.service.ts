@@ -20,19 +20,8 @@ export class ChatsService {
   }
 
   getChat(idChatUser: string) { // Busca chat no produto
-    return this.afs.collection<ChatUser>('ChatUsers', ref => ref.where('idProduct', '==', idChatUser)).snapshotChanges()
-      .pipe(map(actions => {
-        return actions.map(a => {
-          const data = a.payload.doc.data();
-          data.id = a.payload.doc.id;
-          return { ...data };
-        })
-      }));
-  }
-
-  getChats(idChatUser: string) { // Busca chat no produto
-    return this.chatsCollection.doc<ChatUser>(idChatUser)
-      .collection('chatUsers', ref => ref.orderBy('createdAt') ).snapshotChanges()
+    return this.afs.collection<ChatUser>('ChatUsers', ref => ref.orderBy("createdAt").where('idProduct', '==', idChatUser))
+    .snapshotChanges()
       .pipe(map(actions => {
         return actions.map(a => {
           const data = a.payload.doc.data();

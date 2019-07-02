@@ -12,6 +12,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { ProductService } from 'src/app/services/product.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Notify } from 'src/app/interfaces/notification';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-chat',
@@ -31,6 +32,7 @@ export class ChatPage {
   public isUserPublish: boolean = false;
   public respost: string = '';
   public notification: Notify = {};
+  public formMessage: FormGroup;
 
   constructor(
     private productService: ProductService,
@@ -38,8 +40,16 @@ export class ChatPage {
     private chatService: ChatsService,
     private activatedRoute: ActivatedRoute,
     private userService: UsersService,
-    private notificationService: NotificationService
-  ) { }
+    private notificationService: NotificationService,
+    private fb: FormBuilder,
+  ) {
+    this.formMessage = this.fb.group({
+      'message': [null, Validators.compose([
+        Validators.required,
+        Validators.minLength(5)
+      ])]
+    })
+  }
 
   ionViewWillEnter() {
     this.productId = this.activatedRoute.snapshot.params['id'];
@@ -78,6 +88,7 @@ export class ChatPage {
     this.message.idProduct = this.productId;
     this.message.idUser = this.user.id;
     this.message.photoUser = this.user.photo;
+    this.message.message = this.formMessage.value.message;
     this.message.createdAt = new Date().getTime();
     this.updateStatusMessages();
     this.chatService.addChat(this.message);
@@ -93,9 +104,10 @@ export class ChatPage {
     this.message.message = '';
   }
 
-  addMessageRespost(chat: ChatUser){
+  addMessageRespost(chat: ChatUser) {
     chat.photoUserPublish = this.user.photo;
     chat.idUserPublish = this.user.id;
+    chat.messageRespost = this.formMessage.value.message;
     this.chatService.updateChat(chat.id, chat);
     this.notification.idProduct = this.productId;
     this.notification.photoProduct = this.product.picture;

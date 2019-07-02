@@ -53,11 +53,6 @@
       <h2>{{product.name}}</h2>
     </div>
     <div class="dashboard-product">
-      <ion-card color="primary" (click)="openChat()">
-        <ion-card-title>Perguntas</ion-card-title>
-        <ion-icon name="chatboxes"></ion-icon>
-        <ion-card-subtitle>{{product.messagens}}</ion-card-subtitle>
-      </ion-card>
       <ion-card color="primary">
         <ion-card-title>Curtidas</ion-card-title>
         <ion-icon name="thumbs-up"></ion-icon>
@@ -73,17 +68,30 @@
         <ion-icon name="thumbs-down"></ion-icon>
         <ion-card-subtitle>{{product.report}}</ion-card-subtitle>
       </ion-card>
-      <div style="width: 100%; border: 1px solid #8C3555; margin: 20px 0"></div>
+    </div>
+    <div style="width: 100%; border: 1px solid #8C3555; margin: 20px 0"></div>
+    <div class="product-info">
+      <ion-card color="primary" (click)="openChat()">
+        <ion-card-title>Perguntas</ion-card-title>
+        <ion-icon name="chatboxes"></ion-icon>
+        <ion-card-subtitle>{{product.messagens}}</ion-card-subtitle>
+      </ion-card>
       <ion-card color="primary" (click)="editProduct()">
         <ion-card-title>Editar item</ion-card-title>
         <ion-icon name="create"></ion-icon>
       </ion-card>
-      <ion-card color="primary">
-        <ion-card-title>Doação efeituada</ion-card-title>
+      <ion-card *ngIf="!product.donation" color="primary" (click)="donation()">
+        <ion-card-title>Concluir doação</ion-card-title>
         <ion-icon name="cube"></ion-icon>
       </ion-card>
-      <ion-card color="primary" style="width: 100%; margin-top: 20px" (click)="deletarItem()">
-        <ion-card-title><ion-icon name="trash"></ion-icon> Excluir item</ion-card-title>
+      <ion-card *ngIf="product.donation" color="success" (click)="donation()">
+        <ion-icon name="cube"></ion-icon>
+        <ion-card-title>Doação efeituada</ion-card-title>
+      </ion-card>
+      <ion-card color="primary" style="margin-top: 20px" (click)="deletarItem()">
+        <ion-card-title>
+          <ion-icon name="trash"></ion-icon> Excluir item
+        </ion-card-title>
       </ion-card>
     </div>
   </ion-list>

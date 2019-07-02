@@ -15,5 +15,5 @@ export interface Product {
     views?: number;
     messagens?: number;
     like?: number;
-
+    donation?: boolean;
 }

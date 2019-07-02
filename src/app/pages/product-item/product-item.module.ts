@@ -1,3 +1,4 @@
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -21,6 +22,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
+  providers: [SocialSharing],
   declarations: [ProductItemPage]
 })
 export class ProductItemPageModule {}

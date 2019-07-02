@@ -40,11 +40,11 @@ export class ProductService {
           })
         })
       );
-    }
+  }
     
-    getProduct(id: string) { // Pega o produto por id
+  getProduct(id: string) { // Pega o produto por id
       return this.productsCollection.doc<Product>(id).valueChanges();
-    }
+  }
 
   getReportUser(idProduct: string, idUser: string) { // Busca denuncia por usuário
     return this.productsCollection.doc<Product>(idProduct)

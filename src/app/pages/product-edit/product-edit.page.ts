@@ -66,6 +66,22 @@ export class ProductEditPage {
     }
   }
 
+  donation(){
+    if (!this.product.donation) {
+      this.product.visibility = false;
+      this.product.donation = true;
+      this.productService.updateProduct(this.productId, this.product);
+      this.presentToast('Doação concluida com sucesso. Obrigado');
+    } else {
+      if (this.product.report < 5) {
+        this.product.visibility = true;
+      }
+      this.product.donation = false;
+      this.productService.updateProduct(this.productId, this.product);
+      this.presentToast('Doação cancelada.');
+    }
+  }
+
   public uploadImage() {
     if (this.imagePath != '') {
 
