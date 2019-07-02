@@ -9,3 +9,17 @@
     font-size: 50px;
     margin: 0 0 10px 0;
   }
+
+  .donation-completed {
+    position: absolute;
+    top: 30px;
+    right: 12px;
+    background-color: var(--ion-color-primary);
+    border-radius: 25px;
+    color: white;
+    padding: 0px 14px;
+  }
+
+  .donation-background{
+    --background: #b3b3b3;
+  }

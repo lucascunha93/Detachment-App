@@ -86,12 +86,23 @@ ion-list {
 }
 
 .dashboard-product > ion-card {
-    width: 33%;
-    padding: 10px;
+    width: 30%;
+    padding: 5px;
     margin: 2px 0;
 }
 
 ion-card-title {
     font-size: 12px;
     margin-bottom: 3px;
+}
+
+.product-info > ion-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;
+}
+
+.product-info > ion-card > ion-icon {
+    margin: 0 5px;
 }

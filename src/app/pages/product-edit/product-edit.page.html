@@ -59,7 +59,7 @@
         <ion-card-subtitle>{{product.like}}</ion-card-subtitle>
       </ion-card>
       <ion-card color="primary">
-        <ion-card-title>Visualizações</ion-card-title>
+        <ion-card-title>Visto</ion-card-title>
         <ion-icon name="eye"></ion-icon>
         <ion-card-subtitle>{{product.views}}</ion-card-subtitle>
       </ion-card>
@@ -72,17 +72,17 @@
     <div style="width: 100%; border: 1px solid #8C3555; margin: 20px 0"></div>
     <div class="product-info">
       <ion-card color="primary" (click)="openChat()">
-        <ion-card-title>Perguntas</ion-card-title>
         <ion-icon name="chatboxes"></ion-icon>
-        <ion-card-subtitle>{{product.messagens}}</ion-card-subtitle>
+        <ion-card-title>Perguntas</ion-card-title>
+        <ion-card-subtitle> ({{product.messagens}})</ion-card-subtitle>
       </ion-card>
       <ion-card color="primary" (click)="editProduct()">
-        <ion-card-title>Editar item</ion-card-title>
         <ion-icon name="create"></ion-icon>
+        <ion-card-title>Editar item</ion-card-title>
       </ion-card>
       <ion-card *ngIf="!product.donation" color="primary" (click)="donation()">
-        <ion-card-title>Concluir doação</ion-card-title>
         <ion-icon name="cube"></ion-icon>
+        <ion-card-title>Concluir doação</ion-card-title>
       </ion-card>
       <ion-card *ngIf="product.donation" color="success" (click)="donation()">
         <ion-icon name="cube"></ion-icon>

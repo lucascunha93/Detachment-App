@@ -11,7 +11,7 @@
 
 <ion-content>
   <div *ngIf="notifications.length == 0" class="ion-text-center" ><h6>Ops, você não tem notificações ainda.</h6></div>
-  <ion-item *ngFor="let notification of notifications" [ngClass]="{'!not-visualized': notification.visualized}" (click)="openNotification(notification)"
+  <ion-item *ngFor="let notification of notifications" [ngClass]="{'not-visualized': notification.visualized}" (click)="openNotification(notification)"
     class="item-label item ios in-list ion-focusable hydrated">
     <ion-avatar slot="start" class="ios hydrated">
       <img src="{{notification.photoProduct}}">

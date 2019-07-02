@@ -49,7 +49,6 @@ export class Tab3Page {
       'description': [null, Validators.compose([
         Validators.required,
       ])],
-      'cep': [null],
       'phone': [null, Validators.compose([
         Validators.required
       ])]
@@ -108,8 +107,8 @@ export class Tab3Page {
     await this.presentLoading('Publicando item...');
     this.product = this.formResgisterItem.value;
     this.product.picture = url;
-    this.product.userId = this.user.uid;
-    this.product.userName = this.user.displayName;
+    this.product.userId = this.user.id;
+    this.product.userName = this.user.name;
     this.product.city = this.city;
     this.product.state = this.state;
     this.product.visibility = true;
@@ -123,6 +122,7 @@ export class Tab3Page {
 
       try {
         await this.loading.dismiss();
+        
         await this.productService.addProduct(this.product);
         this.product = {};
         this.imagePath = '';
