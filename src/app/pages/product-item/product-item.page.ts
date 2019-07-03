@@ -93,7 +93,13 @@ export class ProductItemPage {
   }
 
   shareItem() {
-    this.socialSharing.share("Compartilhando o conteúdo de um aplicativo com o Social Sharing.", null, "", null);
+    console.log(this.product.picture);
+  
+    //let b = this.product.picture;
+    //var blob = new Blob([b], { type: 'text/plain' });
+  //  var file = new File([blob], 'Compartilhe', {type: "image/jpeg", lastModified: Date.now()});
+    this.socialSharing
+    .share("Compartilhando o conteúdo de um aplicativo com o Social Sharing.", null, this.product.picture, null);
   }
 
   likeItem() {

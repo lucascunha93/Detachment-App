@@ -41,18 +41,21 @@ export class TabsPage {
   }
 
 
-  async verifyNotificationReport(id: string){
-    
-    this.notificationService.getNotification(id).subscribe(data =>{
+  async verifyNotificationReport(id: string) {
+    let cont: number = 0;
+    this.notificationService.getNotification(id).subscribe(data => {
       if (data.length != 0) {
         for (let i = 0; i < data.length; i++) {
           if (data[i].visualized == false) {
-            this.notify = true;
-          }else {
-            this.notify = false;
-          }          
+            cont++;
+          }
         }
-      }else {
+        if (cont == 0) {
+          this.notify = false;
+        } else {
+          this.notify = true;
+        }
+      } else {
         this.notify = false;
       }
     })
