@@ -39,9 +39,15 @@
     <p class="label-product">Localização:</p>
     <p class="local-p">{{product?.city}} / {{product?.state}}</p>
   </div>
-  <div class="btn-content">
+  <div *ngIf="!product.donation && !product.deleted" class="btn-content">
     <a href="https://api.whatsapp.com/send?phone={{product?.phone}}">
       <ion-button class="btn-aceitar">Eu quero</ion-button>
     </a>
   </div>
+  <div *ngIf="product.donation" class="btn-content">
+      <ion-button color="success" class="btn-aceitar">Produto já doado</ion-button>
+  </div>
+  <div *ngIf="product.deleted && !product.donation" class="btn-content">
+    <ion-button color="primary" class="btn-aceitar">Produto indiponível</ion-button>
+</div>
 </ion-content>

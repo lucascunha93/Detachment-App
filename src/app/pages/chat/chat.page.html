@@ -35,7 +35,7 @@
     <div class="respostUser" *ngIf="!msg.idUserPublish && isUserPublish">
       <form #formRespost="ngForm">
         <ion-item>
-          <ion-input type="text" required name="respost" minlength="3" [(ngModel)]="msg.messageRespost" 
+          <ion-input type="text" required name="respost" minlength="1" [(ngModel)]="msg.messageRespost" 
             placeholder="Responda essa mensagem"></ion-input>
           <ion-button [disabled]="!formRespost.form.valid" (click)="addMessageRespost(msg)">Responder</ion-button>
         </ion-item>

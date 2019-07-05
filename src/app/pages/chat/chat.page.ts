@@ -46,7 +46,7 @@ export class ChatPage {
     this.formMessage = this.fb.group({
       'message': [null, Validators.compose([
         Validators.required,
-        Validators.minLength(3)
+        Validators.minLength(1)
       ])]
     })
   }
