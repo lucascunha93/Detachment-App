@@ -107,7 +107,7 @@ export class ProfileEditPage {
       });
   }
 
-  public openGalery() {
+  public async openGalery() {
 
     const options: CameraOptions = {
       quality: 100,

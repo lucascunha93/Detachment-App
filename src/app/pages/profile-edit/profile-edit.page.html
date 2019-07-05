@@ -10,7 +10,7 @@
   <ion-avatar>
     <img src="{{userDb?.photo}}" *ngIf="userDb?.photo != null">
     <img src="{{imagePath}}" *ngIf="imagePath != ''">
-    <ion-icon name="person" *ngIf="userDb?.photo == null"></ion-icon>
+    <ion-icon name="person" *ngIf="userDb?.photo == null && imagePath == ''"></ion-icon>
     <ion-button *ngIf="imagePath != ''" color="primary" class="btn-add-photo" (click)="removePhoto()">
       <ion-icon name="reverse-camera"></ion-icon>
     </ion-button>

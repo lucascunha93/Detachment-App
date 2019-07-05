@@ -26,6 +26,7 @@ export class Tab4Page {
   ionViewWillEnter() {
     let userId = this.authService.getAuth().currentUser.uid;
     this.notificationSubscription = this.noticationService.getNotification(userId).subscribe(data => {
+      
       this.notifications = data;
     })
   }

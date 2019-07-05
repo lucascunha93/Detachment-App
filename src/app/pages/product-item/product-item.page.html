@@ -10,7 +10,7 @@
     </div>
     <ion-icon *ngIf="!favorite" class="favoriteItem" (click)="favoriteItem()" color="light" name="heart-empty">
     </ion-icon>
-    <ion-icon *ngIf="favorite" class="favoriteItem" (click)="removeFavoriteItem()" color="light" name="heart">
+    <ion-icon *ngIf="favorite" class="favoriteItem" (click)="removeFavoriteItem()" color="secondary" name="heart">
     </ion-icon>
   </ion-toolbar>
 </ion-header>
@@ -28,7 +28,7 @@
       <ion-icon *ngIf="!report" color="light" name="thumbs-down"></ion-icon>
       <ion-icon *ngIf="report" color="primary" name="thumbs-down"></ion-icon>
       <p *ngIf="!report">denuncie</p>
-      <p color="primary" *ngIf="report">denunciado</p>
+      <p style="color: var(--ion-color-primary)" *ngIf="report">denunciado</p>
     </div>
   </div>
   <div class="product-content">
