@@ -3,7 +3,6 @@ import {IonicModule} from '@ionic/angular';
 import {CommonModule} from '@angular/common';
 
 import { ModalComponent2 } from './modal2.component';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
      declarations: [

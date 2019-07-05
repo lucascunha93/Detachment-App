@@ -1,31 +1,43 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      {{product.name}}
+    </ion-title>
+    <div class="like-content" (click)="likeItem()">
+      <ion-icon *ngIf="liked" class="liked" name="thumbs-up"></ion-icon>
+      <ion-icon *ngIf="!liked" name="thumbs-up"></ion-icon>
+      <p>{{product.like}}</p>
+    </div>
+    <ion-icon *ngIf="!favorite" class="favoriteItem" (click)="favoriteItem()" color="light" name="heart-empty">
+    </ion-icon>
+    <ion-icon *ngIf="favorite" class="favoriteItem" (click)="removeFavoriteItem()" color="light" name="heart">
+    </ion-icon>
+  </ion-toolbar>
+</ion-header>
 <ion-content color="secondary" *ngIf="product">
   <div class="content-img">
-    <ion-icon *ngIf="!favorite" class="favoriteItem" (click)="favoriteItem()" color="light" name="heart-empty"></ion-icon>
-    <ion-icon *ngIf="favorite" class="favoriteItem" (click)="removeFavoriteItem()" color="primary" name="heart"></ion-icon>
-    <ion-icon *ngIf="!report" color="light" class="report" (click)="reportItem()" name="thumbs-down"></ion-icon>
-    <ion-icon *ngIf="report" color="primary" class="report" (click)="reportBackItem()" name="thumbs-down"></ion-icon>
-    
     <img src="{{product.picture}}" alt="Imagem do item para doar">
   </div>
   <div class="btn-interation">
-    <ion-button (click)="likeItem()">
-      <ion-icon *ngIf="liked" class="liked" name="thumbs-up"></ion-icon>
-      <ion-icon *ngIf="!liked" name="thumbs-up"></ion-icon>
-      {{product.like}}
-    </ion-button>
-    <ion-button (click)="openChat()">
+    <ion-button class="questions" (click)="openChat()">
       <ion-icon name="chatboxes"></ion-icon>
-      {{product.messagens}}
+      <p>perguntas</p>
+      ({{product.messagens}})
     </ion-button>
-    <ion-button (click)="shareItem()">
-      <ion-icon name="share"></ion-icon>
-    </ion-button>
+    <div (click)="reportItem()" class="report">
+      <ion-icon *ngIf="!report" color="light" name="thumbs-down"></ion-icon>
+      <ion-icon *ngIf="report" color="primary" name="thumbs-down"></ion-icon>
+      <p *ngIf="!report">denuncie</p>
+      <p color="primary" *ngIf="report">denunciado</p>
+    </div>
   </div>
   <div class="product-content">
-    <h3>{{product?.name}}</h3>
+    <p class="label-product">Doado por:</p>
+    <h5><b>{{product?.userName}}</b></h5>
+    <p class="label-product">Descrição</p>
     <h5>{{product?.description}}</h5>
-    <p>Doado por {{product?.userName}}</p>
-    <p>{{product?.city}} / {{product?.state}}</p>
+    <p class="label-product">Localização:</p>
+    <p class="local-p">{{product?.city}} / {{product?.state}}</p>
   </div>
   <div class="btn-content">
     <a href="https://api.whatsapp.com/send?phone={{product?.phone}}">

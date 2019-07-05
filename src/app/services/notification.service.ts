@@ -21,7 +21,7 @@ export class NotificationService {
   }
 
   getNotification(idN: string) { // Pegar Usuário no banco
-    return this.afs.collection<Notify>('Notifications', ref => ref.where('idUser', '==', idN))
+    return this.afs.collection<Notify>('Notifications', ref => ref.where('idUser', '==', idN).orderBy('createdAt', 'desc'))
       .snapshotChanges().pipe(
         map(actions => {
           return actions.map(a => {

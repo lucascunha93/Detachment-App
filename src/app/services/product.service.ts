@@ -17,7 +17,7 @@ export class ProductService {
   }
 
   getProducts() { // Pegar produtos cadastrados e com visibilidade com atributo true
-    return this.afs.collection<Product>('Products', ref => ref.where('visibility', '==', true))
+    return this.afs.collection<Product>('Products', ref => ref.where('visibility', '==', true).orderBy('createdAt', 'desc'))
       .snapshotChanges().pipe(
         map(actions => {
           return actions.map(a => {
@@ -30,7 +30,8 @@ export class ProductService {
   }
 
   getProductsByUser(idU: string) { // Pegar produtos do usuário
-    return this.afs.collection<Product>('Products', ref => ref.where('userId', '==', idU))
+    return this.afs.collection<Product>('Products', ref => ref.where('userId', '==', idU)
+    .where('deleted', "==", false))
       .snapshotChanges().pipe(
         map(actions => {
           return actions.map(a => {

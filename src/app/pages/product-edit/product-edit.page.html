@@ -4,8 +4,11 @@
     <img src="{{product.picture}}" *ngIf="imagePath == '' && product.picture != '' ">
     <img src="{{imagePath}}" *ngIf="imagePath != ''">
     <ion-icon name="camera" *ngIf="product.picture === ''"></ion-icon>
-    <ion-button *ngIf="editProd" color="success" class="btn-add-photo" (click)="openCamera()">
-      <ion-icon name="add"></ion-icon>
+    <ion-button *ngIf="imagePath != '' && editProd" color="primary" class="btn-add-photo" (click)="removePhoto()">
+      <ion-icon name="reverse-camera"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="imagePath == '' && editProd" color="primary" class="btn-add-photo" (click)="presentActionSheet()">
+      <ion-icon name="camera"></ion-icon>
     </ion-button>
   </ion-avatar>
 

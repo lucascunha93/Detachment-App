@@ -16,4 +16,5 @@ export interface Product {
     messagens?: number;
     like?: number;
     donation?: boolean;
+    deleted?: boolean;
 }

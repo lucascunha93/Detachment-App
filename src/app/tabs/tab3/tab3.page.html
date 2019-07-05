@@ -25,7 +25,7 @@
       </ion-item>
       <ion-item color="secondary">
         <ion-input style="float: left; width:40%"  
-          [brmasker]="{mask:'00000-00', len:9}" placeholder="CEP"></ion-input>
+          [brmasker]="{mask:'00000-00', len:9}" formControlName="cep" placeholder="CEP"></ion-input>
         <ion-button color="success" (click)="buscaCep()">Busca CEP</ion-button>
       </ion-item>
       <ion-item color="secondary" style="float: left; width:80%; padding: 0 20px 0 0">

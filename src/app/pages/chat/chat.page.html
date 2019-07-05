@@ -33,10 +33,11 @@
       </ion-card>
     </div>
     <div class="respostUser" *ngIf="!msg.idUserPublish && isUserPublish">
-      <form [formGroup]="formMessage" novalidate>
+      <form #formRespost="ngForm">
         <ion-item>
-          <ion-input type="text" formControlName="message" placeholder="Responda essa mensagem"></ion-input>
-          <ion-button [disabled]='!formMessage.valid' (click)="addMessageRespost(msg)">Responder</ion-button>
+          <ion-input type="text" required name="respost" minlength="3" [(ngModel)]="msg.messageRespost" 
+            placeholder="Responda essa mensagem"></ion-input>
+          <ion-button [disabled]="!formRespost.form.valid" (click)="addMessageRespost(msg)">Responder</ion-button>
         </ion-item>
       </form>
     </div>
@@ -47,7 +48,8 @@
 <ion-footer *ngIf="!isUserPublish">
   <form [formGroup]="formMessage" novalidate>
     <ion-item>
-      <ion-input type="text" formControlName="message" placeholder="Faça uma pergunta"></ion-input>
+      <ion-input type="text" formControlName="message" placeholder="Faça uma pergunta" 
+        value="{{formMessage.value.message}}"></ion-input>
       <ion-button [disabled]='!formMessage.valid' (click)="addMessage()">Enviar</ion-button>
     </ion-item>
   </form>

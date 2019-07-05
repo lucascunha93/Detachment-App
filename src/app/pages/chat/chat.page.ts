@@ -46,7 +46,7 @@ export class ChatPage {
     this.formMessage = this.fb.group({
       'message': [null, Validators.compose([
         Validators.required,
-        Validators.minLength(5)
+        Validators.minLength(3)
       ])]
     })
   }
@@ -101,13 +101,12 @@ export class ChatPage {
     this.notification.createdAt = new Date().getTime();
     this.notification.visualized = false;
     this.notificationService.addNotification(this.notification);
-    this.message.message = '';
+    this.formMessage.value.message = '';
   }
 
   addMessageRespost(chat: ChatUser) {
     chat.photoUserPublish = this.user.photo;
     chat.idUserPublish = this.user.id;
-    chat.messageRespost = this.formMessage.value.message;
     this.chatService.updateChat(chat.id, chat);
     this.notification.idProduct = this.productId;
     this.notification.photoProduct = this.product.picture;

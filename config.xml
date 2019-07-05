@@ -3,7 +3,6 @@
     <name>Detachment</name>
     <description>A solidariedade mudando o mundo</description>
     <author email="lucas.cunha@rede.ulbra.br" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.0.100:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -86,8 +85,5 @@
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
-    <allow-navigation href="http://192.168.0.100:8101" sessionid="1a3994ec" />
-    <allow-navigation href="http://172.29.2.17:8100" sessionid="334117f5" />
-    <allow-navigation href="http://192.168.0.108:8100" sessionid="fb397e30" />
-    <allow-navigation href="http://192.168.0.100:8100" sessionid="a2e3d633" />
+    <content src="index.html" />
 </widget>

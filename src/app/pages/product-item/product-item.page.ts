@@ -94,12 +94,12 @@ export class ProductItemPage {
 
   shareItem() {
     console.log(this.product.picture);
-  
+
     //let b = this.product.picture;
     //var blob = new Blob([b], { type: 'text/plain' });
-  //  var file = new File([blob], 'Compartilhe', {type: "image/jpeg", lastModified: Date.now()});
+    //  var file = new File([blob], 'Compartilhe', {type: "image/jpeg", lastModified: Date.now()});
     this.socialSharing
-    .share("Compartilhando o conteúdo de um aplicativo com o Social Sharing.", null, this.product.picture, null);
+      .share("Compartilhando o conteúdo de um aplicativo com o Social Sharing.", null, this.product.picture, null);
   }
 
   likeItem() {
@@ -130,26 +130,26 @@ export class ProductItemPage {
   }
 
   reportItem() {
-    this.report = true;
-    this.product.report += 1;
+    if (!this.report) {
+      this.report = true;
+      this.product.report += 1;
 
-    if (this.product.report >= 5) {
-      this.product.visibility = false;
+      if (this.product.report >= 5) {
+        this.product.visibility = false;
+        this.productService.updateProduct(this.productId, this.product);
+      }
+      this.presentToast('Denúncia efetuada. Obrigado por ajudar a melhorar o App.');
+      this.productService.addReportProduct(this.userId, this.productId);
+    } else {
+      this.report = false;
+      this.product.report -= 1;
+      if (this.product.report < 5) {
+        this.product.visibility = true;
+      }
       this.productService.updateProduct(this.productId, this.product);
+      this.productService.deleteReportProduct(this.productId, this.reportId);
+      this.presentToast('Denúncia cancelada. Obrigado por ajudar a melhorar o App.');
     }
-    this.presentToast('Denúncia efetuada. Obrigado por ajudar a melhorar o App.');
-    this.productService.addReportProduct(this.userId, this.productId)
-  }
-
-  reportBackItem() {
-    this.report = false;
-    this.product.report -= 1;
-    if (this.product.report < 5) {
-      this.product.visibility = true;
-    }
-    this.productService.updateProduct(this.productId, this.product);
-    this.productService.deleteReportProduct(this.productId, this.reportId);
-    this.presentToast('Denúncia cancelada. Obrigado por ajudar a melhorar o App.')
   }
 
   openChat() {

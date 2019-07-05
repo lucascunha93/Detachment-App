@@ -49,6 +49,7 @@ export class Tab3Page {
       'description': [null, Validators.compose([
         Validators.required,
       ])],
+      'cep': [null],
       'phone': [null, Validators.compose([
         Validators.required
       ])]
@@ -64,7 +65,9 @@ export class Tab3Page {
         this.state = data[0].state;
         this.phone = data[0].phone;
       } else {
-        this.user = u;
+        this.user.id = u.uid;
+        this.user.name = u.displayName || 'Usuário';
+        this.user.photo = u.photoURL;
       }
     })
   }
@@ -116,12 +119,14 @@ export class Tab3Page {
     this.product.messagens = 0;
     this.product.views = 0;
     this.product.like = 0;
+    this.product.deleted = false;
 
     if (this.product.picture != '') {
       this.product.createdAt = new Date().getTime();
 
       try {
         await this.loading.dismiss();
+        console.log(this.product);
         
         await this.productService.addProduct(this.product);
         this.product = {};

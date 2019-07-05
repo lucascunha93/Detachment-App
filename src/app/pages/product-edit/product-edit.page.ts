@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingController, NavController, ToastController } from '@ionic/angular';
+import { LoadingController, NavController, ToastController, ActionSheetController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
@@ -36,7 +36,8 @@ export class ProductEditPage {
     private camera: Camera,
     private http: HttpClient,
     private fb: FirebaseApp,
-    private router: Router
+    private router: Router,
+    public actionSheetController: ActionSheetController,
   ) { }
 
   ionViewWillEnter() {
@@ -64,6 +65,10 @@ export class ProductEditPage {
     }else {
       this.editProd = true;
     }
+  }
+
+  public removePhoto() {
+    this.imagePath = '';
   }
 
   donation(){
@@ -131,20 +136,38 @@ export class ProductEditPage {
 
   deletarItem() { // Altera a visibilidade para false
     this.product.visibility = false;
+    this.product.deleted = true;
     this.presentToast('Item deletado.');
     this.productService.updateProduct(this.productId, this.product);
-    this.navCtrl.navigateForward('/tab4');
+    this.navCtrl.pop();
   }
 
-  itemDoado() { // Altera a visibilidade para false
-    this.product.visibility = false;
-    this.presentToast('Item doado. Muito obrigado pela boa ação!')
-    this.productService.updateProduct(this.productId, this.product);
-    this.navCtrl.navigateForward('/tab4');
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Inserir foto',
+      buttons: [{
+        text: 'Camera',
+        role: 'destructive',
+        icon: 'camera',
+        handler: () => {
+          this.openCamera();
+        }
+      }, {
+        text: 'Galeria',
+        icon: 'images',
+        handler: () => {
+          this.openGalery();
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel'
+      }]
+    });
+    await actionSheet.present();
   }
 
-  openCamera() {
-    this.imagePath = '';
+  public openCamera() {
 
     const options: CameraOptions = {
       quality: 100,
@@ -156,6 +179,24 @@ export class ProductEditPage {
       targetHeight: 100
     }
 
+    this.camera.getPicture(options)
+      .then((imageData) => {
+        let base64image = 'data:image/jpeg;base64,' + imageData;
+        this.imagePath = base64image;
+      }, (err) => {
+        // Handle error
+      });
+  }
+
+  public openGalery() {
+
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
+    }
     this.camera.getPicture(options)
       .then((imageData) => {
         let base64image = 'data:image/jpeg;base64,' + imageData;

@@ -35,6 +35,11 @@ ion-item {
     top: 40%;
     left: 8%;
     font-size: 10px !important;
+    --color: var(--ion-color-secondary);
+}
+
+.item-has-focus .label-floating.sc-ion-label-md-h{
+    color: var(--ion-color-secondary);
 }
 
 ion-input {
